@@ -7,7 +7,7 @@ export const Gallery = () => {
       id: 1,
       type: 'image',
       url: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed',
-      title: 'Grup Antrenmanı'
+      title: 'Grup Antrenmanı 2'
     },
     {
       id: 2,

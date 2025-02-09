@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-primary);
+  color: #FFFFFF;
 }
 
 .hero-overlay {
@@ -17,7 +17,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--overlay-dark);
+  background: var(--hero-overlay);
 }
 
 .hero-content {
@@ -43,11 +43,12 @@
   animation: fadeInUp 1s ease-out;
   font-weight: 500;
   letter-spacing: 2px;
+  color: #FFFFFF;
 }
 
 .btn-primary {
   background-color: var(--primary-color);
-  color: var(--text-primary);
+  color: #FFFFFF;
   padding: 1rem 2rem;
   border: none;
   border-radius: 5px;

@@ -13,20 +13,25 @@
   --bg-secondary: #1A1A1A;
   --overlay-dark: rgba(0, 0, 0, 0.7);
   --overlay-light: rgba(255, 255, 255, 0.1);
+  --header-bg: #0A0A0A;
+  --hero-overlay: rgba(0, 0, 0, 0.7);
 }
 
 [data-theme='light'] {
   --primary-color: #FF0000;
-  --primary-light: #FF3333;
+  --primary-light: #FF4444;
   --primary-dark: #CC0000;
-  --secondary-color: #F5F5F5;
+  --secondary-color: #FFFFFF;
   --secondary-light: #FFFFFF;
-  --secondary-dark: #E0E0E0;
+  --secondary-dark: #F8F8F8;
   --accent-color: #FFD700;
-  --text-primary: #1A1A1A;
-  --text-secondary: #333333;
+  --text-primary: #000000;
+  --text-secondary: #444444;
   --bg-primary: #FFFFFF;
-  --bg-secondary: #F5F5F5;
-  --overlay-dark: rgba(0, 0, 0, 0.5);
-  --overlay-light: rgba(255, 255, 255, 0.3);
+  --bg-secondary: #FAFAFA;
+  --overlay-dark: rgba(0, 0, 0, 0.3);
+  --overlay-light: rgba(255, 255, 255, 0.8);
+  /* Keep header and hero dark in light theme */
+  --header-bg: #0A0A0A;
+  --hero-overlay: rgba(0, 0, 0, 0.7);
 } 

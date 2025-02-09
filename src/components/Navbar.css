@@ -49,6 +49,12 @@
   color: var(--primary-color);
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
 @media (max-width: 768px) {
   .nav-links {
     display: none;
@@ -56,5 +62,9 @@
   
   .navbar-container {
     justify-content: center;
+  }
+
+  .nav-right {
+    gap: 1rem;
   }
 } 

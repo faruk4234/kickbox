@@ -1,26 +1,32 @@
 :root {
-  /* Primary Colors */
+  /* Dark theme (default) */
   --primary-color: #FF0000;
   --primary-light: #FF3333;
   --primary-dark: #CC0000;
-
-  /* Secondary Colors */
   --secondary-color: #1A1A1A;
   --secondary-light: #333333;
   --secondary-dark: #000000;
-
-  /* Accent Colors */
   --accent-color: #FFD700;
-  
-  /* Text Colors */
   --text-primary: #FFFFFF;
   --text-secondary: #E0E0E0;
-  
-  /* Background Colors */
   --bg-primary: #0A0A0A;
   --bg-secondary: #1A1A1A;
-  
-  /* Overlay Colors */
   --overlay-dark: rgba(0, 0, 0, 0.7);
   --overlay-light: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='light'] {
+  --primary-color: #FF0000;
+  --primary-light: #FF3333;
+  --primary-dark: #CC0000;
+  --secondary-color: #F5F5F5;
+  --secondary-light: #FFFFFF;
+  --secondary-dark: #E0E0E0;
+  --accent-color: #FFD700;
+  --text-primary: #1A1A1A;
+  --text-secondary: #333333;
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F5F5;
+  --overlay-dark: rgba(0, 0, 0, 0.5);
+  --overlay-light: rgba(255, 255, 255, 0.3);
 } 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ThemeSwitcher } from './ThemeSwitcher';
 import './Navbar.css';
 
 export const Navbar: React.FC = () => {
@@ -17,13 +18,16 @@ export const Navbar: React.FC = () => {
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         <div className="logo">
-          <a href="#home">KICIBKOX</a>
+          <a href="#home">KICKBOX</a>
         </div>
-        <div className="nav-links">
-          <a href="#about">Hakkımızda</a>
-          <a href="#gallery">Galeri</a>
-          <a href="#programs">Programlar</a>
-          <a href="#contact">İletişim</a>
+        <div className="nav-right">
+          <div className="nav-links">
+            <a href="#about">Hakkımızda</a>
+            <a href="#gallery">Galeri</a>
+            <a href="#programs">Programlar</a>
+            <a href="#contact">İletişim</a>
+          </div>
+          <ThemeSwitcher />
         </div>
       </div>
     </nav>

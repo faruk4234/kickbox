@@ -3,10 +3,10 @@ import './Hero.css';
 
 export const Hero = () => {
   return (
-    <section className="hero">
+    <section className="hero" id="home">
       <div className="hero-content">
-        <h1 className="hero-title">KİCİBKOX</h1>
-        <p className="hero-subtitle">Gücünü Keşfet, Limitlerini Aş</p>
+        <h1 className="hero-title">KICKBOX</h1>
+        <p className="hero-subtitle">Güç ve Disiplin ile Zirveye</p>
         <div className="hero-cta">
           <button className="btn-primary">Ücretsiz Deneme Dersi</button>
         </div>

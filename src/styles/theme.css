@@ -1,0 +1,26 @@
+:root {
+  /* Primary Colors */
+  --primary-color: #FF0000;
+  --primary-light: #FF3333;
+  --primary-dark: #CC0000;
+
+  /* Secondary Colors */
+  --secondary-color: #1A1A1A;
+  --secondary-light: #333333;
+  --secondary-dark: #000000;
+
+  /* Accent Colors */
+  --accent-color: #FFD700;
+  
+  /* Text Colors */
+  --text-primary: #FFFFFF;
+  --text-secondary: #E0E0E0;
+  
+  /* Background Colors */
+  --bg-primary: #0A0A0A;
+  --bg-secondary: #1A1A1A;
+  
+  /* Overlay Colors */
+  --overlay-dark: rgba(0, 0, 0, 0.7);
+  --overlay-light: rgba(255, 255, 255, 0.1);
+} 

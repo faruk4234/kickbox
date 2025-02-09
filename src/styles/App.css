@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+main {
+  padding-top: 0; /* Hero section will handle its own padding */
+}
+
+section {
+  padding: 5rem 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  section {
+    padding: 3rem 1rem;
+  }
+} 

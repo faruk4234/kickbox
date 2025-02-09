@@ -1,0 +1,57 @@
+.programs {
+  background-color: var(--bg-primary);
+}
+
+.programs-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.program-card {
+  background-color: var(--bg-secondary);
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+  border: 1px solid var(--primary-light);
+}
+
+.program-card:hover {
+  transform: translateY(-10px);
+}
+
+.program-card h3 {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.program-description {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.program-price {
+  font-size: 1.8rem;
+  color: var(--accent-color);
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.program-features {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+.program-features li {
+  margin: 0.5rem 0;
+  color: var(--text-secondary);
+}
+
+.program-card .btn-primary {
+  width: 100%;
+} 

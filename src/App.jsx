@@ -1,5 +1,4 @@
 import React from 'react';
-import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
 import { Gallery } from './components/Gallery';
@@ -8,19 +7,16 @@ import { Contact } from './components/Contact';
 import './styles/theme.css';
 import './styles/App.css';
 
-const App: React.FC = () => {
+function App() {
   return (
     <div className="app">
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Gallery />
-        <Programs />
-        <Contact />
-      </main>
+      <Hero />
+      <About />
+      <Gallery />
+      <Programs />
+      <Contact />
     </div>
   );
-};
+}
 
-export default App;
+export default App; 

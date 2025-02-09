@@ -18,7 +18,7 @@ export const Navbar: React.FC = () => {
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         <div className="logo">
-          <a href="#home">KICKBOX</a>
+          <a href="#home">CESUR KICKBOX</a>
         </div>
         <div className="nav-right">
           <div className="nav-links">

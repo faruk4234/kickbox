@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'SpaceShards';
+  src: url('../fonts/SummerConcert-R91eE.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SpaceShardsItalic';
+  src: url('../fonts/SummerConcert-R91eE.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --font-heading: 'SpaceShards', sans-serif;
+  --font-body: 'SpaceShards', sans-serif;
+  --font-italic: 'SpaceShardsItalic', sans-serif;
+}
+
+/* Base styles */
+body {
+  font-family: var(--font-body);
+}
+
+/* All headings */
+h1, h2, h3, h4, h5, h6,
+.section-title,
+.hero-title,
+.navbar .logo a {
+  font-family: var(--font-heading);
+  letter-spacing: 1px;
+}
+
+/* Specific styles */
+.hero-subtitle {
+  font-family: var(--font-italic);
+}
+
+/* Buttons */
+.btn-primary,
+.btn-whatsapp,
+.btn-telegram {
+  font-family: var(--font-heading);
+} 

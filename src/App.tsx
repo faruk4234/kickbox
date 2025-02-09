@@ -5,6 +5,7 @@ import { About } from './components/About';
 import { Gallery } from './components/Gallery';
 import { Programs } from './components/Programs';
 import { Contact } from './components/Contact';
+import './styles/fonts.css';
 import './styles/theme.css';
 import './styles/App.css';
 

@@ -37,7 +37,7 @@ export const Gallery = () => {
     {
       id: 3,
       type: 'image',
-      url: 'https://images.unsplash.com/photo-1615117972428-28de87252486',
+      url: 'https://images.unsplash.com/photo-1517438322307-e67111335449',
       title: 'Sparring Seansı',
       description: 'Yarışma hazırlık döneminde sporcularımızın sparring çalışması.',
       date: '10.03.2024'
@@ -62,7 +62,7 @@ export const Gallery = () => {
     {
       id: 6,
       type: 'image',
-      url: 'https://images.unsplash.com/photo-1590056764472-cd39d6c54f32',
+      url: 'https://images.unsplash.com/photo-1517438984742-1262db08379e',
       title: 'Teknik Eğitim',
       description: 'Teknik eğitim, sporcularımızın teknik yeteneklerini geliştirmeleri için yapılan eğitimlerdir.',
       date: '03.03.2024'
@@ -141,20 +141,8 @@ export const Gallery = () => {
                         <div className="play-button">▶</div>
                       </div>
                     )}
-                  </div>
-                  <div className="gallery-modal-info">
-                    <div>
+                    <div className="gallery-overlay">
                       <h3>{item.title}</h3>
-                      <p className="gallery-date">{item.date}</p>
-                      <p className="gallery-description">{item.description}</p>
-                    </div>
-                    <div className="gallery-modal-actions">
-                      <button 
-                        className="btn-primary"
-                        onClick={() => handleItemClick(item)}
-                      >
-                        {item.type === 'image' ? 'Büyüt' : 'İzle'}
-                      </button>
                     </div>
                   </div>
                 </div>

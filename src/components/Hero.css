@@ -45,22 +45,71 @@
 
 .hero-cta {
   margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .btn-primary {
-  padding: 1rem 2.5rem;
-  font-size: 1.1rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
   background-color: var(--primary-color);
   color: #FFFFFF;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
 }
 
 .btn-primary:hover {
   background-color: var(--primary-dark);
   transform: translateY(-2px);
+}
+
+.contact-buttons {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.btn-whatsapp,
+.btn-telegram {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: center;
+}
+
+.btn-whatsapp {
+  background-color: #25D366;
+}
+
+.btn-telegram {
+  background-color: #0088cc;
+}
+
+.btn-whatsapp:hover,
+.btn-telegram:hover {
+  transform: translateY(-2px);
+  filter: brightness(110%);
+}
+
+.btn-whatsapp i,
+.btn-telegram i {
+  font-size: 1.3rem;
 }
 
 @media (max-width: 768px) {
@@ -70,5 +119,15 @@
   
   .hero-subtitle {
     font-size: 1.2rem;
+  }
+
+  .hero-cta {
+    max-width: 200px;
+  }
+
+  .btn-primary,
+  .btn-whatsapp,
+  .btn-telegram {
+    padding: 0.7rem 1rem;
   }
 } 

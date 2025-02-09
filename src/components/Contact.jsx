@@ -2,19 +2,12 @@ import React from 'react';
 import './Contact.css';
 
 export const Contact = () => {
-  const contactInfo = {
-    address: 'Bağdat Caddesi No:123, Kadıköy, İstanbul',
-    phone: '+90 532 123 45 67',
-    email: 'info@kicibkox.com',
-    workingHours: {
-      weekdays: '09:00 - 22:00',
-      weekend: '10:00 - 20:00'
-    },
-    socialMedia: {
-      instagram: 'https://instagram.com/kicibkox',
-      facebook: 'https://facebook.com/kicibkox',
-      youtube: 'https://youtube.com/kicibkox'
-    }
+  const handleWhatsApp = () => {
+    window.open('https://wa.me/+905303816092', '_blank');
+  };
+
+  const handleTelegram = () => {
+    window.open('https://t.me/+905303816092', '_blank');
   };
 
   return (
@@ -22,54 +15,46 @@ export const Contact = () => {
       <h2 className="section-title">İletişim</h2>
       <div className="contact-container">
         <div className="contact-info">
-          <div className="info-item">
-            <i className="icon-location"></i>
-            <h3>Adres</h3>
-            <p>{contactInfo.address}</p>
+          <h3>Bize Ulaşın</h3>
+          <p>Profesyonel kickbox eğitimi için hemen iletişime geçin.</p>
+          <div className="contact-details">
+            <div className="contact-item">
+              <i className="fas fa-phone"></i>
+              <span>+90 530 381 60 92</span>
+            </div>
+            <div className="contact-item">
+              <i className="fas fa-map-marker-alt"></i>
+              <span>İstanbul, Türkiye</span>
+            </div>
+            <div className="contact-item">
+              <i className="fas fa-clock"></i>
+              <div className="schedule">
+                <span>Hafta içi: 09:00 - 22:00</span>
+                <span>Hafta sonu: 10:00 - 20:00</span>
+              </div>
+            </div>
           </div>
-          <div className="info-item">
-            <i className="icon-phone"></i>
-            <h3>Telefon</h3>
-            <p>{contactInfo.phone}</p>
-          </div>
-          <div className="info-item">
-            <i className="icon-clock"></i>
-            <h3>Çalışma Saatleri</h3>
-            <p>Hafta içi: {contactInfo.workingHours.weekdays}</p>
-            <p>Hafta sonu: {contactInfo.workingHours.weekend}</p>
+          <div className="contact-buttons">
+            <button className="btn-whatsapp" onClick={handleWhatsApp}>
+              WhatsApp
+            </button>
+            <button className="btn-telegram" onClick={handleTelegram}>
+              Telegram
+            </button>
           </div>
         </div>
-        
-        <div className="contact-form">
-          <h3>Ücretsiz Deneme Dersi İçin</h3>
-          <form>
-            <div className="form-group">
-              <input type="text" placeholder="Adınız Soyadınız" required />
-            </div>
-            <div className="form-group">
-              <input type="tel" placeholder="Telefon Numaranız" required />
-            </div>
-            <div className="form-group">
-              <input type="email" placeholder="E-posta Adresiniz" required />
-            </div>
-            <div className="form-group">
-              <textarea placeholder="Mesajınız" rows="4"></textarea>
-            </div>
-            <button type="submit" className="btn-primary">Gönder</button>
-          </form>
+        <div className="contact-map">
+          {/* Replace with your actual Google Maps embed code */}
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=YOUR_EMBED_CODE"
+            width="100%" 
+            height="100%" 
+            style={{ border: 0 }} 
+            allowFullScreen="" 
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
-      </div>
-      
-      <div className="social-media">
-        <a href={contactInfo.socialMedia.instagram} target="_blank" rel="noopener noreferrer">
-          <i className="icon-instagram"></i>
-        </a>
-        <a href={contactInfo.socialMedia.facebook} target="_blank" rel="noopener noreferrer">
-          <i className="icon-facebook"></i>
-        </a>
-        <a href={contactInfo.socialMedia.youtube} target="_blank" rel="noopener noreferrer">
-          <i className="icon-youtube"></i>
-        </a>
       </div>
     </section>
   );

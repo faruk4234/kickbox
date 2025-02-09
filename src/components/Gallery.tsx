@@ -338,9 +338,12 @@ export const Gallery = () => {
       </div>
 
       <div className="load-more">
+        <div className="load-more-text">
         <button className="btn-primary" onClick={handleLoadMore}>
           Daha Fazla
         </button>
+        </div>
+     
       </div>
 
       {showAllGallery && (

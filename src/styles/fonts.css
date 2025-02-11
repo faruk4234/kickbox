@@ -1,13 +1,13 @@
 @font-face {
   font-family: 'SpaceShards';
-  src: url('../fonts/SummerConcert-R91eE.otf') format('truetype');
+  src: url('../fonts/SpaceShardsItalic-nRem1.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'SpaceShardsItalic';
-  src: url('../fonts/SummerConcert-R91eE.otf') format('truetype');
+  src: url('../fonts/SpaceShards-RpExo.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -21,6 +21,7 @@
 /* Base styles */
 body {
   font-family: var(--font-body);
+  font-size: 30px;
 }
 
 /* All headings */
@@ -29,12 +30,33 @@ h1, h2, h3, h4, h5, h6,
 .hero-title,
 .navbar .logo a {
   font-family: var(--font-heading);
-  letter-spacing: 1px;
+  letter-spacing: 2px;
 }
 
-/* Specific styles */
+/* Specific heading sizes */
+.hero-title {
+  font-size: 4.5rem;
+  line-height: 1.2;
+}
+
+.section-title {
+  font-size: 3.5rem;
+  margin-bottom: 2rem;
+}
+
+.navbar .logo a {
+  font-size: 2.2rem;
+}
+
+/* Navigation */
+.nav-links a {
+  font-size: 1.2rem;
+}
+
+/* Subtitles */
 .hero-subtitle {
   font-family: var(--font-italic);
+  font-size: 2rem;
 }
 
 /* Buttons */
@@ -42,4 +64,34 @@ h1, h2, h3, h4, h5, h6,
 .btn-whatsapp,
 .btn-telegram {
   font-family: var(--font-heading);
+  font-size: 1.2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+  }
+
+  .navbar .logo a {
+    font-size: 1.8rem;
+  }
+
+  .nav-links a {
+    font-size: 1.1rem;
+  }
+
+  .btn-primary,
+  .btn-whatsapp,
+  .btn-telegram {
+    font-size: 1.1rem;
+  }
 } 

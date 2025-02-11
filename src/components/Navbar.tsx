@@ -25,7 +25,7 @@ export const Navbar: React.FC = () => {
             <a href="#about">Hakkımızda</a>
             <a href="#gallery">Galeri</a>
             <a href="#programs">Programlar</a>
-            <a href="#contact">İletişim</a>
+            <a href="#contact">Iletişim</a>
           </div>
           <ThemeSwitcher />
         </div>

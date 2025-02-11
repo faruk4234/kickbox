@@ -10,10 +10,10 @@ export const Programs = () => {
       features: ['Temel teknikler', 'Kondisyon', 'Grup dersleri']
     },
     {
-      title: 'İleri Seviye',
+      title: 'Ileri Seviye',
       description: 'Tekniklerinizi geliştirin',
       price: '750₺/ay',
-      features: ['İleri teknikler', 'Sparing', 'Özel antrenman']
+      features: ['Ileri teknikler', 'Sparing', 'Özel antrenman']
     },
     {
       title: 'Profesyonel',

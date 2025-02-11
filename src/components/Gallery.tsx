@@ -231,8 +231,8 @@ export const Gallery = () => {
       type: 'video',
       url: 'https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=164&oauth2_token_id=57447761',
       thumbnail: 'https://images.unsplash.com/photo-1517438984742-1262db08379e',
-      title: 'İleri Teknikler',
-      description: 'İleri seviye boks teknikleri eğitimi.',
+      title: 'Ileri Teknikler',
+      description: 'Ileri seviye boks teknikleri eğitimi.',
       date: '22.01.2024',
       category: 'teknik-egitim'
     },

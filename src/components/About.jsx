@@ -12,7 +12,7 @@ export const About = () => {
             <ul className="about-features">
               <li>✓ Profesyonel Eğitmenler</li>
               <li>✓ Modern Ekipmanlar</li>
-              <li>✓ Özel Ders İmkanı</li>
+              <li>✓ Özel Ders Imkanı</li>
               <li>✓ Esnek Program</li>
             </ul>
           </div>

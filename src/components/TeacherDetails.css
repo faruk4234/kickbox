@@ -1,0 +1,134 @@
+.teacher-details-container {
+  background-color: var(--card-background);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.teacher-details-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.teacher-header {
+  position: relative;
+}
+
+.teacher-image {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.teacher-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.teacher-details-container:hover .teacher-image img {
+  transform: scale(1.05);
+}
+
+.teacher-basic-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  color: white;
+}
+
+.teacher-basic-info h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.teacher-basic-info h3 {
+  margin: 0.5rem 0 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.teacher-content {
+  padding: 1.5rem;
+}
+
+.teacher-description {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.teacher-content h4 {
+  color: var(--heading-color);
+  margin: 1.5rem 0 1rem;
+  font-size: 1.2rem;
+}
+
+.teacher-specialties ul,
+.teacher-achievements ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.teacher-specialties li {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.9rem;
+}
+
+.teacher-achievements li {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  border: 1px solid var(--border-color);
+}
+
+.teacher-experience,
+.teacher-education {
+  margin-top: 1.5rem;
+}
+
+.teacher-experience p,
+.teacher-education p {
+  margin: 0.5rem 0;
+  color: var(--text-color-secondary);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .teacher-image {
+    height: 250px;
+  }
+
+  .teacher-basic-info h2 {
+    font-size: 1.3rem;
+  }
+
+  .teacher-basic-info h3 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .teacher-content {
+    padding: 1rem;
+  }
+
+  .teacher-image {
+    height: 200px;
+  }
+} 

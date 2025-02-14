@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/kickbox/static/css/main.2ed323e9.css",
-    "main.js": "/kickbox/static/js/main.389698f9.js",
+    "main.css": "/kickbox/static/css/main.bc71900d.css",
+    "main.js": "/kickbox/static/js/main.900d07de.js",
     "static/js/453.57d93cf5.chunk.js": "/kickbox/static/js/453.57d93cf5.chunk.js",
     "static/media/SummerConcert-R91eE.otf": "/kickbox/static/media/SummerConcert-R91eE.612ca8733ff4539ba757.otf",
     "index.html": "/kickbox/index.html",
-    "main.2ed323e9.css.map": "/kickbox/static/css/main.2ed323e9.css.map",
-    "main.389698f9.js.map": "/kickbox/static/js/main.389698f9.js.map",
+    "main.bc71900d.css.map": "/kickbox/static/css/main.bc71900d.css.map",
+    "main.900d07de.js.map": "/kickbox/static/js/main.900d07de.js.map",
     "453.57d93cf5.chunk.js.map": "/kickbox/static/js/453.57d93cf5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2ed323e9.css",
-    "static/js/main.389698f9.js"
+    "static/css/main.bc71900d.css",
+    "static/js/main.900d07de.js"
   ]
 }

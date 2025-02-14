@@ -117,7 +117,7 @@ export const Teachers: React.FC = () => {
                   <h4>{selectedTeacher.title}</h4>
                   <div className="specialties">
                     {selectedTeacher.specialties.map((specialty, index) => (
-                      <span key={index} className="specialty-tag">{specialty}</span>
+                      <span key={index} className="specialty-tag" data-specialty={specialty}>{specialty}</span>
                     ))}
                   </div>
                 </div>
@@ -126,7 +126,7 @@ export const Teachers: React.FC = () => {
               <div className="teacher-modal-main">
                 <div className="teacher-modal-section">
                   <div className="section-header">
-                    <span className="section-icon">👤</span>
+                    <span className="section-icon">🎯</span>
                     <h5>Hakkında</h5>
                   </div>
                   <div className="section-content">
@@ -137,7 +137,7 @@ export const Teachers: React.FC = () => {
                 {selectedTeacher.experience && (
                   <div className="teacher-modal-section">
                     <div className="section-header">
-                      <span className="section-icon">⭐</span>
+                      <span className="section-icon">💪</span>
                       <h5>Deneyim</h5>
                     </div>
                     <div className="section-content">
@@ -149,7 +149,7 @@ export const Teachers: React.FC = () => {
                 {selectedTeacher.education && (
                   <div className="teacher-modal-section">
                     <div className="section-header">
-                      <span className="section-icon">🎓</span>
+                      <span className="section-icon">📚</span>
                       <h5>Eğitim</h5>
                     </div>
                     <div className="section-content">
@@ -164,13 +164,15 @@ export const Teachers: React.FC = () => {
                       <span className="section-icon">🏆</span>
                       <h5>Başarılar</h5>
                     </div>
-                    <div className="section-content achievements-list">
-                      {selectedTeacher.achievements.map((achievement, index) => (
-                        <div key={index} className="achievement-item">
-                          <span className="achievement-bullet">•</span>
-                          <p>{achievement}</p>
-                        </div>
-                      ))}
+                    <div className="section-content">
+                      <div className="achievements-list">
+                        {selectedTeacher.achievements.map((achievement, index) => (
+                          <div key={index} className="achievement-item">
+                            <span className="achievement-bullet">•</span>
+                            <p>{achievement}</p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}

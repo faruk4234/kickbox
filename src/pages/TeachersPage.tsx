@@ -83,7 +83,8 @@ export const TeachersPage: React.FC = () => {
     <div className="teachers-page">
       <div className="teachers-page-header">
         <button className="back-button" onClick={handleBackClick}>
-          ← Ana Sayfa
+          <span className="icon">←</span>
+          Ana Sayfaya Dön
         </button>
         <h1>Hocalarımız</h1>
         <p>Profesyonel ve deneyimli eğitmen kadromuz ile hizmetinizdeyiz</p>

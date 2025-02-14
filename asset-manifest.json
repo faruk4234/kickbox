@@ -1,17 +1,16 @@
 {
   "files": {
-    "main.css": "/kickbox/static/css/main.ed5624a7.css",
+    "main.css": "/kickbox/static/css/main.e986beb6.css",
     "main.js": "/kickbox/static/js/main.ac929cdf.js",
     "static/js/453.57d93cf5.chunk.js": "/kickbox/static/js/453.57d93cf5.chunk.js",
-    "static/media/SpaceShardsItalic-nRem1.ttf": "/kickbox/static/media/SpaceShardsItalic-nRem1.87356a622536c76db670.ttf",
-    "static/media/SpaceShards-RpExo.ttf": "/kickbox/static/media/SpaceShards-RpExo.f76f46aa1b3dc23d1503.ttf",
+    "static/media/SummerConcert-R91eE.otf": "/kickbox/static/media/SummerConcert-R91eE.612ca8733ff4539ba757.otf",
     "index.html": "/kickbox/index.html",
-    "main.ed5624a7.css.map": "/kickbox/static/css/main.ed5624a7.css.map",
+    "main.e986beb6.css.map": "/kickbox/static/css/main.e986beb6.css.map",
     "main.ac929cdf.js.map": "/kickbox/static/js/main.ac929cdf.js.map",
     "453.57d93cf5.chunk.js.map": "/kickbox/static/js/453.57d93cf5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ed5624a7.css",
+    "static/css/main.e986beb6.css",
     "static/js/main.ac929cdf.js"
   ]
 }

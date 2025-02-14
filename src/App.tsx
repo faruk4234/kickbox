@@ -14,11 +14,11 @@ import './styles/App.css';
 
 const App: React.FC = () => {
   return (
-    <Router>
+    <Router basename="/">
       <div className="app">
         <Navbar />
         <Routes>
-          <Route path="/" element={
+          <Route path="" element={
             <main>
               <Hero />
               <About />
@@ -28,7 +28,7 @@ const App: React.FC = () => {
               <Contact />
             </main>
           } />
-          <Route path="/teachers" element={<TeachersPage />} />
+          <Route path="teachers" element={<TeachersPage />} />
         </Routes>
       </div>
     </Router>

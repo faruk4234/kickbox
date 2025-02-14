@@ -77,7 +77,7 @@ export const Teachers: React.FC = () => {
   };
 
   const handleViewAllTeachers = () => {
-    navigate('/teachers');
+    navigate('teachers');
   };
 
   return (
@@ -98,9 +98,11 @@ export const Teachers: React.FC = () => {
       </div>
 
       <div className="load-more">
+        <div>
         <button className="btn-primary" onClick={handleViewAllTeachers}>
           Tüm Hocalarımız
         </button>
+        </div>
       </div>
 
       {selectedTeacher && (

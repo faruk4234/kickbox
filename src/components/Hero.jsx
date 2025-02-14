@@ -10,13 +10,29 @@ export const Hero = () => {
     window.open('https://t.me/+905303816092', '_blank');
   };
 
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <section className="hero" id="home">
       <div className="hero-content">
         <h1 className="hero-title">MUAMMER HOCA ILE CESUR KICKBOX</h1>
         <p className="hero-subtitle">Güç ve Disiplin ile Zirveye</p>
         <div className="hero-cta">
-          <button className="btn-primary">Ücretsiz Deneme Dersi</button>
+          <button className="btn-primary" onClick={scrollToBottom}>
+            Kayıt Ol
+          </button>
           <div className="contact-buttons">
             <button className="btn-whatsapp" onClick={handleWhatsApp}>
               <i className="fab fa-whatsapp"></i> WhatsApp

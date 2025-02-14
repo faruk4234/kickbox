@@ -23,6 +23,13 @@ export const Programs = () => {
     }
   ];
 
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <section className="programs" id="programs">
       <h2 className="section-title">Eğitim Programları</h2>
@@ -37,7 +44,7 @@ export const Programs = () => {
                 <li key={i}>{feature}</li>
               ))}
             </ul>
-            <button className="btn-primary">Kayıt Ol</button>
+            <button className="btn-primary" onClick={scrollToBottom}>Kayıt Ol</button>
           </div>
         ))}
       </div>

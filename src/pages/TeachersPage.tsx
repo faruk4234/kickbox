@@ -99,7 +99,6 @@ export const TeachersPage: React.FC = () => {
             <div className="teacher-info">
               <h3>{teacher.name}</h3>
               <p>{teacher.title}</p>
-              <button className="more-button">Detaylar</button>
             </div>
           </div>
         ))}

@@ -114,101 +114,6 @@
   line-height: 1.6;
 }
 
-.contact-buttons {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.contact-buttons2 {
-  justify-content: center;
-  
-}
-
-.btn-whatsapp,
-.btn-telegram,
-.btn-youtube,
-.btn-instagram {
-  padding: 0.8rem 1.2rem;
-  font-size: 1rem;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  font-weight: 500;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-whatsapp {
-  background: linear-gradient(135deg, #25D366, #128C7E);
-}
-
-.btn-telegram {
-  background: linear-gradient(135deg, #0088cc, #0056a3);
-}
-
-.btn-youtube {
-  background: linear-gradient(135deg, #FF0000, #CC0000);
-}
-
-.btn-instagram {
-  background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
-}
-
-.btn-whatsapp:hover,
-.btn-telegram:hover,
-.btn-youtube:hover,
-.btn-instagram:hover {
-  transform: translateY(-2px);
-  filter: brightness(110%);
-}
-
-@media (max-width: 992px) {
-  .contact-container {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
-
-  .contact-map {
-    order: 1;
-    height: 400px;
-  }
-
-  .contact-info {
-    order: 2;
-  }
-}
-
-@media (max-width: 768px) {
-  .contact {
-    padding: 4rem 0;
-  }
-
-  .section-title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .contact-info {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-map {
-    height: 300px;
-  }
-
-  .contact-card {
-    padding: 1.5rem;
-  }
-
-  .contact-buttons {
-    flex-direction: column;
-  }
-}
-
 .messaging-section {
   display: flex;
   justify-content: center;
@@ -274,7 +179,44 @@
   filter: brightness(110%);
 }
 
+@media (max-width: 992px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .contact-map {
+    order: 1;
+    height: 400px;
+  }
+
+  .contact-info {
+    order: 2;
+  }
+}
+
 @media (max-width: 768px) {
+  .contact {
+    padding: 4rem 0;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .contact-info {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-map {
+    height: 300px;
+  }
+
+  .contact-card {
+    padding: 1.5rem;
+  }
+
   .messaging-buttons {
     grid-template-columns: 1fr;
     max-width: 250px;

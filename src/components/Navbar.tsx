@@ -15,7 +15,7 @@ export const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+    <nav className={`navbar ${true ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         <div className="logo">
           <a href="#home">CESUR KICKBOX</a>

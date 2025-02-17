@@ -114,16 +114,16 @@ export const Hero = () => {
             </button>
             <div className="contact-buttons">
               <button className="btn-whatsapp" onClick={handleWhatsApp}>
-                <i className="fab fa-whatsapp"></i> WHATSAPP
+                <i className="fab fa-whatsapp"></i> WhatsApp
               </button>
               <button className="btn-telegram" onClick={handleTelegram}>
-                <i className="fab fa-telegram"></i> TELEGRAM
+                <i className="fab fa-telegram"></i> Telegram
               </button>
               <button className="btn-youtube" onClick={handleYoutube}>
-                <i className="fab fa-youtube"></i> YOUTUBE
+                <i className="fab fa-youtube"></i> Youtube
               </button>
               <button className="btn-instagram" onClick={handleInstagram}>
-                <i className="fab fa-instagram"></i> INSTAGRAM
+                <i className="fab fa-instagram"></i> Instagram
               </button>
             </div>
             <div className="contact-section-buttons">

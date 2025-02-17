@@ -35,11 +35,26 @@ export const Hero = () => {
     window.open('https://t.me/+905303816092', '_blank');
   };
 
+  const handleYoutube = () => {
+    window.open('https://youtube.com/@muammerhocailecesur', '_blank');
+  };
+
+  const handleInstagram = () => {
+    window.open('https://instagram.com/muammerhocailecesur', '_blank');
+  };
+
   const scrollToBottom = () => {
     window.scrollTo({
       top: document.documentElement.scrollHeight,
       behavior: 'smooth'
     });
+  };
+
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -95,15 +110,25 @@ export const Hero = () => {
           </div>
           <div className="hero-cta">
             <button className="btn-primary" onClick={scrollToBottom}>
-              Kayıt Ol
+              <i className="fas fa-user-plus"></i> İletişime Geç
             </button>
             <div className="contact-buttons">
               <button className="btn-whatsapp" onClick={handleWhatsApp}>
-                <i className="fab fa-whatsapp"></i> WhatsApp
+                <i className="fab fa-whatsapp"></i> Whatsapp
               </button>
               <button className="btn-telegram" onClick={handleTelegram}>
                 <i className="fab fa-telegram"></i> Telegram
               </button>
+              <button className="btn-youtube" onClick={handleYoutube}>
+                <i className="fab fa-youtube"></i> Youtube
+              </button>
+              <button className="btn-instagram" onClick={handleInstagram}>
+                <i className="fab fa-instagram"></i> Instagram
+              </button>
+            </div>
+            <div className="contact-section-buttons">
+             
+              
             </div>
           </div>
         </div>

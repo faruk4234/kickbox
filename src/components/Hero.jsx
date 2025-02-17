@@ -88,6 +88,7 @@ export const Hero = () => {
         <div className="hero-content">
           <h1 className="hero-title">MUAMMER HOCA ILE CESUR KICKBOX</h1>
           <p className="hero-subtitle">Güç ve Disiplin ile Zirveye</p>
+          <h2 className="hero-section-title">Bizi Tanı</h2>
           <div className="hero-description">
             <p>Profesyonel eğitmenlerimiz ve modern tesislerimizle kickboks dünyasına adım atın. Hem fiziksel hem mental gelişiminiz için özel programlar sunuyoruz.</p>
             <p>Başlangıç seviyesinden profesyonel seviyeye kadar her düzeyde eğitim imkanı.</p>

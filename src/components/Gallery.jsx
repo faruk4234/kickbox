@@ -1,66 +1,91 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { teachersData } from '../data/teachersData';
 import './Gallery.css';
 
 export const Gallery = () => {
-  const galleryItems = [
-    {
-      id: 1,
-      type: 'image',
-      url: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed',
-      title: 'Grup Antrenmanı 2'
-    },
-    {
-      id: 2,
-      type: 'image',
-      url: 'https://images.unsplash.com/photo-1591117207239-788bf8de6c3b',
-      title: 'Teknik Çalışma'
-    },
-    {
-      id: 3,
-      type: 'image',
-      url: 'https://images.unsplash.com/photo-1615117972428-28de87252486',
-      title: 'Sparring Seansı'
-    },
-    {
-      id: 4,
-      type: 'image',
-      url: 'https://images.unsplash.com/photo-1517438322307-e67111335449',
-      title: 'Salon Ekipmanları'
-    },
-    {
-      id: 5,
-      type: 'image',
-      url: 'https://images.unsplash.com/photo-1599058945522-28d584b6f0ff',
-      title: 'Şampiyon Sporcularımız'
-    },
-    {
-      id: 6,
-      type: 'image',
-      url: 'https://images.unsplash.com/photo-1590056764472-cd39d6c54f32',
-      title: 'Teknik Eğitim'
-    }
-  ];
+  const [selectedMedia, setSelectedMedia] = useState(null);
+
+  // Flatten all media from all teachers into a single array
+  const allMedia = teachersData.flatMap(teacher => 
+    teacher.media.map(media => ({
+      ...media,
+      teacherName: teacher.name,
+      teacherTitle: teacher.title
+    }))
+  );
+
+  const handleMediaClick = (media) => {
+    setSelectedMedia(media);
+  };
+
+  const handleClose = () => {
+    setSelectedMedia(null);
+  };
 
   return (
     <section className="gallery" id="gallery">
       <h2 className="section-title">Galeri</h2>
       <div className="gallery-container">
-        {galleryItems.map((item) => (
-          <div key={item.id} className="gallery-item">
-            {item.type === 'image' ? (
-              <img src={item.url} alt={item.title} />
-            ) : (
+        {allMedia.map((media, index) => (
+          <div 
+            key={index} 
+            className="gallery-item"
+            onClick={() => handleMediaClick(media)}
+          >
+            {media.type === 'video' ? (
               <div className="video-thumbnail">
-                <img src={item.thumbnail} alt={item.title} />
-                <div className="play-button">▶</div>
+                <img 
+                  src={media.thumbnail || media.url} 
+                  alt={media.teacherName}
+                  loading="lazy"
+                />
+                <div className="play-icon">
+                  <i className="fas fa-play"></i>
+                </div>
               </div>
+            ) : (
+              <img 
+                src={media.url} 
+                alt={media.teacherName}
+                loading="lazy"
+              />
             )}
-            <div className="gallery-overlay">
-              <h3>{item.title}</h3>
+            <div className="gallery-item-overlay">
+              <h3>{media.teacherName}</h3>
+              <p>{media.teacherTitle}</p>
             </div>
           </div>
         ))}
       </div>
+
+      {selectedMedia && (
+        <div className="media-modal-overlay" onClick={handleClose}>
+          <div className="media-modal" onClick={e => e.stopPropagation()}>
+            <button className="close-button" onClick={handleClose}>&times;</button>
+            <div className="media-modal-content">
+              {selectedMedia.type === 'video' ? (
+                <video
+                  src={selectedMedia.url}
+                  controls
+                  autoPlay
+                  playsInline
+                  className="modal-media"
+                />
+              ) : (
+                <img
+                  src={selectedMedia.url}
+                  alt={selectedMedia.teacherName}
+                  className="modal-media"
+                />
+              )}
+              <div className="media-info">
+                <h3>{selectedMedia.teacherName}</h3>
+                <p>{selectedMedia.teacherTitle}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }; 

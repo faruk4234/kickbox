@@ -231,9 +231,47 @@
 .messaging-buttons .btn-telegram,
 .messaging-buttons .btn-youtube,
 .messaging-buttons .btn-instagram {
-  padding: 1rem;
-  font-size: 1rem;
+  padding: 0.8rem 1rem;
+  font-size: 0.9rem;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
   width: 100%;
+  text-align: center;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.messaging-buttons .btn-whatsapp {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+}
+
+.messaging-buttons .btn-telegram {
+  background: linear-gradient(135deg, #0088cc, #0056a3);
+}
+
+.messaging-buttons .btn-youtube {
+  background: linear-gradient(135deg, #FF0000, #CC0000);
+}
+
+.messaging-buttons .btn-instagram {
+  background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+}
+
+.messaging-buttons .btn-whatsapp:hover,
+.messaging-buttons .btn-telegram:hover,
+.messaging-buttons .btn-youtube:hover,
+.messaging-buttons .btn-instagram:hover {
+  transform: translateY(-2px);
+  filter: brightness(110%);
 }
 
 @media (max-width: 768px) {
@@ -247,6 +285,6 @@
   .messaging-buttons .btn-youtube,
   .messaging-buttons .btn-instagram {
     width: 100%;
-    padding: 0.8rem 1.5rem;
+    padding: 0.8rem 1rem;
   }
 } 

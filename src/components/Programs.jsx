@@ -4,21 +4,18 @@ import './Programs.css';
 export const Programs = () => {
   const programs = [
     {
-      title: 'Başlangıç Programı',
-      description: 'Kickboks temellerini öğrenin',
-      price: '500₺/ay',
+      title: 'Ücretsiz Deneme',
+      description: 'Kickboks dünyasını keşfedin',
       features: ['Temel teknikler', 'Kondisyon', 'Grup dersleri']
     },
     {
-      title: 'Ileri Seviye',
+      title: 'Teknik Programı',
       description: 'Tekniklerinizi geliştirin',
-      price: '750₺/ay',
       features: ['Ileri teknikler', 'Sparing', 'Özel antrenman']
     },
     {
       title: 'Profesyonel',
       description: 'Yarışmalara hazırlık',
-      price: '1000₺/ay',
       features: ['Birebir koçluk', 'Beslenme planı', 'Yarışma hazırlığı']
     }
   ];
@@ -38,13 +35,14 @@ export const Programs = () => {
           <div className="program-card" key={index}>
             <h3>{program.title}</h3>
             <p className="program-description">{program.description}</p>
-            <div className="program-price">{program.price}</div>
             <ul className="program-features">
               {program.features.map((feature, i) => (
                 <li key={i}>{feature}</li>
               ))}
             </ul>
-            <button className="btn-primary" onClick={scrollToBottom}>Kayıt Ol</button>
+            <button className="btn-primary" onClick={scrollToBottom}>
+              {index === 0 ? 'Ücretsiz Dene' : 'İletişime Geç'}
+            </button>
           </div>
         ))}
       </div>

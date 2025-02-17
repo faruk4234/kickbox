@@ -10,6 +10,14 @@ export const Contact = () => {
     window.open('https://t.me/+905303816092', '_blank');
   };
 
+  const handleYoutube = () => {
+    window.open('https://youtube.com/@muammerhocailecesur', '_blank');
+  };
+
+  const handleInstagram = () => {
+    window.open('https://instagram.com/muammerhocailecesur', '_blank');
+  };
+
   return (
     <section className="contact" id="contact">
       <h2 className="section-title">İletişim</h2>
@@ -47,10 +55,16 @@ export const Contact = () => {
           <div className="messaging-section">
             <div className="messaging-buttons">
               <button className="btn-whatsapp" onClick={handleWhatsApp}>
-                WhatsApp
+                <i className="fab fa-whatsapp"></i> WhatsApp
               </button>
               <button className="btn-telegram" onClick={handleTelegram}>
-                Telegram
+                <i className="fab fa-telegram"></i> Telegram
+              </button>
+              <button className="btn-youtube" onClick={handleYoutube}>
+                <i className="fab fa-youtube"></i> Youtube
+              </button>
+              <button className="btn-instagram" onClick={handleInstagram}>
+                <i className="fab fa-instagram"></i> Instagram
               </button>
             </div>
           </div>

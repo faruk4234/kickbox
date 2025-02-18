@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './Gallery.css';
 
 interface GalleryItem {
@@ -18,6 +18,9 @@ export const Gallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleItems, setVisibleItems] = useState(6);
   const [showAllGallery, setShowAllGallery] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+  const modalImageRef = useRef<HTMLImageElement>(null);
 
   const galleryItems: GalleryItem[] = [
     // Grup Antrenmanı Category (5 items)
@@ -266,150 +269,161 @@ export const Gallery = () => {
     }
   ];
 
+  const handleImageZoom = (e: React.MouseEvent<HTMLImageElement>) => {
+    if (!modalImageRef.current) return;
+    
+    const image = modalImageRef.current;
+    const rect = image.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    setZoomPosition({ x, y });
+    setIsZoomed(!isZoomed);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
+    if (!isZoomed || !modalImageRef.current) return;
+    
+    const image = modalImageRef.current;
+    const rect = image.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    setZoomPosition({ x, y });
+  };
+
   const getCategoryItems = (category: string) => {
     return galleryItems.filter(item => item.category === category);
   };
 
   const handleLoadMore = () => {
-    setShowAllGallery(true);
+    setVisibleItems(prev => prev + 6);
   };
 
-  const handleItemClick = (item: GalleryItem) => {
+  const handleItemClick = (item: GalleryItem, index: number) => {
     setSelectedItem(item);
-    setSelectedCategory(item.category);
-    setCurrentIndex(getCategoryItems(item.category).findIndex(i => i.id === item.id));
+    setCurrentIndex(index);
+    setIsZoomed(false);
   };
 
   const handleNext = () => {
-    if (selectedCategory) {
-      const categoryItems = getCategoryItems(selectedCategory);
-      setCurrentIndex((prev) => {
-        const nextIndex = (prev + 1) % categoryItems.length;
-        setSelectedItem(categoryItems[nextIndex]);
-        return nextIndex;
-      });
-    }
+    const categoryItems = selectedCategory
+      ? getCategoryItems(selectedCategory)
+      : galleryItems;
+    const nextIndex = (currentIndex + 1) % categoryItems.length;
+    setCurrentIndex(nextIndex);
+    setSelectedItem(categoryItems[nextIndex]);
+    setIsZoomed(false);
   };
 
   const handlePrevious = () => {
-    if (selectedCategory) {
-      const categoryItems = getCategoryItems(selectedCategory);
-      setCurrentIndex((prev) => {
-        const nextIndex = prev === 0 ? categoryItems.length - 1 : prev - 1;
-        setSelectedItem(categoryItems[nextIndex]);
-        return nextIndex;
-      });
-    }
+    const categoryItems = selectedCategory
+      ? getCategoryItems(selectedCategory)
+      : galleryItems;
+    const prevIndex = (currentIndex - 1 + categoryItems.length) % categoryItems.length;
+    setCurrentIndex(prevIndex);
+    setSelectedItem(categoryItems[prevIndex]);
+    setIsZoomed(false);
   };
 
   const handleClose = () => {
     setSelectedItem(null);
-    setSelectedCategory(null);
-    setCurrentIndex(0);
-  };
-
-  const handleCloseGallery = () => {
-    setShowAllGallery(false);
+    setIsZoomed(false);
   };
 
   return (
     <section className="gallery" id="gallery">
       <h2 className="section-title">Galeri</h2>
       <div className="gallery-container">
-        {galleryItems.slice(0, visibleItems).map((item) => (
-          <div 
-            key={item.id} 
+        {galleryItems.slice(0, visibleItems).map((item, index) => (
+          <div
+            key={item.id}
             className="gallery-item"
-            onClick={() => handleItemClick(item)}
+            onClick={() => handleItemClick(item, index)}
           >
-            {item.type === 'image' ? (
-              <img src={item.url} alt={item.title} loading="lazy" />
-            ) : (
+            {item.type === 'video' ? (
               <div className="video-thumbnail">
-                <img src={item.thumbnail} alt={item.title} loading="lazy" />
-                <div className="play-button">▶</div>
+                <img
+                  src={item.thumbnail || item.url}
+                  alt={item.title}
+                  className="gallery-img"
+                />
+                <div className="play-button"></div>
               </div>
+            ) : (
+              <img src={item.url} alt={item.title} className="gallery-img" />
             )}
-            <div className="gallery-overlay">
+            <div className="gallery-item-overlay">
               <h3>{item.title}</h3>
+              <p>{item.description}</p>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="load-more">
-        <div className="load-more-text">
-        <button className="btn-primary" onClick={handleLoadMore}>
-          Daha Fazla
-        </button>
-        </div>
-     
-      </div>
-
-      {showAllGallery && (
-        <div className="gallery-modal" onClick={handleCloseGallery}>
-          <div className="gallery-modal-content" onClick={e => e.stopPropagation()}>
-            <h2>Tüm Galeri</h2>
-            <div className="gallery-grid">
-              {galleryItems.map((item) => (
-                <div key={item.id} className="gallery-modal-item">
-                  <div className="gallery-modal-media" onClick={() => handleItemClick(item)}>
-                    {item.type === 'image' ? (
-                      <img src={item.url} alt={item.title} loading="lazy" />
-                    ) : (
-                      <div className="video-thumbnail">
-                        <img src={item.thumbnail} alt={item.title} loading="lazy" />
-                        <div className="play-button">▶</div>
-                      </div>
-                    )}
-                    <div className="gallery-overlay">
-                      <h3>{item.title}</h3>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <button className="close-button" onClick={handleCloseGallery}>×</button>
-          </div>
+      {visibleItems < galleryItems.length && (
+        <div className="load-more">
+          <button className="btn-primary" onClick={handleLoadMore}>
+            Daha Fazla Göster
+          </button>
         </div>
       )}
 
       {selectedItem && (
-        <div className="modal" onClick={handleClose}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <button className="nav-button prev" onClick={handlePrevious}>❮</button>
-            <div className="modal-media">
-              {selectedItem.type === 'image' ? (
-                <img src={selectedItem.url} alt={selectedItem.title} />
-              ) : (
-                <video controls autoPlay>
-                  <source src={selectedItem.url} type="video/mp4" />
-                  Tarayıcınız video oynatmayı desteklemiyor.
-                </video>
-              )}
-              {selectedCategory && (
-                <div className="pagination-dots">
-                  {getCategoryItems(selectedCategory).map((_, index) => (
-                    <span
-                      key={index}
-                      className={`dot ${index === currentIndex ? 'active' : ''}`}
-                      onClick={() => {
-                        const categoryItems = getCategoryItems(selectedCategory);
-                        setCurrentIndex(index);
-                        setSelectedItem(categoryItems[index]);
-                      }}
+        <div className="instagram-modal-overlay" onClick={handleClose}>
+          <div className="instagram-modal" onClick={e => e.stopPropagation()}>
+            <div className="instagram-modal-content">
+              <div className="instagram-modal-media">
+                {selectedItem.type === 'video' ? (
+                  <video
+                    controls
+                    className="modal-media"
+                    src={selectedItem.url}
+                  />
+                ) : (
+                  <div 
+                    className={`modal-media-container ${isZoomed ? 'zoomed' : ''}`}
+                    style={isZoomed ? {
+                      cursor: 'zoom-out',
+                      backgroundImage: `url(${selectedItem.url})`,
+                      backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`
+                    } : { cursor: 'zoom-in' }}
+                  >
+                    <img
+                      ref={modalImageRef}
+                      src={selectedItem.url}
+                      alt={selectedItem.title}
+                      className="modal-media"
+                      onClick={handleImageZoom}
+                      onMouseMove={handleMouseMove}
+                      style={{ opacity: isZoomed ? 0 : 1 }}
                     />
-                  ))}
+                  </div>
+                )}
+              </div>
+              <div className="instagram-modal-sidebar">
+                <div className="instagram-modal-header">
+                  <div className="instagram-modal-user">
+                    <div className="user-info">
+                      <h4>{selectedItem.title}</h4>
+                    </div>
+                  </div>
                 </div>
-              )}
+                <div className="instagram-modal-description">
+                  <p className="description-text">{selectedItem.description}</p>
+                  <span className="post-date">{selectedItem.date}</span>
+                </div>
+              </div>
             </div>
-            <button className="nav-button next" onClick={handleNext}>❯</button>
-            <div className="modal-info">
-              <h3>{selectedItem.title}</h3>
-              <span className="modal-date">{selectedItem.date}</span>
-              <p className="modal-description">{selectedItem.description}</p>
-            </div>
-            <button className="close-button" onClick={handleClose}>×</button>
+            <button className="nav-button prev" onClick={handlePrevious}>
+              &#10094;
+            </button>
+            <button className="nav-button next" onClick={handleNext}>
+              &#10095;
+            </button>
+            <button className="instagram-close-button" onClick={handleClose}>
+              &#10005;
+            </button>
           </div>
         </div>
       )}

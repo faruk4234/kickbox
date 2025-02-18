@@ -40,76 +40,39 @@
 
 .gallery-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 2rem;
 }
 
 .gallery-item {
   position: relative;
-  height: 300px;
-  border-radius: 12px;
+  aspect-ratio: 1;
+  border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: center;
+  background: var(--background-color);
 }
 
 .gallery-item:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
-.gallery-item img {
+.gallery-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.gallery-item:hover img {
+.gallery-item:hover .gallery-img {
   transform: scale(1.1);
-}
-
-.video-thumbnail {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: #000;
-}
-
-.play-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50px;
-  height: 50px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  z-index: 2;
-}
-
-.play-button::before {
-  content: '▶';
-  color: var(--primary-color);
-  font-size: 20px;
-}
-
-.gallery-item:hover .play-button {
-  transform: translate(-50%, -50%) scale(1.1);
-  background: var(--primary-color);
-}
-
-.gallery-item:hover .play-button::before {
-  color: white;
 }
 
 .gallery-item-overlay {
@@ -117,24 +80,71 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0.8rem;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  padding: 2rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent);
   color: white;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item:hover .gallery-item-overlay {
   opacity: 1;
-  transition: all 0.3s ease;
+  transform: translateY(0);
 }
 
 .gallery-item-overlay h3 {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 500;
-  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .gallery-item-overlay p {
   margin: 0;
   font-size: 0.9rem;
   opacity: 0.9;
+}
+
+.video-thumbnail {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.play-button::before {
+  content: '▶';
+  margin-left: 4px;
+}
+
+.gallery-item:hover .play-button {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: white;
+  opacity: 1;
+}
+
+.gallery-item:hover .play-button::before {
+  color: white;
 }
 
 .media-modal-overlay {
@@ -148,28 +158,40 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  padding: 20px;
 }
 
 .modal-content {
   position: relative;
-  width: 90%;
-  max-width: 935px;
-  height: 600px;
+  width: 95%;
+  max-width: 1200px;
+  height: 90vh;
   display: flex;
   background: var(--background-color);
-  border-radius: 3px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-media-container {
+  width: 70%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
 .modal-media {
-  width: 65%;
+  width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   background: #000;
 }
 
 .modal-info {
-  width: 35%;
+  width: 30%;
   height: 100%;
   background: var(--background-color);
   border-left: 1px solid rgba(255, 255, 255, 0.1);
@@ -178,30 +200,42 @@
 }
 
 .modal-header {
-  padding: 14px;
+  padding: 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .modal-header h3 {
   margin: 0;
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: 600;
   color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.modal-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .modal-date {
-  display: block;
-  font-size: 12px;
+  font-size: 0.9rem;
   color: var(--text-color-secondary);
-  margin-top: 4px;
 }
 
 .modal-description {
-  padding: 14px;
-  font-size: 14px;
-  line-height: 1.4;
-  color: var(--text-color);
+  padding: 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.modal-description p {
   margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-color);
 }
 
 .nav-button {
@@ -252,6 +286,28 @@
   z-index: 3;
 }
 
+@media (max-width: 1200px) {
+  .modal-content {
+    width: 95%;
+    height: 85vh;
+  }
+}
+
+@media (max-width: 992px) {
+  .modal-content {
+    width: 90%;
+    height: 80vh;
+  }
+
+  .modal-media-container {
+    width: 65%;
+  }
+
+  .modal-info {
+    width: 35%;
+  }
+}
+
 @media (max-width: 768px) {
   .modal-content {
     width: 100%;
@@ -260,7 +316,7 @@
     border-radius: 0;
   }
 
-  .modal-media {
+  .modal-media-container {
     width: 100%;
     height: 60vh;
   }
@@ -268,6 +324,29 @@
   .modal-info {
     width: 100%;
     height: auto;
+    max-height: 40vh;
+  }
+
+  .modal-header {
+    padding: 1rem;
+  }
+
+  .modal-header h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .modal-description {
+    padding: 1rem;
+  }
+
+  .modal-description p {
+    font-size: 0.95rem;
+  }
+
+  .category-tag {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.75rem;
   }
 
   .nav-button {
@@ -292,36 +371,61 @@
   }
 
   .gallery-item-overlay {
-    padding: 0.6rem;
+    padding: 0.8rem;
   }
 
   .gallery-item-overlay h3 {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 
   .play-button {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
   }
 
   .play-button::before {
-    font-size: 16px;
+    font-size: 20px;
   }
 }
 
 @media (max-width: 480px) {
+  .media-modal-overlay {
+    padding: 0;
+  }
+
   .modal-content {
     width: 100%;
     height: 100vh;
-    border-radius: 0;
   }
 
-  .modal-media {
-    max-height: 50vh;
+  .modal-media-container {
+    height: 50vh;
   }
 
   .modal-info {
     max-height: 50vh;
+  }
+
+  .modal-header {
+    padding: 0.8rem;
+  }
+
+  .modal-header h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .modal-description {
+    padding: 0.8rem;
+  }
+
+  .modal-description p {
+    font-size: 0.9rem;
+  }
+
+  .category-tag {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.7rem;
   }
 
   .nav-button {
@@ -346,20 +450,20 @@
   }
 
   .gallery-item-overlay {
-    padding: 0.5rem;
+    padding: 0.6rem;
   }
 
   .gallery-item-overlay h3 {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
 
   .play-button {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
   }
 
   .play-button::before {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 
@@ -683,5 +787,261 @@
   .dot {
     width: 6px;
     height: 6px;
+  }
+}
+
+/* Instagram-style Modal */
+.instagram-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.instagram-modal {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: 90vh;
+  background-color: var(--background-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.instagram-modal-content {
+  display: flex;
+  height: 100%;
+}
+
+.instagram-modal-media {
+  flex: 2;
+  background-color: black;
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-media-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-media-container.zoomed {
+  background-size: 200% auto;
+  background-repeat: no-repeat;
+}
+
+.modal-media {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
+}
+
+.instagram-modal-sidebar {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  background-color: var(--background-color);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.instagram-modal-header {
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.instagram-modal-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-info h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.instagram-modal-description {
+  padding: 16px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.description-text {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+.post-date {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-color-secondary);
+  margin-top: 16px;
+}
+
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.nav-button:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.nav-button.prev {
+  left: 20px;
+}
+
+.nav-button.next {
+  right: 20px;
+}
+
+.instagram-close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.instagram-close-button:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+.load-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .instagram-modal-content {
+    flex-direction: column;
+  }
+
+  .instagram-modal-sidebar {
+    max-width: none;
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-container {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    padding: 0 1rem;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+  }
+
+  .instagram-modal {
+    height: 100vh;
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .instagram-modal-media {
+    height: 60vh;
+  }
+
+  .instagram-modal-sidebar {
+    height: 40vh;
+  }
+
+  .nav-button {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .instagram-close-button {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-container {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .instagram-modal-media {
+    height: 50vh;
+  }
+
+  .instagram-modal-sidebar {
+    height: 50vh;
   }
 } 

@@ -9,41 +9,51 @@ const Gallery = () => {
     {
       id: 1,
       src: '/images/gallery/gallery1.jpg',
-      title: 'Morning Training Session',
-      description: 'Students practicing their techniques during our morning class.',
-      date: '15.03.2024'
+      title: 'Sabah Antrenmanı',
+      description: 'Sporcularımız sabah antrenmanında teknik ve kondisyon çalışmaları yapıyor. Her gün düzenli olarak yapılan bu antrenmanlar, sporcularımızın fiziksel ve mental gelişimini destekliyor.',
+      date: '15.03.2024',
+      type: 'image',
+      category: 'Antrenman'
     },
     {
       id: 2,
       src: '/images/gallery/gallery2.jpg',
-      title: 'Sparring Practice',
-      description: 'Advanced students engaging in controlled sparring matches.',
-      date: '12.03.2024'
+      title: 'Sparring Seansı',
+      description: 'İleri seviye sporcularımız kontrollü sparring maçları yaparak gerçek müsabaka deneyimi kazanıyor. Güvenli ve profesyonel bir ortamda gerçekleşen bu seanslar, teknik ve taktik gelişimi destekliyor.',
+      date: '12.03.2024',
+      type: 'image',
+      category: 'Sparring'
     },
     {
       id: 3,
       src: '/images/gallery/gallery3.jpg',
-      title: 'Technique Demonstration',
-      description: 'Our instructor demonstrating proper form and technique.',
-      date: '10.03.2024'
+      title: 'Teknik Gösterimi',
+      description: 'Muammer hocamız temel ve ileri seviye teknikleri göstererek sporcularımıza detaylı eğitim veriyor. Doğru form ve teknik, başarılı bir kickboks kariyeri için temel oluşturuyor.',
+      date: '10.03.2024',
+      type: 'video',
+      category: 'Eğitim'
     },
     {
       id: 4,
       src: '/images/gallery/gallery4.jpg',
-      title: 'Group Training',
-      description: 'Students working together to improve their skills.',
-      date: '08.03.2024'
+      title: 'Grup Çalışması',
+      description: 'Sporcularımız grup halinde çalışarak hem motivasyonlarını yükseltiyor hem de birbirlerinden öğreniyorlar. Takım ruhu ve dayanışma, salonumuzun temel değerlerinden.',
+      date: '08.03.2024',
+      type: 'image',
+      category: 'Antrenman'
     }
   ];
 
   const handleMediaClick = (item, index) => {
     setSelectedMedia(item);
     setCurrentIndex(index);
+    document.body.style.overflow = 'hidden';
   };
 
   const handleCloseModal = () => {
     setSelectedMedia(null);
     setCurrentIndex(0);
+    document.body.style.overflow = 'auto';
   };
 
   const handlePrevious = (e) => {
@@ -70,32 +80,66 @@ const Gallery = () => {
             className="gallery-item"
             onClick={() => handleMediaClick(item, index)}
           >
-            <img src={item.src} alt={item.title} className="gallery-img" />
+            {item.type === 'video' ? (
+              <div className="video-thumbnail">
+                <img src={item.src} alt={item.title} className="gallery-img" />
+                <div className="play-button"></div>
+              </div>
+            ) : (
+              <img src={item.src} alt={item.title} className="gallery-img" />
+            )}
             <div className="gallery-item-overlay">
               <h3>{item.title}</h3>
+              <span className="category-tag">{item.category}</span>
             </div>
           </div>
         ))}
       </div>
 
       {selectedMedia && (
-        <div className="media-modal-overlay" onClick={handleCloseModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={selectedMedia.src}
-              alt={selectedMedia.title}
-              className="modal-media"
-            />
-            <div className="modal-info">
-              <div className="modal-header">
-                <h3>{selectedMedia.title}</h3>
-                <span className="modal-date">{selectedMedia.date}</span>
+        <div className="instagram-modal-overlay" onClick={handleCloseModal}>
+          <div className="instagram-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="instagram-modal-content">
+              <div className="instagram-modal-media">
+                {selectedMedia.type === 'video' ? (
+                  <video
+                    src={selectedMedia.src}
+                    controls
+                    className="modal-media"
+                    playsInline
+                  />
+                ) : (
+                  <img
+                    src={selectedMedia.src}
+                    alt={selectedMedia.title}
+                    className="modal-media"
+                  />
+                )}
               </div>
-              <p className="modal-description">{selectedMedia.description}</p>
+              <div className="instagram-modal-sidebar">
+                <div className="instagram-modal-header">
+                  <div className="instagram-modal-user">
+                    <div className="user-avatar">
+                      <img src="/images/logo.png" alt="Muammer Hoca" />
+                    </div>
+                    <div className="user-info">
+                      <h4>Muammer Hoca</h4>
+                      <span className="category-tag">{selectedMedia.category}</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="instagram-modal-description">
+                  <p className="title-text">
+                    <strong>{selectedMedia.title}</strong>
+                  </p>
+                  <p className="description-text">{selectedMedia.description}</p>
+                  <span className="post-date">{selectedMedia.date}</span>
+                </div>
+              </div>
             </div>
             <button className="nav-button prev" onClick={handlePrevious}>❮</button>
             <button className="nav-button next" onClick={handleNext}>❯</button>
-            <button className="close-button" onClick={handleCloseModal}>×</button>
+            <button className="instagram-close-button" onClick={handleCloseModal}>×</button>
           </div>
         </div>
       )}

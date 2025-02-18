@@ -1,30 +1,36 @@
 .gallery-page {
   min-height: 100vh;
-  background-color: #fafafa;
+  background-color: var(--background-primary);
+  color: var(--text-primary);
 }
 
 .gallery-content {
-  max-width: 935px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
 .gallery-categories {
+  position: sticky;
+  top: 64px;
+  z-index: 90;
   display: flex;
   gap: 12px;
-  padding: 12px 0;
-  margin-bottom: 24px;
+  padding: 12px 20px;
+  margin: 0 -20px 24px;
   overflow-x: auto;
+  background-color: var(--background-primary);
+  border-bottom: 1px solid var(--border-color);
   -webkit-overflow-scrolling: touch;
 }
 
 .category-button {
   background: none;
-  border: 1px solid #dbdbdb;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 6px 16px;
+  padding: 8px 20px;
   font-size: 14px;
-  color: #262626;
+  color: var(--text-primary);
   cursor: pointer;
   white-space: nowrap;
   transition: all 0.2s ease;
@@ -32,15 +38,16 @@
 
 .category-button:hover,
 .category-button.active {
-  background-color: #262626;
+  background-color: var(--accent-color);
   color: white;
-  border-color: #262626;
+  border-color: var(--accent-color);
 }
 
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 4px;
+  gap: 28px;
+  margin-bottom: 40px;
 }
 
 .gallery-item {
@@ -48,6 +55,8 @@
   aspect-ratio: 1;
   overflow: hidden;
   cursor: pointer;
+  border-radius: 4px;
+  background-color: var(--background-secondary);
 }
 
 .gallery-item img {
@@ -64,7 +73,7 @@
 .gallery-item-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -83,11 +92,12 @@
 .gallery-modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(0, 0, 0, 0.95);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  backdrop-filter: blur(8px);
 }
 
 .gallery-modal {
@@ -95,10 +105,11 @@
   width: 95%;
   max-width: 1350px;
   height: 90vh;
-  background: white;
-  border-radius: 4px;
+  background: var(--background-primary);
+  border-radius: 12px;
   overflow: hidden;
   display: flex;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
 .gallery-modal-content {
@@ -125,8 +136,8 @@
   max-width: 350px;
   display: flex;
   flex-direction: column;
-  border-left: 1px solid #dbdbdb;
-  background: white;
+  border-left: 1px solid var(--border-color);
+  background: var(--background-primary);
 }
 
 .gallery-modal-media {
@@ -142,7 +153,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black;
+  background-color: var(--background-secondary);
 }
 
 .modal-media-container.zoomed {
@@ -157,7 +168,7 @@
 
 .modal-header {
   padding: 14px 16px;
-  border-bottom: 1px solid #dbdbdb;
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -167,7 +178,7 @@
   margin: 0;
   font-size: 14px;
   font-weight: 600;
-  color: #262626;
+  color: var(--text-primary);
 }
 
 .modal-description {
@@ -176,21 +187,21 @@
   font-size: 14px;
   line-height: 1.5;
   overflow-y: auto;
+  color: var(--text-secondary);
 }
 
 .modal-description p {
   margin: 0;
-  color: #262626;
 }
 
 .modal-footer {
   padding: 16px;
-  border-top: 1px solid #dbdbdb;
+  border-top: 1px solid var(--border-color);
   margin-top: auto;
 }
 
 .gallery-date {
-  color: #8e8e8e;
+  color: var(--text-secondary);
   font-size: 12px;
   text-transform: uppercase;
 }
@@ -199,7 +210,7 @@
   position: fixed;
   top: 16px;
   right: 16px;
-  background: none;
+  background: rgba(0, 0, 0, 0.4);
   border: none;
   color: white;
   font-size: 32px;
@@ -210,6 +221,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.close-button:hover {
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .nav-button {
@@ -218,8 +235,8 @@
   transform: translateY(-50%);
   background: rgba(255, 255, 255, 0.9);
   border: none;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -227,7 +244,14 @@
   cursor: pointer;
   z-index: 1;
   color: #262626;
-  font-size: 16px;
+  font-size: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.nav-button:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.05);
 }
 
 .nav-button.prev {
@@ -258,7 +282,13 @@
 }
 
 .dot.active {
-  background: white;
+  background: var(--accent-color);
+}
+
+@media (max-width: 1200px) {
+  .gallery-grid {
+    gap: 20px;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -267,25 +297,26 @@
     height: 100vh;
     border-radius: 0;
   }
-  
-  .gallery-modal-content {
-    flex-direction: row;
-  }
-  
-  .modal-media-section {
-    flex: 1.5;
-  }
-  
-  .modal-info-section {
-    width: 350px;
-    min-width: 350px;
-  }
 }
 
 @media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .gallery-categories {
+    top: 56px;
+    padding: 8px 16px;
+  }
+
+  .category-button {
+    padding: 6px 16px;
+    font-size: 13px;
+  }
+
   .gallery-modal {
     flex-direction: column;
-    height: 100vh;
   }
   
   .gallery-modal-content {
@@ -304,32 +335,35 @@
     max-width: 100%;
     height: 40vh;
     border-left: none;
-    border-top: 1px solid #dbdbdb;
-  }
-  
-  .modal-description {
-    max-height: calc(40vh - 120px);
-  }
-  
-  .gallery-modal-media {
-    max-height: 60vh;
+    border-top: 1px solid var(--border-color);
   }
 }
 
 @media (max-width: 480px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .gallery-content {
+    padding: 16px;
+  }
+
+  .gallery-categories {
+    margin: 0 -16px 20px;
+    padding: 8px 12px;
+  }
+
+  .category-button {
+    padding: 4px 12px;
+    font-size: 12px;
+  }
+
   .modal-media-section {
     height: 50vh;
   }
   
   .modal-info-section {
     height: 50vh;
-  }
-  
-  .modal-description {
-    max-height: calc(50vh - 120px);
-  }
-  
-  .gallery-modal-media {
-    max-height: 50vh;
   }
 } 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PageHeader } from '../components/PageHeader';
 import './GalleryPage.css';
 
@@ -43,8 +43,14 @@ const GalleryPage: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+  const [categories, setCategories] = useState<string[]>([]);
 
-  const categories = Array.from(new Set(galleryItems.map(item => item.category)));
+  useEffect(() => {
+    // Get unique categories and sort them
+    const uniqueCategories = Array.from(new Set(galleryItems.map(item => item.category)))
+      .sort((a, b) => a.localeCompare(b));
+    setCategories(uniqueCategories);
+  }, []);
 
   const filteredItems = selectedCategory
     ? galleryItems.filter(item => item.category === selectedCategory)
@@ -75,9 +81,12 @@ const GalleryPage: React.FC = () => {
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category === selectedCategory ? null : category);
+    setSelectedItem(null);
+    setIsZoomed(false);
   };
 
-  const handleItemClick = (item: GalleryItem, index: number) => {
+  const handleItemClick = (item: GalleryItem) => {
+    const index = filteredItems.findIndex(i => i.id === item.id);
     setSelectedItem(item);
     setCurrentIndex(index);
     setIsZoomed(false);
@@ -97,6 +106,12 @@ const GalleryPage: React.FC = () => {
     setIsZoomed(false);
   };
 
+  const formatCategoryName = (category: string) => {
+    return category.split('-').map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
+  };
+
   return (
     <div className="gallery-page">
       <PageHeader title="Galeri" />
@@ -104,7 +119,7 @@ const GalleryPage: React.FC = () => {
         <div className="gallery-categories">
           <button
             className={`category-button ${selectedCategory === null ? 'active' : ''}`}
-            onClick={() => setSelectedCategory(null)}
+            onClick={() => handleCategoryClick('')}
           >
             Tümü
           </button>
@@ -114,25 +129,25 @@ const GalleryPage: React.FC = () => {
               className={`category-button ${selectedCategory === category ? 'active' : ''}`}
               onClick={() => handleCategoryClick(category)}
             >
-              {category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+              {formatCategoryName(category)}
             </button>
           ))}
         </div>
 
         <div className="gallery-grid">
-          {filteredItems.map((item, index) => (
+          {filteredItems.map((item) => (
             <div
               key={item.id}
               className="gallery-item"
-              onClick={() => handleItemClick(item, index)}
+              onClick={() => handleItemClick(item)}
             >
               {item.type === 'video' ? (
                 <div className="video-thumbnail">
-                  <img src={item.thumbnail || item.url} alt={item.title} />
+                  <img src={item.thumbnail || item.url} alt={item.title} loading="lazy" />
                   <div className="play-button"></div>
                 </div>
               ) : (
-                <img src={item.url} alt={item.title} />
+                <img src={item.url} alt={item.title} loading="lazy" />
               )}
               <div className="gallery-item-overlay">
                 <h3>{item.title}</h3>
@@ -174,26 +189,30 @@ const GalleryPage: React.FC = () => {
                       />
                     </div>
                   )}
-                  <button className="nav-button prev" onClick={handlePrevious}>
-                    &#10094;
-                  </button>
-                  <button className="nav-button next" onClick={handleNext}>
-                    &#10095;
-                  </button>
-                  <div className="pagination-dots">
-                    {filteredItems.map((_, index) => (
-                      <span
-                        key={index}
-                        className={`dot ${index === currentIndex ? 'active' : ''}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setCurrentIndex(index);
-                          setSelectedItem(filteredItems[index]);
-                          setIsZoomed(false);
-                        }}
-                      />
-                    ))}
-                  </div>
+                  {filteredItems.length > 1 && (
+                    <>
+                      <button className="nav-button prev" onClick={handlePrevious}>
+                        &#10094;
+                      </button>
+                      <button className="nav-button next" onClick={handleNext}>
+                        &#10095;
+                      </button>
+                      <div className="pagination-dots">
+                        {filteredItems.map((_, index) => (
+                          <span
+                            key={index}
+                            className={`dot ${index === currentIndex ? 'active' : ''}`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setCurrentIndex(index);
+                              setSelectedItem(filteredItems[index]);
+                              setIsZoomed(false);
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
                 </div>
                 <div className="modal-info-section">
                   <div className="gallery-modal-info">

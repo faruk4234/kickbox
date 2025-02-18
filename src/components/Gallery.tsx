@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Gallery.css';
 
 interface GalleryItem {
@@ -13,6 +14,7 @@ interface GalleryItem {
 }
 
 export const Gallery = () => {
+  const navigate = useNavigate();
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -269,10 +271,12 @@ export const Gallery = () => {
     }
   ];
 
+  const previewItems = galleryItems.slice(0, 6);
+
   const handleImageZoom = (e: React.MouseEvent<HTMLImageElement>) => {
-    if (!modalImageRef.current) return;
+    if (!selectedItem) return;
     
-    const image = modalImageRef.current;
+    const image = e.currentTarget;
     const rect = image.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
@@ -282,9 +286,9 @@ export const Gallery = () => {
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
-    if (!isZoomed || !modalImageRef.current) return;
+    if (!isZoomed || !selectedItem) return;
     
-    const image = modalImageRef.current;
+    const image = e.currentTarget;
     const rect = image.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
@@ -307,22 +311,16 @@ export const Gallery = () => {
   };
 
   const handleNext = () => {
-    const categoryItems = selectedCategory
-      ? getCategoryItems(selectedCategory)
-      : galleryItems;
-    const nextIndex = (currentIndex + 1) % categoryItems.length;
+    const nextIndex = (currentIndex + 1) % previewItems.length;
     setCurrentIndex(nextIndex);
-    setSelectedItem(categoryItems[nextIndex]);
+    setSelectedItem(previewItems[nextIndex]);
     setIsZoomed(false);
   };
 
   const handlePrevious = () => {
-    const categoryItems = selectedCategory
-      ? getCategoryItems(selectedCategory)
-      : galleryItems;
-    const prevIndex = (currentIndex - 1 + categoryItems.length) % categoryItems.length;
+    const prevIndex = (currentIndex - 1 + previewItems.length) % previewItems.length;
     setCurrentIndex(prevIndex);
-    setSelectedItem(categoryItems[prevIndex]);
+    setSelectedItem(previewItems[prevIndex]);
     setIsZoomed(false);
   };
 
@@ -331,11 +329,15 @@ export const Gallery = () => {
     setIsZoomed(false);
   };
 
+  const handleViewAll = () => {
+    navigate('/gallery');
+  };
+
   return (
     <section className="gallery" id="gallery">
       <h2 className="section-title">Galeri</h2>
       <div className="gallery-container">
-        {galleryItems.slice(0, visibleItems).map((item, index) => (
+        {previewItems.map((item, index) => (
           <div
             key={item.id}
             className="gallery-item"
@@ -343,15 +345,11 @@ export const Gallery = () => {
           >
             {item.type === 'video' ? (
               <div className="video-thumbnail">
-                <img
-                  src={item.thumbnail || item.url}
-                  alt={item.title}
-                  className="gallery-img"
-                />
+                <img src={item.thumbnail || item.url} alt={item.title} />
                 <div className="play-button"></div>
               </div>
             ) : (
-              <img src={item.url} alt={item.title} className="gallery-img" />
+              <img src={item.url} alt={item.title} />
             )}
             <div className="gallery-item-overlay">
               <h3>{item.title}</h3>
@@ -361,24 +359,24 @@ export const Gallery = () => {
         ))}
       </div>
 
-      {visibleItems < galleryItems.length && (
-        <div className="load-more">
-          <button className="btn-primary" onClick={handleLoadMore}>
-            Daha Fazla Göster
-          </button>
-        </div>
-      )}
+      <div className="gallery-actions">
+        <button className="btn-primary" onClick={handleViewAll}>
+          Tüm Galeriyi Gör
+        </button>
+      </div>
 
       {selectedItem && (
-        <div className="instagram-modal-overlay" onClick={handleClose}>
-          <div className="instagram-modal" onClick={e => e.stopPropagation()}>
-            <div className="instagram-modal-content">
-              <div className="instagram-modal-media">
+        <div className="gallery-modal-overlay" onClick={handleClose}>
+          <div className="gallery-modal" onClick={e => e.stopPropagation()}>
+            <button className="close-button" onClick={handleClose}>&times;</button>
+            <div className="gallery-modal-content">
+              <div className="modal-media-section">
                 {selectedItem.type === 'video' ? (
                   <video
-                    controls
-                    className="modal-media"
                     src={selectedItem.url}
+                    controls
+                    playsInline
+                    className="gallery-modal-media"
                   />
                 ) : (
                   <div 
@@ -393,37 +391,48 @@ export const Gallery = () => {
                       ref={modalImageRef}
                       src={selectedItem.url}
                       alt={selectedItem.title}
-                      className="modal-media"
+                      className="gallery-modal-media"
                       onClick={handleImageZoom}
                       onMouseMove={handleMouseMove}
                       style={{ opacity: isZoomed ? 0 : 1 }}
                     />
                   </div>
                 )}
-              </div>
-              <div className="instagram-modal-sidebar">
-                <div className="instagram-modal-header">
-                  <div className="instagram-modal-user">
-                    <div className="user-info">
-                      <h4>{selectedItem.title}</h4>
-                    </div>
-                  </div>
+                <button className="nav-button prev" onClick={handlePrevious}>
+                  &#10094;
+                </button>
+                <button className="nav-button next" onClick={handleNext}>
+                  &#10095;
+                </button>
+                <div className="pagination-dots">
+                  {previewItems.map((_, index) => (
+                    <span
+                      key={index}
+                      className={`dot ${index === currentIndex ? 'active' : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCurrentIndex(index);
+                        setSelectedItem(previewItems[index]);
+                        setIsZoomed(false);
+                      }}
+                    />
+                  ))}
                 </div>
-                <div className="instagram-modal-description">
-                  <p className="description-text">{selectedItem.description}</p>
-                  <span className="post-date">{selectedItem.date}</span>
+              </div>
+              <div className="modal-info-section">
+                <div className="gallery-modal-info">
+                  <div className="modal-header">
+                    <h3>{selectedItem.title}</h3>
+                  </div>
+                  <div className="modal-description">
+                    <p>{selectedItem.description}</p>
+                  </div>
+                  <div className="modal-footer">
+                    <span className="gallery-date">{selectedItem.date}</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <button className="nav-button prev" onClick={handlePrevious}>
-              &#10094;
-            </button>
-            <button className="nav-button next" onClick={handleNext}>
-              &#10095;
-            </button>
-            <button className="instagram-close-button" onClick={handleClose}>
-              &#10005;
-            </button>
           </div>
         </div>
       )}

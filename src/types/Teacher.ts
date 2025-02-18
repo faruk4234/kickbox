@@ -2,6 +2,8 @@ export interface MediaItem {
   type: 'image' | 'video';
   url: string;
   thumbnail?: string;
+  title?: string;
+  description?: string;
 }
 
 export interface Teacher {
@@ -14,4 +16,5 @@ export interface Teacher {
   achievements?: string[];
   experience?: string;
   education?: string;
+  gallery?: MediaItem[];
 } 

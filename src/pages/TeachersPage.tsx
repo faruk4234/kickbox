@@ -1,20 +1,44 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Teacher, MediaItem } from '../types/Teacher';
+import { Teacher } from '../types/Teacher';
 import { teachersData } from '../data/teachersData';
 import './TeachersPage.css';
 
-const MediaCarousel: React.FC<{ media: MediaItem[]; onClose?: () => void }> = ({ media, onClose }) => {
+const MediaCarousel: React.FC<{ media: any[]; onClose?: () => void }> = ({ media, onClose }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
 
   const handlePrevious = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentIndex((prev) => (prev === 0 ? media.length - 1 : prev - 1));
+    setIsZoomed(false);
   };
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentIndex((prev) => (prev === media.length - 1 ? 0 : prev + 1));
+    setIsZoomed(false);
+  };
+
+  const handleImageZoom = (e: React.MouseEvent<HTMLImageElement>) => {
+    const image = e.currentTarget;
+    const rect = image.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    setZoomPosition({ x, y });
+    setIsZoomed(!isZoomed);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
+    if (!isZoomed) return;
+    
+    const image = e.currentTarget;
+    const rect = image.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    setZoomPosition({ x, y });
   };
 
   return (
@@ -29,12 +53,24 @@ const MediaCarousel: React.FC<{ media: MediaItem[]; onClose?: () => void }> = ({
             onClick={(e) => e.stopPropagation()}
           />
         ) : (
-          <img
-            src={media[currentIndex].url}
-            alt=""
-            className="media-item"
-            loading="lazy"
-          />
+          <div 
+            className={`modal-media-container ${isZoomed ? 'zoomed' : ''}`}
+            style={isZoomed ? {
+              cursor: 'zoom-out',
+              backgroundImage: `url(${media[currentIndex].url})`,
+              backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`
+            } : { cursor: 'zoom-in' }}
+          >
+            <img
+              src={media[currentIndex].url}
+              alt=""
+              className="media-item"
+              loading="lazy"
+              onClick={handleImageZoom}
+              onMouseMove={handleMouseMove}
+              style={{ opacity: isZoomed ? 0 : 1 }}
+            />
+          </div>
         )}
         {media.length > 1 && (
           <>
@@ -63,42 +99,41 @@ const MediaCarousel: React.FC<{ media: MediaItem[]; onClose?: () => void }> = ({
   );
 };
 
-export const TeachersPage: React.FC = () => {
-  const navigate = useNavigate();
+const TeachersPage: React.FC = () => {
   const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
+  const [selectedGalleryItem, setSelectedGalleryItem] = useState<any | null>(null);
 
   const handleTeacherClick = (teacher: Teacher) => {
     setSelectedTeacher(teacher);
   };
 
-  const handleClose = () => {
-    setSelectedTeacher(null);
+  const handleGalleryItemClick = (item: any) => {
+    setSelectedGalleryItem(item);
   };
 
-  const handleBackClick = () => {
-    navigate('/');
+  const handleClose = () => {
+    setSelectedTeacher(null);
+    setSelectedGalleryItem(null);
   };
 
   return (
     <div className="teachers-page">
-      <div className="teachers-page-header">
-        <button className="back-button" onClick={handleBackClick}>
-          <span className="icon">←</span>
-          Ana Sayfaya Dön
-        </button>
-        <h1>Hocalarımız</h1>
-        <p>Profesyonel ve deneyimli eğitmen kadromuz ile hizmetinizdeyiz</p>
-      </div>
+      <h1 className="page-title">Hocalarımız</h1>
       
-      <div className="teachers-page-grid">
+      <div className="teachers-gallery-grid">
         {teachersData.map((teacher) => (
-          <div key={teacher.id} className="teacher-card" onClick={() => handleTeacherClick(teacher)}>
-            <div className="teacher-image">
+          <div key={teacher.id} className="teacher-gallery-card" onClick={() => handleTeacherClick(teacher)}>
+            <div className="teacher-gallery-image">
               <MediaCarousel media={teacher.media} />
             </div>
-            <div className="teacher-info">
+            <div className="teacher-gallery-info">
               <h3>{teacher.name}</h3>
               <p>{teacher.title}</p>
+              <div className="specialties">
+                {teacher.specialties.slice(0, 3).map((specialty, index) => (
+                  <span key={index} className="specialty-tag">{specialty}</span>
+                ))}
+              </div>
             </div>
           </div>
         ))}
@@ -127,7 +162,7 @@ export const TeachersPage: React.FC = () => {
               <div className="teacher-modal-main">
                 <div className="teacher-modal-section">
                   <div className="section-header">
-                    <span className="section-icon">👤</span>
+                    <span className="section-icon">🎯</span>
                     <h5>Hakkında</h5>
                   </div>
                   <div className="section-content">
@@ -138,7 +173,7 @@ export const TeachersPage: React.FC = () => {
                 {selectedTeacher.experience && (
                   <div className="teacher-modal-section">
                     <div className="section-header">
-                      <span className="section-icon">⭐</span>
+                      <span className="section-icon">💪</span>
                       <h5>Deneyim</h5>
                     </div>
                     <div className="section-content">
@@ -150,7 +185,7 @@ export const TeachersPage: React.FC = () => {
                 {selectedTeacher.education && (
                   <div className="teacher-modal-section">
                     <div className="section-header">
-                      <span className="section-icon">🎓</span>
+                      <span className="section-icon">📚</span>
                       <h5>Eğitim</h5>
                     </div>
                     <div className="section-content">
@@ -158,18 +193,50 @@ export const TeachersPage: React.FC = () => {
                     </div>
                   </div>
                 )}
-                
+
                 {selectedTeacher.achievements && (
                   <div className="teacher-modal-section">
                     <div className="section-header">
                       <span className="section-icon">🏆</span>
                       <h5>Başarılar</h5>
                     </div>
-                    <div className="section-content achievements-list">
-                      {selectedTeacher.achievements.map((achievement, index) => (
-                        <div key={index} className="achievement-item">
-                          <span className="achievement-bullet">•</span>
-                          <p>{achievement}</p>
+                    <div className="section-content">
+                      <div className="achievements-list">
+                        {selectedTeacher.achievements.map((achievement, index) => (
+                          <div key={index} className="achievement-item">
+                            <span className="achievement-bullet">•</span>
+                            <p>{achievement}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {selectedTeacher.gallery && (
+                  <div className="teacher-modal-section">
+                    <div className="section-header">
+                      <span className="section-icon">📸</span>
+                      <h5>Galeri</h5>
+                    </div>
+                    <div className="teacher-gallery-grid">
+                      {selectedTeacher.gallery.map((item, index) => (
+                        <div
+                          key={index}
+                          className="gallery-item"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleGalleryItemClick(item);
+                          }}
+                        >
+                          {item.type === 'video' ? (
+                            <div className="video-thumbnail">
+                              <img src={item.thumbnail || item.url} alt={item.title} />
+                              <div className="play-button"></div>
+                            </div>
+                          ) : (
+                            <img src={item.url} alt={item.title} />
+                          )}
                         </div>
                       ))}
                     </div>
@@ -180,6 +247,40 @@ export const TeachersPage: React.FC = () => {
           </div>
         </div>
       )}
+
+      {selectedGalleryItem && (
+        <div className="gallery-modal-overlay" onClick={handleClose}>
+          <div className="gallery-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="close-button" onClick={handleClose}>&times;</button>
+            <div className="gallery-modal-content">
+              {selectedGalleryItem.type === 'video' ? (
+                <video
+                  src={selectedGalleryItem.url}
+                  controls
+                  playsInline
+                  className="gallery-modal-media"
+                />
+              ) : (
+                <img
+                  src={selectedGalleryItem.url}
+                  alt={selectedGalleryItem.title}
+                  className="gallery-modal-media"
+                />
+              )}
+              {selectedGalleryItem.title && (
+                <div className="gallery-modal-info">
+                  <h3>{selectedGalleryItem.title}</h3>
+                  {selectedGalleryItem.description && (
+                    <p>{selectedGalleryItem.description}</p>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
-}; 
+};
+
+export default TeachersPage; 

@@ -64,7 +64,6 @@
   transform: scale(1.05);
 }
 
-
 .carousel-button {
   position: absolute;
   top: 50%;
@@ -291,25 +290,105 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-@media (max-width: 768px) {
+/* Tablet Responsive Styles */
+@media (max-width: 1024px) {
+  .hero {
+    padding: 1rem;
+  }
+
+  .hero-container {
+    padding: 1rem;
+    gap: 2rem;
+  }
+
+  .hero-media {
+    height: 500px;
+  }
+
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 3rem;
   }
 
   .hero-subtitle {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
+  }
+
+  .hero-description p {
+    font-size: 1.1rem;
+  }
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .hero {
+    padding: 0;
+    min-height: auto;
+  }
+
+  .hero-container {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 2rem;
+  }
+
+  .hero-media {
+    height: 300px;
+    width: 100%;
+    transform: none;
+    order: 1;
+  }
+
+  .hero-content {
+    order: 2;
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
   }
 
   .hero-section-title {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-section-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .hero-description {
+    margin-bottom: 1.5rem;
   }
 
   .hero-description p {
     font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .messaging-section {
+    padding: 0.75rem;
   }
 
   .messaging-buttons {
     grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .messaging-buttons .btn-whatsapp,
+  .messaging-buttons .btn-telegram,
+  .messaging-buttons .btn-youtube,
+  .messaging-buttons .btn-instagram {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    gap: 0.5rem;
   }
 
   .carousel-button {
@@ -317,23 +396,42 @@
     height: 40px;
     font-size: 20px;
   }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
 }
 
+/* Small Mobile Responsive Styles */
 @media (max-width: 480px) {
   .hero-container {
-    padding: 0 1rem;
+    padding: 0.5rem;
+  }
+
+  .hero-media {
+    height: 250px;
+    border-radius: 12px;
   }
 
   .hero-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
 
   .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
-  .hero-section-title {
-    font-size: 1.5rem;
+  .hero-description p {
+    font-size: 0.9rem;
+  }
+
+  .messaging-buttons .btn-whatsapp,
+  .messaging-buttons .btn-telegram,
+  .messaging-buttons .btn-youtube,
+  .messaging-buttons .btn-instagram {
+    padding: 0.6rem;
+    font-size: 0.85rem;
   }
 
   .carousel-button {

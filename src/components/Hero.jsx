@@ -69,6 +69,7 @@ export const Hero = () => {
                 src={heroMedia[currentIndex].url}
                 alt=""
                 className="media-item"
+                loading="lazy"
               />
             )}
             {heroMedia.length > 1 && (

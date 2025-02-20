@@ -4,6 +4,7 @@ import './Navbar.css';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -18,6 +19,7 @@ export const Navbar = () => {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
     e.preventDefault();
+    setIsMenuOpen(false);
     
     if (location.pathname !== '/') {
       // If we're not on the home page, first navigate to home
@@ -38,18 +40,33 @@ export const Navbar = () => {
     }
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLinkClick = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${isMenuOpen ? 'menu-open' : ''}`}>
       <div className="navbar-container">
         <div className="logo">
-          <Link to="/">KICKBOXING</Link>
+          <Link to="/" onClick={handleLinkClick}>KICKBOXING</Link>
         </div>
-        <div className="nav-links">
+        
+        <button className="hamburger" onClick={toggleMenu} aria-label="Menu">
+          <span className="hamburger-line"></span>
+          <span className="hamburger-line"></span>
+          <span className="hamburger-line"></span>
+        </button>
+
+        <div className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
           <a href="#about" onClick={(e) => handleNavClick(e, 'about')}>
             Hakkımızda
           </a>
-          <Link to="/gallery">Galeri</Link>
-          <Link to="/teachers">Hocalarımız</Link>
+          <Link to="/gallery" onClick={handleLinkClick}>Galeri</Link>
+          <Link to="/teachers" onClick={handleLinkClick}>Hocalarımız</Link>
           <a href="#programs" onClick={(e) => handleNavClick(e, 'programs')}>
             Programlar
           </a>

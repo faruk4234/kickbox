@@ -194,8 +194,8 @@ const TeachersPage: React.FC = () => {
                   <MediaCarousel media={selectedTeacher.media} />
                 </div>
                 <div className="teacher-modal-basic-info">
-                  <h3>{selectedTeacher.name}</h3>
-                  <h4>{selectedTeacher.title}</h4>
+                  <h2>{selectedTeacher.name}</h2>
+                  <h3>{selectedTeacher.title}</h3>
                   <div className="specialties">
                     {selectedTeacher.specialties.map((specialty, index) => (
                       <span key={index} className="specialty-tag">{specialty}</span>
@@ -205,21 +205,23 @@ const TeachersPage: React.FC = () => {
               </div>
               
               <div className="teacher-modal-main">
-                <div className="teacher-modal-section">
-                  <div className="section-header">
-                    <span className="section-icon">🎯</span>
-                    <h5>Hakkında</h5>
+                {selectedTeacher.description && (
+                  <div className="teacher-modal-section">
+                    <div className="section-header">
+                      <div className="section-icon">📝</div>
+                      <h4>Hakkında</h4>
+                    </div>
+                    <div className="section-content">
+                      <p>{selectedTeacher.description}</p>
+                    </div>
                   </div>
-                  <div className="section-content">
-                    <p>{selectedTeacher.description}</p>
-                  </div>
-                </div>
+                )}
 
                 {selectedTeacher.experience && (
                   <div className="teacher-modal-section">
                     <div className="section-header">
-                      <span className="section-icon">💪</span>
-                      <h5>Deneyim</h5>
+                      <div className="section-icon">💪</div>
+                      <h4>Deneyim</h4>
                     </div>
                     <div className="section-content">
                       <p>{selectedTeacher.experience}</p>
@@ -230,8 +232,8 @@ const TeachersPage: React.FC = () => {
                 {selectedTeacher.education && (
                   <div className="teacher-modal-section">
                     <div className="section-header">
-                      <span className="section-icon">📚</span>
-                      <h5>Eğitim</h5>
+                      <div className="section-icon">🎓</div>
+                      <h4>Eğitim</h4>
                     </div>
                     <div className="section-content">
                       <p>{selectedTeacher.education}</p>
@@ -239,17 +241,17 @@ const TeachersPage: React.FC = () => {
                   </div>
                 )}
 
-                {selectedTeacher.achievements && (
+                {selectedTeacher.achievements && selectedTeacher.achievements.length > 0 && (
                   <div className="teacher-modal-section">
                     <div className="section-header">
-                      <span className="section-icon">🏆</span>
-                      <h5>Başarılar</h5>
+                      <div className="section-icon">🏆</div>
+                      <h4>Başarılar</h4>
                     </div>
                     <div className="section-content">
-                      <div className="achievements-list">
+                      <div className="achievements-grid">
                         {selectedTeacher.achievements.map((achievement, index) => (
-                          <div key={index} className="achievement-item">
-                            <span className="achievement-bullet">•</span>
+                          <div key={index} className="achievement-card">
+                            <div className="achievement-icon">🎯</div>
                             <p>{achievement}</p>
                           </div>
                         ))}
@@ -258,13 +260,13 @@ const TeachersPage: React.FC = () => {
                   </div>
                 )}
 
-                {selectedTeacher.gallery && (
+                {selectedTeacher.gallery && selectedTeacher.gallery.length > 0 && (
                   <div className="teacher-modal-section">
                     <div className="section-header">
-                      <span className="section-icon">📸</span>
-                      <h5>Galeri</h5>
+                      <div className="section-icon">📸</div>
+                      <h4>Galeri</h4>
                     </div>
-                    <div className="teacher-gallery-grid">
+                    <div className="gallery-grid">
                       {selectedTeacher.gallery.map((item, index) => (
                         <div
                           key={index}
@@ -276,11 +278,11 @@ const TeachersPage: React.FC = () => {
                         >
                           {item.type === 'video' ? (
                             <div className="video-thumbnail">
-                              <img src={item.thumbnail || item.url} alt={item.title} />
-                              <div className="play-button"></div>
+                              <img src={item.thumbnail || item.url} alt="" loading="lazy" />
+                              <div className="play-icon">▶</div>
                             </div>
                           ) : (
-                            <img src={item.url} alt={item.title} />
+                            <img src={item.url} alt="" loading="lazy" />
                           )}
                         </div>
                       ))}

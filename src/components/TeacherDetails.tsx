@@ -1,5 +1,5 @@
 import React from 'react';
-import { Teacher, MediaItem } from '../types/Teacher';
+import { Teacher } from '../types/Teacher';
 import './TeacherDetails.css';
 
 const MediaCarousel: React.FC<{ media: MediaItem[]; onClose?: () => void }> = ({ media, onClose }) => {
@@ -63,63 +63,151 @@ const MediaCarousel: React.FC<{ media: MediaItem[]; onClose?: () => void }> = ({
 
 interface TeacherDetailsProps {
   teacher: Teacher;
+  variant?: 'page' | 'modal';
+  onClose?: () => void;
+  onGalleryItemClick?: (item: any) => void;
 }
 
-export const TeacherDetails: React.FC<TeacherDetailsProps> = ({ teacher }) => {
-  return (
-    <div className="teacher-details-container">
-      <div className="teacher-header">
-        <div className="teacher-image">
+export const TeacherDetails: React.FC<TeacherDetailsProps> = ({
+  teacher,
+  variant = 'page',
+  onClose,
+  onGalleryItemClick
+}) => {
+  // Effect to handle escape key for modal variant
+  React.useEffect(() => {
+    if (variant === 'modal' && onClose) {
+      const handleEscape = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          onClose();
+        }
+      };
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }
+  }, [variant, onClose]);
+
+  const content = (
+    <>
+      <div className="teacher-details-sidebar">
+        <div className="teacher-details-image">
           <MediaCarousel media={teacher.media} />
         </div>
-        <div className="teacher-basic-info">
+        <div className="teacher-details-basic-info">
           <h2>{teacher.name}</h2>
           <h3>{teacher.title}</h3>
-        </div>
-      </div>
-
-      <div className="teacher-content">
-        <div className="teacher-description">
-          <p>{teacher.description}</p>
-        </div>
-
-        <div className="teacher-specialties">
-          <h4>Uzmanlık Alanları</h4>
           <div className="specialties">
             {teacher.specialties.map((specialty, index) => (
               <span key={index} className="specialty-tag">{specialty}</span>
             ))}
           </div>
         </div>
-
-        {teacher.achievements && (
-          <div className="teacher-achievements">
-            <h4>Başarılar</h4>
-            <div className="achievements-list">
-              {teacher.achievements.map((achievement, index) => (
-                <div key={index} className="achievement-item">
-                  <span className="achievement-bullet">•</span>
-                  <p>{achievement}</p>
-                </div>
-              ))}
+      </div>
+      
+      <div className="teacher-details-main">
+        {teacher.description && (
+          <div className="teacher-details-section">
+            <div className="section-header">
+              <div className="section-icon">📝</div>
+              <h4>Hakkında</h4>
+            </div>
+            <div className="section-content">
+              <p>{teacher.description}</p>
             </div>
           </div>
         )}
 
         {teacher.experience && (
-          <div className="teacher-experience">
-            <h4>Deneyim</h4>
-            <p>{teacher.experience}</p>
+          <div className="teacher-details-section">
+            <div className="section-header">
+              <div className="section-icon">💪</div>
+              <h4>Deneyim</h4>
+            </div>
+            <div className="section-content">
+              <p>{teacher.experience}</p>
+            </div>
           </div>
         )}
 
         {teacher.education && (
-          <div className="teacher-education">
-            <h4>Eğitim</h4>
-            <p>{teacher.education}</p>
+          <div className="teacher-details-section">
+            <div className="section-header">
+              <div className="section-icon">🎓</div>
+              <h4>Eğitim</h4>
+            </div>
+            <div className="section-content">
+              <p>{teacher.education}</p>
+            </div>
+          </div>
+        )}
+
+        {teacher.achievements && teacher.achievements.length > 0 && (
+          <div className="teacher-details-section">
+            <div className="section-header">
+              <div className="section-icon">🏆</div>
+              <h4>Başarılar</h4>
+            </div>
+            <div className="section-content">
+              <div className="achievements-grid">
+                {teacher.achievements.map((achievement, index) => (
+                  <div key={index} className="achievement-card">
+                    <div className="achievement-icon">🎯</div>
+                    <p>{achievement}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {teacher.gallery && teacher.gallery.length > 0 && (
+          <div className="teacher-details-section">
+            <div className="section-header">
+              <div className="section-icon">📸</div>
+              <h4>Galeri</h4>
+            </div>
+            <div className="gallery-grid">
+              {teacher.gallery.map((item, index) => (
+                <div
+                  key={index}
+                  className="gallery-item"
+                  onClick={() => onGalleryItemClick?.(item)}
+                >
+                  {item.type === 'video' ? (
+                    <div className="video-thumbnail">
+                      <img src={item.thumbnail || item.url} alt="" loading="lazy" />
+                      <div className="play-icon">▶</div>
+                    </div>
+                  ) : (
+                    <img src={item.url} alt="" loading="lazy" />
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>
+    </>
+  );
+
+  if (variant === 'modal') {
+    return (
+      <div className="teacher-modal-overlay" onClick={onClose}>
+        <div className="teacher-modal" onClick={(e) => e.stopPropagation()}>
+          {onClose && (
+            <button className="close-button" onClick={onClose}>&times;</button>
+          )}
+          <div className="teacher-modal-container">
+            {content}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="teacher-details-container">
+      {content}
     </div>
   );
 }; 

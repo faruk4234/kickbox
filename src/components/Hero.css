@@ -213,6 +213,8 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
   width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
 }
 
 .messaging-buttons .btn-whatsapp,
@@ -344,6 +346,25 @@
     padding: 0 1rem;
   }
 
+  .hero-cta {
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .messaging-buttons {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+  }
+
+  .messaging-section {
+    padding: 0.75rem;
+    width: 100%;
+  }
+
   .hero-title {
     font-size: 2rem;
     margin-bottom: 0.5rem;
@@ -371,15 +392,6 @@
   .hero-description p {
     font-size: 1rem;
     margin-bottom: 0.8rem;
-  }
-
-  .messaging-section {
-    padding: 0.75rem;
-  }
-
-  .messaging-buttons {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
   }
 
   .messaging-buttons .btn-whatsapp,

@@ -103,27 +103,21 @@ export const Hero = () => {
             <p>Başlangıç seviyesinden profesyonel seviyeye kadar her düzeyde eğitim imkanı.</p>
           </div>
          
-         {/** <button className="btn-primary contact-btn" onClick={scrollToContact}>
-          <i className="fas fa-user-plus"></i> İletişime Geç
-        </button> */} <div className="messaging-buttons">
-         
-            <div className="messaging-section">
-              <div className="messaging-buttons">
-                <button className="btn-whatsapp" onClick={handleWhatsApp}>
-                  <i className="fab fa-whatsapp"></i> WhatsApp
-                </button>
-                <button className="btn-telegram" onClick={handleTelegram}>
-                  <i className="fab fa-telegram"></i> Telegram
-                </button>
-                <button className="btn-youtube" onClick={handleYoutube}>
-                  <i className="fab fa-youtube"></i> Youtube
-                </button>
-                <button className="btn-instagram" onClick={handleInstagram}>
-                  <i className="fab fa-instagram"></i> Instagram
-                </button>
-              </div>
+          <div className="messaging-section">
+            <div className="messaging-buttons">
+              <button className="btn-whatsapp" onClick={handleWhatsApp}>
+                <i className="fab fa-whatsapp"></i> WhatsApp
+              </button>
+              <button className="btn-telegram" onClick={handleTelegram}>
+                <i className="fab fa-telegram"></i> Telegram
+              </button>
+              <button className="btn-youtube" onClick={handleYoutube}>
+                <i className="fab fa-youtube"></i> Youtube
+              </button>
+              <button className="btn-instagram" onClick={handleInstagram}>
+                <i className="fab fa-instagram"></i> Instagram
+              </button>
             </div>
-            
           </div>
         </div>
       </div>

@@ -3,10 +3,11 @@
   top: 0;
   left: 0;
   right: 0;
+  background: var(--background-primary);
+  padding: 0;
+  border-bottom: 1px solid var(--border-color);
   z-index: 1000;
-  padding: 1rem 0;
-  transition: all 0.3s ease;
-  background: transparent;
+  height: 64px;
 }
 
 .navbar.scrolled {
@@ -17,8 +18,10 @@
 
 .navbar-container {
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 2rem;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,10 +38,11 @@
 .nav-links {
   display: flex;
   gap: 2rem;
+  margin-left: auto;
 }
 
 .nav-links a {
-  color: #FFFFFF;
+  color: var(--text-primary);
   text-decoration: none;
   font-size: 1.1rem;
   font-weight: 500;
@@ -46,29 +50,46 @@
 }
 
 .nav-links a:hover {
-  color: var(--primary-color);
+  color: var(--accent-color);
 }
 
 .nav-right {
   display: flex;
   align-items: center;
   gap: 2rem;
+  margin-left: 2rem;
 }
 
 .theme-switcher {
   color: #FFFFFF;
 }
 
+/* Add margin to main content to account for fixed navbar */
+main {
+  padding-top: 64px;
+  min-height: calc(100vh - 64px);
+}
+
 @media (max-width: 768px) {
+  .navbar {
+    height: 56px;
+  }
+
+  .navbar-container {
+    padding: 0 1rem;
+  }
+
   .nav-links {
     display: none;
   }
-  
-  .navbar-container {
-    justify-content: center;
-  }
 
   .nav-right {
+    margin-left: 1rem;
     gap: 1rem;
+  }
+
+  main {
+    padding-top: 56px;
+    min-height: calc(100vh - 56px);
   }
 } 

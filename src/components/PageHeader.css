@@ -1,45 +1,93 @@
 .page-header {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid rgba(var(--border-color-rgb), 0.2);
+  padding: 12px 20px;
   background: var(--background-primary);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  z-index: 98;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .page-header h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 20px;
   color: var(--text-primary);
   font-weight: 600;
-  margin-left: 1rem;
+  margin-left: 16px;
 }
 
-.back-button {
-  background: none;
-  border: none;
-  padding: 0.5rem;
-  cursor: pointer;
-  color: var(--text-primary);
+.back-button,
+.home-button {
   display: flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background-color 0.2s;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 }
 
-.back-button:hover {
-  background: rgba(var(--border-color-rgb), 0.1);
+.back-button:hover,
+.home-button:hover {
+  background: var(--background-secondary);
+}
+
+.back-button svg,
+.home-button svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
   .page-header {
-    padding: 0.75rem 1rem;
+    top: 56px;
+    padding: 8px 16px;
+  }
+
+  .header-nav {
+    padding: 0;
   }
 
   .page-header h1 {
-    font-size: 1.25rem;
+    font-size: 18px;
+    margin-left: 12px;
+  }
+
+  .back-button,
+  .home-button {
+    padding: 6px 8px;
+  }
+
+  .back-button span,
+  .home-button span {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header {
+    padding: 8px 12px;
+  }
+
+  .page-header h1 {
+    font-size: 16px;
+    margin-left: 8px;
   }
 } 

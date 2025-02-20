@@ -1,7 +1,8 @@
 .teachers-page {
   padding: 2rem;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 64px auto 0; /* Add top margin for navbar */
+  min-height: calc(100vh - 64px); /* Subtract navbar height */
 }
 
 .page-title {
@@ -338,6 +339,11 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .teachers-page {
+    margin-top: 56px; /* Adjust for mobile navbar */
+    min-height: calc(100vh - 56px); /* Subtract mobile navbar height */
+    padding: 1.5rem;
+  }
   .teacher-modal-container {
     grid-template-columns: 1fr;
   }

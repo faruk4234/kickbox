@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PageHeader } from '../components/PageHeader';
 import './GalleryPage.css';
-
+import { galleryItems } from '../components/Gallery';
 interface GalleryItem {
   id: number;
   type: 'image' | 'video';
@@ -13,29 +13,6 @@ interface GalleryItem {
   category: string;
 }
 
-const galleryItems: GalleryItem[] = [
-  // Grup Antrenmanı Category (5 items)
-  {
-    id: 1,
-    type: 'image',
-    url: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed',
-    title: 'Grup Antrenmanı',
-    description: 'Haftalık grup antrenmanlarımızda sporcularımız teknik ve kondisyon çalışmaları yapıyor.',
-    date: '15.03.2024',
-    category: 'grup-antrenmani'
-  },
-  {
-    id: 2,
-    type: 'video',
-    url: 'https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=164&oauth2_token_id=57447761',
-    thumbnail: 'https://images.unsplash.com/photo-1591117207239-788bf8de6c3b',
-    title: 'Grup Antrenmanı Videosu',
-    description: 'Muammer Hoca eşliğinde ileri seviye teknik antrenman seansı.',
-    date: '12.03.2024',
-    category: 'grup-antrenmani'
-  },
-  // ... add more items as needed
-];
 
 const GalleryPage: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
@@ -114,47 +91,56 @@ const GalleryPage: React.FC = () => {
 
   return (
     <div className="gallery-page">
-      <PageHeader title="Galeri" />
-      <div className="gallery-content">
-        <div className="gallery-categories">
-          <button
-            className={`category-button ${selectedCategory === null ? 'active' : ''}`}
-            onClick={() => handleCategoryClick('')}
-          >
-            Tümü
-          </button>
-          {categories.map((category) => (
+      <div className="page-header-wrapper">
+        <PageHeader title="Galeri" />
+      </div>
+      
+      <div className="categories-container">
+        <div className="categories-wrapper">
+          <div className="categories-scroll">
             <button
-              key={category}
-              className={`category-button ${selectedCategory === category ? 'active' : ''}`}
-              onClick={() => handleCategoryClick(category)}
+              className={`category-button ${selectedCategory === null ? 'active' : ''}`}
+              onClick={() => handleCategoryClick('')}
             >
-              {formatCategoryName(category)}
+              Tümü
             </button>
-          ))}
+            {categories.map((category) => (
+              <button
+                key={category}
+                className={`category-button ${selectedCategory === category ? 'active' : ''}`}
+                onClick={() => handleCategoryClick(category)}
+              >
+                {formatCategoryName(category)}
+              </button>
+            ))}
+          </div>
         </div>
+      </div>
 
-        <div className="gallery-grid">
-          {filteredItems.map((item) => (
-            <div
-              key={item.id}
-              className="gallery-item"
-              onClick={() => handleItemClick(item)}
-            >
-              {item.type === 'video' ? (
-                <div className="video-thumbnail">
-                  <img src={item.thumbnail || item.url} alt={item.title} loading="lazy" />
-                  <div className="play-button"></div>
+      <div className="gallery-content">
+        <div className="gallery-content-inner">
+          <div className="gallery-grid">
+            {filteredItems.map((item) => (
+              <div
+                key={item.id}
+                className="gallery-item"
+                onClick={() => handleItemClick(item)}
+              >
+                {item.type === 'video' ? (
+                  <div className="video-thumbnail">
+                    <img src={item.thumbnail || item.url} alt={item.title} loading="lazy" />
+                    <div className="play-button"></div>
+                  </div>
+                ) : (
+                  <img src={item.url} alt={item.title} loading="lazy" />
+                )}
+                <div className="gallery-item-overlay">
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
                 </div>
-              ) : (
-                <img src={item.url} alt={item.title} loading="lazy" />
-              )}
-              <div className="gallery-item-overlay">
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {selectedItem && (

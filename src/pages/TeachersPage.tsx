@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Teacher } from '../types/Teacher';
 import { teachersData } from '../data/teachersData';
+import { PageHeader } from '../components/PageHeader';
 import './TeachersPage.css';
 
 const MediaCarousel: React.FC<{ media: any[]; onClose?: () => void }> = ({ media, onClose }) => {
@@ -102,6 +103,20 @@ const MediaCarousel: React.FC<{ media: any[]; onClose?: () => void }> = ({ media
 const TeachersPage: React.FC = () => {
   const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
   const [selectedGalleryItem, setSelectedGalleryItem] = useState<any | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [categories, setCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Get unique categories from teacher specialties
+    const uniqueCategories = Array.from(
+      new Set(teachersData.flatMap(teacher => teacher.specialties))
+    ).sort((a, b) => a.localeCompare(b));
+    setCategories(uniqueCategories);
+  }, []);
+
+  const filteredTeachers = selectedCategory
+    ? teachersData.filter(teacher => teacher.specialties.includes(selectedCategory))
+    : teachersData;
 
   const handleTeacherClick = (teacher: Teacher) => {
     setSelectedTeacher(teacher);
@@ -116,27 +131,57 @@ const TeachersPage: React.FC = () => {
     setSelectedGalleryItem(null);
   };
 
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category === selectedCategory ? null : category);
+  };
+
   return (
     <div className="teachers-page">
-      <h1 className="page-title">Hocalarımız</h1>
+      <div className="page-header-wrapper">
+        <PageHeader title="Hocalarımız" />
+      </div>
       
-      <div className="teachers-gallery-grid">
-        {teachersData.map((teacher) => (
-          <div key={teacher.id} className="teacher-gallery-card" onClick={() => handleTeacherClick(teacher)}>
-            <div className="teacher-gallery-image">
-              <MediaCarousel media={teacher.media} />
-            </div>
-            <div className="teacher-gallery-info">
-              <h3>{teacher.name}</h3>
-              <p>{teacher.title}</p>
-              <div className="specialties">
-                {teacher.specialties.slice(0, 3).map((specialty, index) => (
-                  <span key={index} className="specialty-tag">{specialty}</span>
-                ))}
+      <div className="categories-container">
+        <div className="categories-wrapper">
+          <div className="categories-scroll">
+            <button
+              className={`category-button ${selectedCategory === null ? 'active' : ''}`}
+              onClick={() => handleCategoryClick('')}
+            >
+              Tümü
+            </button>
+            {categories.map((category) => (
+              <button
+                key={category}
+                className={`category-button ${selectedCategory === category ? 'active' : ''}`}
+                onClick={() => handleCategoryClick(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="teachers-content">
+        <div className="teachers-grid">
+          {filteredTeachers.map((teacher) => (
+            <div key={teacher.id} className="teacher-gallery-card" onClick={() => handleTeacherClick(teacher)}>
+              <div className="teacher-gallery-image">
+                <MediaCarousel media={teacher.media} />
+              </div>
+              <div className="teacher-gallery-info">
+                <h3>{teacher.name}</h3>
+                <p>{teacher.title}</p>
+                <div className="specialties">
+                  {teacher.specialties.slice(0, 3).map((specialty, index) => (
+                    <span key={index} className="specialty-tag">{specialty}</span>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {selectedTeacher && (

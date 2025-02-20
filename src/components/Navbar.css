@@ -35,9 +35,17 @@
   letter-spacing: 2px;
 }
 
-.nav-links {
+/* Desktop Navigation */
+.desktop-nav {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.desktop-nav .nav-links {
   display: flex;
   gap: 2rem;
+  align-items: center;
   margin-left: auto;
 }
 
@@ -46,22 +54,15 @@
   text-decoration: none;
   font-size: 1.1rem;
   font-weight: 500;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  white-space: nowrap;
 }
 
 .nav-links a:hover {
   color: var(--accent-color);
-}
-
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  margin-left: 2rem;
-}
-
-.theme-switcher {
-  color: #FFFFFF;
+  background: rgba(var(--accent-rgb), 0.1);
 }
 
 /* Add margin to main content to account for fixed navbar */
@@ -80,8 +81,8 @@ main {
   width: 44px;
   height: 44px;
   position: relative;
-  z-index: 100;
-  margin-left: auto;
+  z-index: 1001;
+  margin-left: 2rem;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -94,18 +95,18 @@ main {
   margin: 5px auto;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
               opacity 0.2s ease;
+  position: relative;
+}
+
+/* Drawer Container */
+.drawer-container {
+  display: none;
 }
 
 /* Mobile Styles */
 @media (max-width: 768px) {
   .navbar {
     height: 60px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    background: var(--background-primary);
   }
 
   .navbar-container {
@@ -116,69 +117,49 @@ main {
     font-size: 1.4rem;
   }
 
-  /* Improved Hamburger Button */
+  /* Hide desktop navigation */
+  .desktop-nav {
+    display: none;
+  }
+
+  /* Show hamburger in mobile */
   .hamburger {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 44px;
-    height: 44px;
-    background: transparent;
-    border-radius: 8px;
-    margin-left: auto;
-    border: none;
-    padding: 0;
-    z-index: 1001;
-    position: relative;
+    margin-left: 0;
+    padding: 12px;
   }
 
   .hamburger-line {
-    display: block;
-    width: 26px;
-    height: 2.5px;
+    width: 24px;
+    height: 2px;
     background-color: var(--text-primary);
-    position: relative;
-    transition: all 0.3s ease;
-  }
-
-  .hamburger-line + .hamburger-line {
-    margin-top: 6px;
-  }
-
-  /* Clear X Animation */
-  .menu-open .hamburger-line {
-    position: absolute;
-    margin: 0;
+    margin: 2px 0;
   }
 
   .menu-open .hamburger-line:nth-child(1) {
-    transform: rotate(45deg);
-    top: 50%;
-    margin-top: -1.25px;
-    background-color: var(--accent-color);
+    transform: translateY(6px) rotate(45deg);
   }
 
   .menu-open .hamburger-line:nth-child(2) {
     opacity: 0;
-    transform: translateX(-20px);
   }
 
   .menu-open .hamburger-line:nth-child(3) {
-    transform: rotate(-45deg);
-    top: 50%;
-    margin-top: -1.25px;
-    background-color: var(--accent-color);
+    transform: translateY(-6px) rotate(-45deg);
   }
 
-  /* Drawer Container */
+  /* Show drawer container in mobile */
   .drawer-container {
+    display: block;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1000;
+    z-index: 999;
     pointer-events: none;
     visibility: hidden;
   }
@@ -204,8 +185,9 @@ main {
     opacity: 1;
   }
 
-  /* Drawer Menu */
-  .nav-links {
+  /* Mobile Nav Links */
+  .drawer-container .nav-links {
+    display: flex;
     position: fixed;
     top: 0;
     right: 0;
@@ -228,7 +210,7 @@ main {
     box-shadow: -4px 0 25px rgba(0, 0, 0, 0.3);
   }
 
-  .nav-links a {
+  .drawer-container .nav-links a {
     font-size: 1.1rem;
     padding: 16px 24px;
     margin: 0;
@@ -237,14 +219,15 @@ main {
     display: flex;
     align-items: center;
     font-weight: 500;
+    border-radius: 0;
     border-bottom: 1px solid var(--border-color);
   }
 
-  .nav-links a:last-child {
+  .drawer-container .nav-links a:last-child {
     border-bottom: none;
   }
 
-  .nav-links a:active {
+  .drawer-container .nav-links a:active {
     background-color: rgba(var(--accent-rgb), 0.1);
   }
 }
@@ -263,12 +246,12 @@ main {
     font-size: 1.2rem;
   }
 
-  .nav-links {
-    width: 100% !important;
+  .drawer-container .nav-links {
+    width: 100%;
     padding-top: 56px;
   }
 
-  .nav-links a {
+  .drawer-container .nav-links a {
     font-size: 1rem;
     padding: 14px 20px;
   }
@@ -276,15 +259,20 @@ main {
   .hamburger {
     width: 40px;
     height: 40px;
+    padding: 10px;
   }
 
   .hamburger-line {
-    width: 24px;
-    height: 2px;
+    width: 20px;
+    margin: 2px 0;
   }
 
-  .hamburger-line + .hamburger-line {
-    margin-top: 5px;
+  .menu-open .hamburger-line:nth-child(1) {
+    transform: translateY(5px) rotate(45deg);
+  }
+
+  .menu-open .hamburger-line:nth-child(3) {
+    transform: translateY(-5px) rotate(-45deg);
   }
 
   main {
@@ -293,36 +281,40 @@ main {
   }
 }
 
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .navbar {
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .navbar.scrolled {
+    background: rgba(0, 0, 0, 0.98);
+  }
+
+  .nav-links a:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .drawer-container .nav-links {
+    background: rgba(0, 0, 0, 0.95);
+  }
+}
+
 /* Touch Device Improvements */
 @media (hover: none) {
-  .nav-links {
+  .nav-links a:hover {
+    background: none;
+  }
+
+  .drawer-container .nav-links {
     overscroll-behavior: contain;
   }
 
-  .nav-links a {
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-  }
-
-  .hamburger {
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-  }
-
-  /* Prevent text selection */
-  .nav-links, 
   .nav-links a,
   .hamburger {
-    user-select: none;
-    -webkit-user-select: none;
-  }
-
-  /* Prevent pull-to-refresh */
-  .drawer-container.active {
-    overscroll-behavior: contain;
-  }
-
-  .hamburger:active {
-    background-color: rgba(var(--accent-rgb), 0.1);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 } 

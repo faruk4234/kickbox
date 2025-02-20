@@ -122,6 +122,22 @@ export const Navbar = () => {
     setIsMenuOpen(false);
   }, []);
 
+  const renderNavLinks = () => (
+    <>
+      <a href="#about" onClick={(e) => handleNavClick(e, 'about')} role="menuitem">
+        Hakkımızda
+      </a>
+      <Link to="/gallery" onClick={handleLinkClick} role="menuitem">Galeri</Link>
+      <Link to="/teachers" onClick={handleLinkClick} role="menuitem">Hocalarımız</Link>
+      <a href="#programs" onClick={(e) => handleNavClick(e, 'programs')} role="menuitem">
+        Programlar
+      </a>
+      <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} role="menuitem">
+        İletişim
+      </a>
+    </>
+  );
+
   return (
     <>
       <nav 
@@ -133,6 +149,13 @@ export const Navbar = () => {
           <div className="logo">
             <Link to="/" onClick={handleLinkClick}>KICKBOXING</Link>
           </div>
+
+          {/* Desktop Navigation */}
+          <div className="desktop-nav">
+            <div className="nav-links" role="menubar">
+              {renderNavLinks()}
+            </div>
+          </div>
           
           <button 
             ref={hamburgerRef}
@@ -140,7 +163,7 @@ export const Navbar = () => {
             onClick={toggleMenu} 
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMenuOpen}
-            aria-controls="nav-links"
+            aria-controls="mobile-nav-links"
           >
             <span className="hamburger-line"></span>
             <span className="hamburger-line"></span>
@@ -149,26 +172,17 @@ export const Navbar = () => {
         </div>
       </nav>
 
+      {/* Mobile Navigation */}
       <div className={`drawer-container ${isMenuOpen ? 'active' : ''}`}>
         <div className="drawer-backdrop" onClick={handleBackdropClick} />
         <div 
-          id="nav-links"
+          id="mobile-nav-links"
           ref={menuRef}
           className="nav-links"
           role="menu"
           aria-hidden={!isMenuOpen}
         >
-          <a href="#about" onClick={(e) => handleNavClick(e, 'about')} role="menuitem">
-            Hakkımızda
-          </a>
-          <Link to="/gallery" onClick={handleLinkClick} role="menuitem">Galeri</Link>
-          <Link to="/teachers" onClick={handleLinkClick} role="menuitem">Hocalarımız</Link>
-          <a href="#programs" onClick={(e) => handleNavClick(e, 'programs')} role="menuitem">
-            Programlar
-          </a>
-          <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')} role="menuitem">
-            İletişim
-          </a>
+          {renderNavLinks()}
         </div>
       </div>
     </>

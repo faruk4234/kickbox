@@ -14,8 +14,6 @@
   flex-direction: column;
   gap: 2rem;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
-  height: 100%;
-  overflow-y: auto;
 }
 
 .teacher-details-image {
@@ -86,10 +84,9 @@
   -webkit-backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   z-index: 1000;
   padding: clamp(1rem, 3vw, 2rem);
-  animation: fadeIn 0.3s ease;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -103,7 +100,6 @@
   position: relative;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   animation: slideUp 0.3s ease;
-  overflow: hidden;
 }
 
 .close-button {
@@ -166,26 +162,32 @@
 @media (max-width: 768px) {
   .teacher-modal-overlay {
     padding: 0;
-    height: 100%;
-    align-items: flex-start;
+    height: auto;
+    min-height: 100%;
   }
 
   .teacher-modal {
     margin: 0;
     border-radius: 0;
+    height: auto;
     min-height: 100%;
   }
 
-  .teacher-details-container {
-    margin: 1rem;
-    border-radius: 12px;
+  .teacher-modal-container {
+    height: auto;
+    overflow: visible;
   }
 
   .teacher-details-sidebar,
-  .teacher-modal .teacher-details-sidebar,
-  .teacher-details-main {
+  .teacher-modal .teacher-details-sidebar {
     padding: 1rem;
     gap: 1rem;
+    overflow: visible;
+  }
+
+  .teacher-details-main {
+    padding: 1rem;
+    overflow: visible;
   }
 
   .teacher-details-section {
@@ -197,21 +199,26 @@
     position: fixed;
     top: 1rem;
     right: 1rem;
+    z-index: 1002;
+  }
+
+  .teacher-details-image {
+    margin-top: 3rem; /* Add space for fixed close button */
   }
 }
 
 @media (max-width: 480px) {
-  .teacher-details-container {
-    margin: 0.5rem;
-  }
-
   .teacher-modal-overlay {
-    overflow-x: hidden;
+    padding: 0;
   }
 
-  .teacher-details-container,
+  .teacher-modal {
+    width: 100%;
+    min-height: 100%;
+  }
+
   .teacher-modal-container {
-    overflow: visible;
+    min-height: 100%;
   }
 
   .teacher-details-sidebar,
@@ -231,15 +238,25 @@
   .teacher-details-basic-info h3 {
     font-size: 1rem;
   }
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.75rem;
+  }
 }
 
 /* Touch Device Improvements */
 @media (hover: none) {
-  .teacher-modal-overlay,
-  .teacher-details-container,
+  .teacher-modal-overlay {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .teacher-modal,
+  .teacher-modal-container,
   .teacher-details-sidebar,
   .teacher-details-main {
-    -webkit-overflow-scrolling: touch;
+    height: auto;
+    overflow: visible;
   }
 
   .teacher-details-section:hover {

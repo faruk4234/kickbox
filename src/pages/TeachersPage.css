@@ -5,32 +5,40 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  padding-top: 64px; /* Add padding for navbar */
 }
 
 .page-header-wrapper {
   position: fixed;
-  top: 64px;
+  top: 64px; /* navbar height */
   left: 0;
   right: 0;
+  height: 56px; /* Fixed height for header */
   background-color: var(--background-primary);
   z-index: 99;
   border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
 }
 
 .categories-container {
   position: fixed;
-  top: 120px; /* navbar height (64px) + header height (56px) */
+  top: 120px; /* navbar (64px) + header (56px) */
   left: 0;
   right: 0;
+  height: 56px; /* Fixed height for categories */
   background-color: var(--background-primary);
   z-index: 98;
   border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
 }
 
 .categories-wrapper {
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
-  padding: 12px 20px;
+  padding: 0 20px;
 }
 
 .categories-scroll {
@@ -41,7 +49,8 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
-  padding-bottom: 4px;
+  padding: 8px 0;
+  height: 100%;
 }
 
 .categories-scroll::-webkit-scrollbar {
@@ -422,25 +431,30 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .teachers-page {
+    padding-top: 56px; /* Mobile navbar height */
+  }
+
   .page-header-wrapper {
-    top: 56px; /* mobile navbar height */
+    top: 56px; /* Mobile navbar height */
+    height: 48px; /* Smaller header on mobile */
   }
 
   .categories-container {
-    top: 104px; /* mobile navbar (56px) + header (48px) */
+    top: 104px; /* Mobile navbar (56px) + header (48px) */
+    height: 48px; /* Smaller categories height on mobile */
   }
 
   .categories-wrapper {
-    padding: 8px 16px;
+    padding: 0 16px;
   }
 
-  .category-button {
-    padding: 6px 12px;
-    font-size: 13px;
+  .categories-scroll {
+    padding: 6px 0;
   }
 
   .teachers-content {
-    margin-top: 152px; /* mobile navbar (56px) + header (48px) + categories (48px) */
+    margin-top: 152px; /* Mobile navbar (56px) + header (48px) + categories (48px) */
     padding: 16px;
   }
 
@@ -452,7 +466,7 @@
 
 @media (max-width: 480px) {
   .categories-wrapper {
-    padding: 8px 12px;
+    padding: 0 12px;
   }
 
   .categories-scroll {

@@ -43,13 +43,6 @@ export const Hero = () => {
     window.open('https://instagram.com/muammerhocailecesur', '_blank');
   };
 
-  const scrollToBottom = () => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth'
-    });
-  };
-
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
@@ -108,28 +101,28 @@ export const Hero = () => {
             <p>Profesyonel eğitmenlerimiz ve modern tesislerimizle kickboks dünyasına adım atın. Hem fiziksel hem mental gelişiminiz için özel programlar sunuyoruz.</p>
             <p>Başlangıç seviyesinden profesyonel seviyeye kadar her düzeyde eğitim imkanı.</p>
           </div>
-          <div className="hero-cta">
-            <button className="btn-primary" onClick={scrollToBottom}>
-              <i className="fas fa-user-plus"></i> İletişime Geç
-            </button>
-            <div className="contact-buttons">
-              <button className="btn-whatsapp" onClick={handleWhatsApp}>
-                <i className="fab fa-whatsapp"></i> WhatsApp
-              </button>
-              <button className="btn-telegram" onClick={handleTelegram}>
-                <i className="fab fa-telegram"></i> Telegram
-              </button>
-              <button className="btn-youtube" onClick={handleYoutube}>
-                <i className="fab fa-youtube"></i> Youtube
-              </button>
-              <button className="btn-instagram" onClick={handleInstagram}>
-                <i className="fab fa-instagram"></i> Instagram
-              </button>
+         
+         {/** <button className="btn-primary contact-btn" onClick={scrollToContact}>
+          <i className="fas fa-user-plus"></i> İletişime Geç
+        </button> */} <div className="messaging-buttons">
+         
+            <div className="messaging-section">
+              <div className="messaging-buttons">
+                <button className="btn-whatsapp" onClick={handleWhatsApp}>
+                  <i className="fab fa-whatsapp"></i> WhatsApp
+                </button>
+                <button className="btn-telegram" onClick={handleTelegram}>
+                  <i className="fab fa-telegram"></i> Telegram
+                </button>
+                <button className="btn-youtube" onClick={handleYoutube}>
+                  <i className="fab fa-youtube"></i> Youtube
+                </button>
+                <button className="btn-instagram" onClick={handleInstagram}>
+                  <i className="fab fa-instagram"></i> Instagram
+                </button>
+              </div>
             </div>
-            <div className="contact-section-buttons">
-             
-              
-            </div>
+            
           </div>
         </div>
       </div>

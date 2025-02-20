@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Teacher } from '../types/Teacher';
 import { teachersData } from '../data/teachersData';
 import { PageHeader } from '../components/PageHeader';
+import { TeacherDetails } from '../components/TeacherDetails';
 import './TeachersPage.css';
 
 const MediaCarousel: React.FC<{ media: any[]; onClose?: () => void }> = ({ media, onClose }) => {
@@ -100,7 +101,7 @@ const MediaCarousel: React.FC<{ media: any[]; onClose?: () => void }> = ({ media
   );
 };
 
-const TeachersPage: React.FC = () => {
+export const TeachersPage: React.FC = () => {
   const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
   const [selectedGalleryItem, setSelectedGalleryItem] = useState<any | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -185,114 +186,12 @@ const TeachersPage: React.FC = () => {
       </div>
 
       {selectedTeacher && (
-        <div className="teacher-modal-overlay" onClick={handleClose}>
-          <div className="teacher-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={handleClose}>&times;</button>
-            <div className="teacher-modal-container">
-              <div className="teacher-modal-sidebar">
-                <div className="teacher-modal-image">
-                  <MediaCarousel media={selectedTeacher.media} />
-                </div>
-                <div className="teacher-modal-basic-info">
-                  <h2>{selectedTeacher.name}</h2>
-                  <h3>{selectedTeacher.title}</h3>
-                  <div className="specialties">
-                    {selectedTeacher.specialties.map((specialty, index) => (
-                      <span key={index} className="specialty-tag">{specialty}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              
-              <div className="teacher-modal-main">
-                {selectedTeacher.description && (
-                  <div className="teacher-modal-section">
-                    <div className="section-header">
-                      <div className="section-icon">📝</div>
-                      <h4>Hakkında</h4>
-                    </div>
-                    <div className="section-content">
-                      <p>{selectedTeacher.description}</p>
-                    </div>
-                  </div>
-                )}
-
-                {selectedTeacher.experience && (
-                  <div className="teacher-modal-section">
-                    <div className="section-header">
-                      <div className="section-icon">💪</div>
-                      <h4>Deneyim</h4>
-                    </div>
-                    <div className="section-content">
-                      <p>{selectedTeacher.experience}</p>
-                    </div>
-                  </div>
-                )}
-
-                {selectedTeacher.education && (
-                  <div className="teacher-modal-section">
-                    <div className="section-header">
-                      <div className="section-icon">🎓</div>
-                      <h4>Eğitim</h4>
-                    </div>
-                    <div className="section-content">
-                      <p>{selectedTeacher.education}</p>
-                    </div>
-                  </div>
-                )}
-
-                {selectedTeacher.achievements && selectedTeacher.achievements.length > 0 && (
-                  <div className="teacher-modal-section">
-                    <div className="section-header">
-                      <div className="section-icon">🏆</div>
-                      <h4>Başarılar</h4>
-                    </div>
-                    <div className="section-content">
-                      <div className="achievements-grid">
-                        {selectedTeacher.achievements.map((achievement, index) => (
-                          <div key={index} className="achievement-card">
-                            <div className="achievement-icon">🎯</div>
-                            <p>{achievement}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {selectedTeacher.gallery && selectedTeacher.gallery.length > 0 && (
-                  <div className="teacher-modal-section">
-                    <div className="section-header">
-                      <div className="section-icon">📸</div>
-                      <h4>Galeri</h4>
-                    </div>
-                    <div className="gallery-grid">
-                      {selectedTeacher.gallery.map((item, index) => (
-                        <div
-                          key={index}
-                          className="gallery-item"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleGalleryItemClick(item);
-                          }}
-                        >
-                          {item.type === 'video' ? (
-                            <div className="video-thumbnail">
-                              <img src={item.thumbnail || item.url} alt="" loading="lazy" />
-                              <div className="play-icon">▶</div>
-                            </div>
-                          ) : (
-                            <img src={item.url} alt="" loading="lazy" />
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
+        <TeacherDetails
+          teacher={selectedTeacher}
+          variant="modal"
+          onClose={handleClose}
+          onGalleryItemClick={handleGalleryItemClick}
+        />
       )}
 
       {selectedGalleryItem && (

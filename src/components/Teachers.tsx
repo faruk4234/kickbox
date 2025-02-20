@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Teacher, MediaItem } from '../types/Teacher';
 import { teachersData } from '../data/teachersData';
+import { TeacherDetails } from './TeacherDetails';
 import './Teachers.css';
 
-const MediaCarousel: React.FC<{ media: MediaItem[]; onClose?: () => void }> = ({ media, onClose }) => {
+const MediaCarousel: React.FC<{ media: MediaItem[] }> = ({ media }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrevious = (e: React.MouseEvent) => {
@@ -99,89 +100,18 @@ export const Teachers: React.FC = () => {
 
       <div className="load-more">
         <div>
-        <button className="btn-primary" onClick={handleViewAllTeachers}>
-          Tüm Hocalarımız
-        </button>
+          <button className="btn-primary" onClick={handleViewAllTeachers}>
+            Tüm Hocalarımız
+          </button>
         </div>
       </div>
 
       {selectedTeacher && (
-        <div className="teacher-modal-overlay" onClick={handleClose}>
-          <div className="teacher-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={handleClose}>&times;</button>
-            <div className="teacher-modal-container">
-              <div className="teacher-modal-sidebar">
-                <div className="teacher-modal-image">
-                  <MediaCarousel media={selectedTeacher.media} />
-                </div>
-                <div className="teacher-modal-basic-info">
-                  <h3>{selectedTeacher.name}</h3>
-                  <h4>{selectedTeacher.title}</h4>
-                  <div className="specialties">
-                    {selectedTeacher.specialties.map((specialty, index) => (
-                      <span key={index} className="specialty-tag" data-specialty={specialty}>{specialty}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              
-              <div className="teacher-modal-main">
-                <div className="teacher-modal-section">
-                  <div className="section-header">
-                    <span className="section-icon">🎯</span>
-                    <h5>Hakkında</h5>
-                  </div>
-                  <div className="section-content">
-                    <p>{selectedTeacher.description}</p>
-                  </div>
-                </div>
-
-                {selectedTeacher.experience && (
-                  <div className="teacher-modal-section">
-                    <div className="section-header">
-                      <span className="section-icon">💪</span>
-                      <h5>Deneyim</h5>
-                    </div>
-                    <div className="section-content">
-                      <p>{selectedTeacher.experience}</p>
-                    </div>
-                  </div>
-                )}
-
-                {selectedTeacher.education && (
-                  <div className="teacher-modal-section">
-                    <div className="section-header">
-                      <span className="section-icon">📚</span>
-                      <h5>Eğitim</h5>
-                    </div>
-                    <div className="section-content">
-                      <p>{selectedTeacher.education}</p>
-                    </div>
-                  </div>
-                )}
-                
-                {selectedTeacher.achievements && (
-                  <div className="teacher-modal-section">
-                    <div className="section-header">
-                      <span className="section-icon">🏆</span>
-                      <h5>Başarılar</h5>
-                    </div>
-                    <div className="section-content">
-                      <div className="achievements-list">
-                        {selectedTeacher.achievements.map((achievement, index) => (
-                          <div key={index} className="achievement-item">
-                            <span className="achievement-bullet">•</span>
-                            <p>{achievement}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
+        <TeacherDetails
+          teacher={selectedTeacher}
+          variant="modal"
+          onClose={handleClose}
+        />
       )}
     </section>
   );

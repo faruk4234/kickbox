@@ -1,8 +1,8 @@
 import React from 'react';
-import { Teacher } from '../types/Teacher';
+import { Teacher, MediaItem } from '../types/Teacher';
 import './TeacherDetails.css';
 
-const MediaCarousel: React.FC<{ media: MediaItem[]; onClose?: () => void }> = ({ media, onClose }) => {
+const MediaCarousel: React.FC<{ media: MediaItem[] }> = ({ media }) => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
   const handlePrevious = (e: React.MouseEvent) => {

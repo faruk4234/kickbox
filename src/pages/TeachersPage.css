@@ -126,15 +126,26 @@
 
 .teacher-gallery-image {
   position: relative;
-  aspect-ratio: 3/4;
+  aspect-ratio: 4/5; /* Better ratio for kickboxing action shots */
   overflow: hidden;
+  background-color: var(--background-secondary);
+  border-radius: 12px 12px 0 0;
 }
 
 .teacher-gallery-image img,
-.teacher-gallery-image video {
+.teacher-gallery-image video,
+.media-item {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  transition: all 0.5s ease;
+}
+
+.teacher-gallery-card:hover .teacher-gallery-image img,
+.teacher-gallery-card:hover .teacher-gallery-image video,
+.teacher-gallery-card:hover .media-item {
+  transform: scale(1.1);
 }
 
 .teacher-gallery-info {
@@ -242,10 +253,10 @@
 }
 
 .teacher-modal-image {
-  aspect-ratio: 1; /* Make it square */
-  border-radius: 16px; /* Increased border radius */
+  aspect-ratio: 16/9; /* Wider aspect ratio for modal view to show more action */
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .teacher-modal-image img,
@@ -253,6 +264,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
 }
 
 .teacher-modal-basic-info {
@@ -377,22 +390,30 @@
 }
 
 .gallery-item {
-  aspect-ratio: 1;
+  aspect-ratio: 16/9; /* Better for action shots */
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
   position: relative;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .gallery-item:hover {
   transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .gallery-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.1);
 }
 
 .video-thumbnail {
@@ -666,4 +687,34 @@
     grid-template-columns: 1fr;
     gap: 1rem;
   }
+}
+
+.media-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--background-secondary);
+}
+
+.media-carousel {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.modal-media-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--background-secondary);
+}
+
+.modal-media-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
 } 

@@ -7,6 +7,7 @@ import { Gallery } from './components/Gallery';
 import { Teachers } from './components/Teachers';
 import { Programs } from './components/Programs';
 import { Contact } from './components/Contact';
+import { WomensClass } from './components/WomensClass';
 import TeachersPage from './pages/TeachersPage';
 import GalleryPage from './pages/GalleryPage';
 import './styles/fonts.css';
@@ -23,6 +24,7 @@ const App: React.FC = () => {
             <main>
               <Hero />
               <About />
+              <WomensClass />
               <Gallery />
               <Teachers />
               <Programs />

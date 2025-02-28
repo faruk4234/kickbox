@@ -1,4 +1,5 @@
 import React from 'react';
+import { ImageSlider } from './ImageSlider';
 import '../styles/WomensClass.css';
 
 export const WomensClass: React.FC = () => {
@@ -7,6 +8,8 @@ export const WomensClass: React.FC = () => {
     "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?q=80&w=800&auto=format&fit=crop",
     "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?q=80&w=800&auto=format&fit=crop",
     "https://images.pexels.com/photos/4162550/pexels-photo-4162550.jpeg?auto=compress&w=800",
+    "https://images.pexels.com/photos/4162548/pexels-photo-4162548.jpeg?auto=compress&w=800",
+    "https://images.pexels.com/photos/4162452/pexels-photo-4162452.jpeg?auto=compress&w=800"
   ];
 
   return (
@@ -31,12 +34,8 @@ export const WomensClass: React.FC = () => {
               <li>Kişiye özel antrenman planları</li>
             </ul>
           </div>
-          <div className="image-grid">
-            {classImages.map((image, index) => (
-              <div key={index} className="image-container">
-                <img src={image} alt={`Kadınlar kickbox ${index + 1}`} loading="lazy" />
-              </div>
-            ))}
+          <div className="slider-section">
+            <ImageSlider images={classImages} aspectRatio="4/3" />
           </div>
         </div>
       </div>

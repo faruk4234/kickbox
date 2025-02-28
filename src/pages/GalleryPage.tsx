@@ -69,18 +69,27 @@ const GalleryPage: React.FC = () => {
     setIsZoomed(false);
   };
 
-  const handleNext = () => {
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
     const nextIndex = (currentIndex + 1) % filteredItems.length;
     setCurrentIndex(nextIndex);
     setSelectedItem(filteredItems[nextIndex]);
     setIsZoomed(false);
   };
 
-  const handlePrevious = () => {
+  const handlePrevious = (e: React.MouseEvent) => {
+    e.stopPropagation();
     const prevIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length;
     setCurrentIndex(prevIndex);
     setSelectedItem(filteredItems[prevIndex]);
     setIsZoomed(false);
+  };
+
+  const handleModalClick = (e: React.MouseEvent) => {
+    // Only close if clicking the overlay, not the content
+    if (e.target === e.currentTarget) {
+      setSelectedItem(null);
+    }
   };
 
   const formatCategoryName = (category: string) => {
@@ -144,43 +153,42 @@ const GalleryPage: React.FC = () => {
         </div>
 
         {selectedItem && (
-          <div className="gallery-modal-overlay" onClick={() => setSelectedItem(null)}>
-            <div className="gallery-modal">
+          <div className="gallery-modal-overlay" onClick={handleModalClick}>
+            <div className="gallery-modal" onClick={(e) => e.stopPropagation()}>
               <button className="close-button" onClick={() => setSelectedItem(null)}>&times;</button>
               <div className="gallery-modal-content">
                 <div className="modal-media-section">
-                  {selectedItem.type === 'video' ? (
-                    <video
+                  <div 
+                    className={`modal-media-container ${isZoomed ? 'zoomed' : ''}`}
+                    style={isZoomed ? {
+                      cursor: 'zoom-out',
+                      backgroundImage: `url(${selectedItem.url})`,
+                      backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`
+                    } : { cursor: 'zoom-in' }}
+                  >
+                    <img
                       src={selectedItem.url}
-                      controls
-                      playsInline
+                      alt={selectedItem.title}
                       className="gallery-modal-media"
+                      onClick={handleImageZoom}
+                      onMouseMove={handleMouseMove}
+                      style={{ opacity: isZoomed ? 0 : 1 }}
                     />
-                  ) : (
-                    <div 
-                      className={`modal-media-container ${isZoomed ? 'zoomed' : ''}`}
-                      style={isZoomed ? {
-                        cursor: 'zoom-out',
-                        backgroundImage: `url(${selectedItem.url})`,
-                        backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`
-                      } : { cursor: 'zoom-in' }}
-                    >
-                      <img
-                        src={selectedItem.url}
-                        alt={selectedItem.title}
-                        className="gallery-modal-media"
-                        onClick={handleImageZoom}
-                        onMouseMove={handleMouseMove}
-                        style={{ opacity: isZoomed ? 0 : 1 }}
-                      />
-                    </div>
-                  )}
+                  </div>
                   {filteredItems.length > 1 && (
                     <>
-                      <button className="nav-button prev" onClick={handlePrevious}>
+                      <button 
+                        className="nav-button prev" 
+                        onClick={handlePrevious}
+                        aria-label="Previous image"
+                      >
                         &#10094;
                       </button>
-                      <button className="nav-button next" onClick={handleNext}>
+                      <button 
+                        className="nav-button next" 
+                        onClick={handleNext}
+                        aria-label="Next image"
+                      >
                         &#10095;
                       </button>
                       <div className="pagination-dots">

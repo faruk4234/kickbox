@@ -12,6 +12,24 @@ export const WomensClass: React.FC = () => {
     "https://images.pexels.com/photos/4162452/pexels-photo-4162452.jpeg?auto=compress&w=800"
   ];
 
+  const imageTitles = [
+    "Kadınlar için Özel Kickbox Dersleri",
+    "Güçlendirici Antrenmanlar",
+    "Teknik Gelişim",
+    "Kondisyon ve Dayanıklılık",
+    "Özgüven Geliştirme",
+    "Profesyonel Eğitim"
+  ];
+
+  const imageDescriptions = [
+    "Kadınlara özel tasarlanmış kickbox programımızda, güvenli ve destekleyici bir ortamda kendinizi geliştirin. Deneyimli kadın eğitmenlerimiz eşliğinde, kendi hızınızda ilerleyin.",
+    "Vücut direncini artıran, kas yapısını güçlendiren ve esneklik kazandıran özel antrenman programları. Her seviyeye uygun egzersizlerle forma girin.",
+    "Kickbox tekniklerini adım adım öğrenin. Doğru duruş, vuruş teknikleri ve savunma stratejileri ile kendinizi korumayı öğrenin.",
+    "Yüksek tempolu kardio egzersizleri ile kondisyonunuzu artırın. Dayanıklılık ve güç dengesini yakalayın.",
+    "Kickbox eğitimi ile sadece fiziksel değil, mental olarak da güçlenin. Özgüveninizi artırın ve stresle başa çıkmayı öğrenin.",
+    "Uzman eğitmenlerimizle birebir çalışma imkanı. Size özel hazırlanmış programlarla hedeflerinize ulaşın."
+  ];
+
   return (
     <section className="womens-class" id="womens-class">
       <div className="container">
@@ -35,7 +53,12 @@ export const WomensClass: React.FC = () => {
             </ul>
           </div>
           <div className="slider-section">
-            <ImageSlider images={classImages} aspectRatio="4/3" />
+            <ImageSlider 
+              images={classImages} 
+              aspectRatio="4/3"
+              titles={imageTitles}
+              descriptions={imageDescriptions}
+            />
           </div>
         </div>
       </div>

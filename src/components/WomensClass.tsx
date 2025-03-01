@@ -1,15 +1,15 @@
 import React from 'react';
-import { ImageSlider } from './ImageSlider';
+import ImageSlider from './ImageSlider';
 import '../styles/WomensClass.css';
 
 export const WomensClass: React.FC = () => {
   const classImages = [
-    "https://images.unsplash.com/photo-1593352216894-89108a0d2653?q=80&w=800&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?q=80&w=800&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?q=80&w=800&auto=format&fit=crop",
-    "https://images.pexels.com/photos/4162550/pexels-photo-4162550.jpeg?auto=compress&w=800",
-    "https://images.pexels.com/photos/4162548/pexels-photo-4162548.jpeg?auto=compress&w=800",
-    "https://images.pexels.com/photos/4162452/pexels-photo-4162452.jpeg?auto=compress&w=800"
+    "https://images.unsplash.com/photo-1593352216894-89108a0d2653?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?q=80&w=1200&auto=format&fit=crop",
+    "https://images.pexels.com/photos/4162550/pexels-photo-4162550.jpeg?auto=compress&w=1200",
+    "https://images.pexels.com/photos/4162548/pexels-photo-4162548.jpeg?auto=compress&w=1200",
+    "https://images.pexels.com/photos/4162452/pexels-photo-4162452.jpeg?auto=compress&w=1200"
   ];
 
   const imageTitles = [
@@ -28,6 +28,24 @@ export const WomensClass: React.FC = () => {
     "Yüksek tempolu kardio egzersizleri ile kondisyonunuzu artırın. Dayanıklılık ve güç dengesini yakalayın.",
     "Kickbox eğitimi ile sadece fiziksel değil, mental olarak da güçlenin. Özgüveninizi artırın ve stresle başa çıkmayı öğrenin.",
     "Uzman eğitmenlerimizle birebir çalışma imkanı. Size özel hazırlanmış programlarla hedeflerinize ulaşın."
+  ];
+
+  const categories = [
+    "Kadınlara Özel",
+    "Fitness",
+    "Teknik Eğitim",
+    "Kardio",
+    "Mental Gelişim",
+    "Özel Ders"
+  ];
+
+  const dates = [
+    "2024-03-01",
+    "2024-03-02",
+    "2024-03-03",
+    "2024-03-04",
+    "2024-03-05",
+    "2024-03-06"
   ];
 
   return (
@@ -55,9 +73,10 @@ export const WomensClass: React.FC = () => {
           <div className="slider-section">
             <ImageSlider 
               images={classImages} 
-              aspectRatio="4/3"
               titles={imageTitles}
               descriptions={imageDescriptions}
+              categories={categories}
+              dates={dates}
             />
           </div>
         </div>

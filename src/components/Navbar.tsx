@@ -147,7 +147,7 @@ export const Navbar = () => {
       >
         <div className="navbar-container">
           <div className="logo">
-            <Link to="/" onClick={handleLinkClick}>KICKBOXING</Link>
+            <Link to="/" onClick={handleLinkClick}>CESUR KICKBOX</Link>
           </div>
 
           {/* Desktop Navigation */}

@@ -135,17 +135,24 @@ const GalleryPage: React.FC = () => {
                 className="gallery-item"
                 onClick={() => handleItemClick(item)}
               >
-                {item.type === 'video' ? (
-                  <div className="video-thumbnail">
-                    <img src={item.thumbnail || item.url} alt={item.title} loading="lazy" />
-                    <div className="play-button"></div>
-                  </div>
-                ) : (
-                  <img src={item.url} alt={item.title} loading="lazy" />
-                )}
+                <div className="gallery-item-media">
+                  {item.type === 'video' ? (
+                    <div className="video-thumbnail">
+                      <img src={item.thumbnail || item.url} alt={item.title} loading="lazy" />
+                      <div className="play-button">
+                        <span>▶</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <img src={item.url} alt={item.title} loading="lazy" />
+                  )}
+                </div>
                 <div className="gallery-item-overlay">
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
+                  <div className="overlay-content">
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                    <span className="view-more">Detayları Gör</span>
+                  </div>
                 </div>
               </div>
             ))}
@@ -166,28 +173,37 @@ const GalleryPage: React.FC = () => {
                       backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`
                     } : { cursor: 'zoom-in' }}
                   >
-                    <img
-                      src={selectedItem.url}
-                      alt={selectedItem.title}
-                      className="gallery-modal-media"
-                      onClick={handleImageZoom}
-                      onMouseMove={handleMouseMove}
-                      style={{ opacity: isZoomed ? 0 : 1 }}
-                    />
+                    {selectedItem.type === 'video' ? (
+                      <video
+                        src={selectedItem.url}
+                        controls
+                        playsInline
+                        className="gallery-modal-media"
+                      />
+                    ) : (
+                      <img
+                        src={selectedItem.url}
+                        alt={selectedItem.title}
+                        className="gallery-modal-media"
+                        onClick={handleImageZoom}
+                        onMouseMove={handleMouseMove}
+                        style={{ opacity: isZoomed ? 0 : 1 }}
+                      />
+                    )}
                   </div>
                   {filteredItems.length > 1 && (
                     <>
                       <button 
                         className="nav-button prev" 
                         onClick={handlePrevious}
-                        aria-label="Previous image"
+                        aria-label="Önceki görsel"
                       >
                         &#10094;
                       </button>
                       <button 
                         className="nav-button next" 
                         onClick={handleNext}
-                        aria-label="Next image"
+                        aria-label="Sonraki görsel"
                       >
                         &#10095;
                       </button>
@@ -212,6 +228,9 @@ const GalleryPage: React.FC = () => {
                   <div className="gallery-modal-info">
                     <div className="modal-header">
                       <h3>{selectedItem.title}</h3>
+                      <span className="gallery-category">
+                        {formatCategoryName(selectedItem.category)}
+                      </span>
                     </div>
                     <div className="modal-description">
                       <p>{selectedItem.description}</p>

@@ -1,181 +1,139 @@
 import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
 import '../styles/ImageSlider.css';
 
 interface ImageSliderProps {
   images: string[];
-  aspectRatio?: string;
   titles?: string[];
   descriptions?: string[];
+  categories?: string[];
+  dates?: string[];
 }
 
-export const ImageSlider: React.FC<ImageSliderProps> = ({ 
+const ImageSlider: React.FC<ImageSliderProps> = ({ 
   images, 
-  aspectRatio = '1',
-  titles = [],
-  descriptions = []
+  titles = [], 
+  descriptions = [],
+  categories = [],
+  dates = []
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isZoomed, setIsZoomed] = useState(false);
-  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
   const handleImageClick = (index: number) => {
-    setCurrentImageIndex(index);
-    setIsModalOpen(true);
-    setIsZoomed(false);
+    setSelectedImage(index);
+  };
+
+  const handleClose = () => {
+    setSelectedImage(null);
   };
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const nextIndex = (currentImageIndex + 1) % images.length;
-    setCurrentImageIndex(nextIndex);
-    setIsZoomed(false);
-  };
-
-  const handlePrevious = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const prevIndex = (currentImageIndex - 1 + images.length) % images.length;
-    setCurrentImageIndex(prevIndex);
-    setIsZoomed(false);
-  };
-
-  const handleImageZoom = (e: React.MouseEvent<HTMLImageElement>) => {
-    const image = e.currentTarget;
-    const rect = image.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    
-    setZoomPosition({ x, y });
-    setIsZoomed(!isZoomed);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
-    if (!isZoomed) return;
-    
-    const image = e.currentTarget;
-    const rect = image.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    
-    setZoomPosition({ x, y });
-  };
-
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (!isModalOpen) return;
-    
-    if (e.key === 'ArrowLeft') {
-      setCurrentImageIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
-    } else if (e.key === 'ArrowRight') {
-      setCurrentImageIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
-    } else if (e.key === 'Escape') {
-      setIsModalOpen(false);
+    if (selectedImage !== null) {
+      setSelectedImage((selectedImage + 1) % images.length);
     }
   };
 
-  React.useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (selectedImage !== null) {
+      setSelectedImage((selectedImage - 1 + images.length) % images.length);
+    }
+  };
+
+  const formatDate = (date: string) => {
+    if (!date) return '';
+    const options: Intl.DateTimeFormatOptions = { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
     };
-  }, [isModalOpen]);
+    return new Date(date).toLocaleDateString('tr-TR', options);
+  };
 
   return (
-    <>
+    <div className="image-slider">
       <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={20}
+        modules={[Navigation, Pagination, Autoplay, EffectFade]}
+        spaceBetween={0}
         slidesPerView={1}
         navigation
         pagination={{ clickable: true }}
+        loop={true}
         autoplay={{
-          delay: 3000,
+          delay: 5000,
           disableOnInteraction: false,
+          pauseOnMouseEnter: true,
         }}
-        breakpoints={{
-          640: {
-            slidesPerView: 2,
-          },
-          1024: {
-            slidesPerView: 3,
-          },
-        }}
-        className="image-slider"
+        effect="fade"
+        speed={800}
+        grabCursor={true}
+        touchRatio={1.5}
+        longSwipesRatio={0.2}
+        resistance={false}
+        watchSlidesProgress={true}
       >
         {images.map((image, index) => (
-          <SwiperSlide key={index} onClick={() => handleImageClick(index)}>
-            <div className="slider-image-container" style={{ aspectRatio }}>
-              <img src={image} alt={titles[index] || `Slide ${index + 1}`} loading="lazy" />
+          <SwiperSlide key={index}>
+            <div 
+              className="slider-image-container"
+              onClick={() => handleImageClick(index)}
+            >
+              <img src={image} alt={titles[index] || `Slide ${index + 1}`} />
+              {(titles[index] || descriptions[index]) && (
+                <div className="slider-content">
+                  {titles[index] && <h3>{titles[index]}</h3>}
+                  {descriptions[index] && <p>{descriptions[index]}</p>}
+                </div>
+              )}
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
 
-      {isModalOpen && (
-        <div className="gallery-modal-overlay" onClick={() => setIsModalOpen(false)}>
-          <div className="gallery-modal">
-            <button className="close-button" onClick={() => setIsModalOpen(false)}>&times;</button>
-            <div className="gallery-modal-content">
+      {selectedImage !== null && (
+        <div className="slider-modal-overlay" onClick={handleClose}>
+          <div className="slider-modal" onClick={e => e.stopPropagation()}>
+            <button className="close-button" onClick={handleClose}>&times;</button>
+            <div className="slider-modal-content">
               <div className="modal-media-section">
-                <div 
-                  className={`modal-media-container ${isZoomed ? 'zoomed' : ''}`}
-                  style={isZoomed ? {
-                    cursor: 'zoom-out',
-                    backgroundImage: `url(${images[currentImageIndex]})`,
-                    backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`
-                  } : { cursor: 'zoom-in' }}
-                >
-                  <img
-                    src={images[currentImageIndex]}
-                    alt={titles[currentImageIndex] || 'Kickbox Antrenmanı'}
-                    className="gallery-modal-media"
-                    onClick={handleImageZoom}
-                    onMouseMove={handleMouseMove}
-                    style={{ opacity: isZoomed ? 0 : 1 }}
-                  />
-                </div>
-                {images.length > 1 && (
-                  <>
-                    <button className="nav-button prev" onClick={handlePrevious}>
-                      &#10094;
-                    </button>
-                    <button className="nav-button next" onClick={handleNext}>
-                      &#10095;
-                    </button>
-                    <div className="pagination-dots">
-                      {images.map((_, index) => (
-                        <span
-                          key={index}
-                          className={`dot ${index === currentImageIndex ? 'active' : ''}`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setCurrentImageIndex(index);
-                            setIsZoomed(false);
-                          }}
-                        />
-                      ))}
-                    </div>
-                  </>
-                )}
+                <img 
+                  src={images[selectedImage]} 
+                  alt={titles[selectedImage] || `Detail ${selectedImage + 1}`}
+                  className="modal-image"
+                />
+                <button className="nav-button prev" onClick={handlePrev}>&#10094;</button>
+                <button className="nav-button next" onClick={handleNext}>&#10095;</button>
               </div>
               <div className="modal-info-section">
-                <div className="gallery-modal-info">
-                  <div className="modal-header">
-                    <h3>{titles[currentImageIndex] || 'Kickbox Antrenmanı'}</h3>
-                  </div>
-                  <div className="modal-description">
-                    <p>{descriptions[currentImageIndex] || 'Profesyonel eğitmenlerimiz eşliğinde güvenli ve etkili antrenman deneyimi.'}</p>
-                  </div>
+                <div className="modal-header">
+                  <h3>{titles[selectedImage] || 'Kickbox Antrenmanı'}</h3>
+                  {categories[selectedImage] && (
+                    <span className="modal-category">
+                      {categories[selectedImage]}
+                    </span>
+                  )}
                 </div>
+                <div className="modal-description">
+                  <p>{descriptions[selectedImage] || 'Profesyonel eğitmenlerimiz eşliğinde güvenli ve etkili antrenman deneyimi.'}</p>
+                </div>
+                {dates[selectedImage] && (
+                  <div className="modal-footer">
+                    {formatDate(dates[selectedImage])}
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
-}; 
+};
+
+export default ImageSlider; 

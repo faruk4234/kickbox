@@ -74,13 +74,8 @@ export const Teachers: React.FC = () => {
       setVisibleTeachers(window.innerWidth <= 768 ? 1 : 3);
     };
 
-    // Set initial value
     handleResize();
-
-    // Add event listener
     window.addEventListener('resize', handleResize);
-
-    // Cleanup
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
@@ -114,11 +109,9 @@ export const Teachers: React.FC = () => {
       </div>
 
       <div className="load-more">
-        <div>
-          <button className="btn-primary" onClick={handleViewAllTeachers}>
-            Tüm Hocalarımız
-          </button>
-        </div>
+        <button className="btn-primary" onClick={handleViewAllTeachers}>
+          Tüm Hocalarımız
+        </button>
       </div>
 
       {selectedTeacher && (

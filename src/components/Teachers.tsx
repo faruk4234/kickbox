@@ -45,11 +45,11 @@ const MediaCarousel: React.FC<{ media: MediaItem[] }> = ({ media }) => {
             <button className="carousel-button next" onClick={handleNext}>
               ›
             </button>
-            <div className="carousel-dots">
+            <div className="teacher-carousel-dots">
               {media.map((_, index) => (
                 <span
                   key={index}
-                  className={`dot ${index === currentIndex ? 'active' : ''}`}
+                  className={`teacher-dot ${index === currentIndex ? 'active' : ''}`}
                   onClick={(e) => {
                     e.stopPropagation();
                     setCurrentIndex(index);
@@ -78,6 +78,18 @@ export const Teachers: React.FC = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Add body scroll lock effect
+  useEffect(() => {
+    if (selectedTeacher) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedTeacher]);
 
   const handleTeacherClick = (teacher: Teacher) => {
     setSelectedTeacher(teacher);

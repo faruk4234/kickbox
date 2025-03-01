@@ -176,6 +176,34 @@
   background: var(--accent-color);
 }
 
+/* Update class names to be more specific */
+.teacher-carousel-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 1;
+}
+
+.teacher-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.teacher-dot:hover {
+  background: rgba(255, 51, 51, 0.8);
+}
+
+.teacher-dot.active {
+  background: var(--accent-color);
+}
+
 @media (max-width: 1200px) {
   .teachers-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -255,55 +283,41 @@
 .teachers-modal-overlay,
 .teacher-modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.85);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  padding: 2rem;
+  overflow: hidden;
 }
 
 .teachers-modal,
 .teacher-modal {
-  background-color: var(--card-background);
-  border-radius: 12px;
-  padding: 2rem;
+  position: relative;
+  width: 95%;
   max-width: 1200px;
-  width: 90%;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-}
-
-.teacher-modal {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  height: 90vh;
+  background: var(--background-primary);
   border-radius: 12px;
-  padding: 0;
-  max-width: 1000px;
-  width: 90%;
-  max-height: 90vh;
   overflow: hidden;
-  position: relative;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+  display: flex;
+  flex-direction: column;
 }
 
 .teacher-modal-container {
   display: flex;
   height: 100%;
-  max-height: 90vh;
+  overflow: hidden;
 }
 
 .teacher-modal-sidebar {
-  width: 35%;
-  background: rgba(255, 255, 255, 0.9);
-  border-right: 1px solid rgba(0, 0, 0, 0.15);
+  width: 40%;
+  min-width: 350px;
+  padding: 20px;
+  border-right: 1px solid var(--border-color);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .teacher-modal-image {
@@ -542,9 +556,9 @@
 
 .teacher-modal-main {
   flex: 1;
-  padding: 2rem;
+  padding: 20px;
   overflow-y: auto;
-  background: rgba(255, 255, 255, 0.9);
+  -webkit-overflow-scrolling: touch;
 }
 
 .teacher-modal-section {
@@ -681,10 +695,13 @@
 
   .teacher-modal-container {
     flex-direction: column;
+    height: 100%;
   }
 
   .teacher-modal-sidebar {
     width: 100%;
+    min-width: 0;
+    max-height: 45vh;
     border-right: none;
     border-bottom: 1px solid var(--border-color);
   }
@@ -694,8 +711,8 @@
   }
 
   .teacher-modal-main {
-    padding: 1.5rem;
-    border-radius: 0 0 12px 12px;
+    flex: 1;
+    max-height: 55vh;
   }
 
   .teacher-modal-section {
@@ -736,15 +753,23 @@
   }
 
   .teacher-modal {
-    padding: 0;
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
   }
 
   .teacher-modal-image {
     height: 200px;
   }
 
+  .teacher-modal-sidebar {
+    max-height: 40vh;
+    padding: 16px;
+  }
+
   .teacher-modal-main {
-    padding: 1rem;
+    max-height: 60vh;
+    padding: 16px;
   }
 
   .teacher-modal-section {

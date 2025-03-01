@@ -42,11 +42,11 @@ const MediaCarousel: React.FC<{ media: MediaItem[] }> = ({ media }) => {
             <button className="carousel-button next" onClick={handleNext}>
               ›
             </button>
-            <div className="carousel-dots">
+            <div className="teacher-carousel-dots">
               {media.map((_, index) => (
                 <span
                   key={index}
-                  className={`dot ${index === currentIndex ? 'active' : ''}`}
+                  className={`teacher-dot ${index === currentIndex ? 'active' : ''}`}
                   onClick={(e) => {
                     e.stopPropagation();
                     setCurrentIndex(index);

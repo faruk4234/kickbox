@@ -1,121 +1,253 @@
 .teachers-section {
-  padding: 4rem 2rem;
-  background-color: var(--background-color);
-  color: var(--text-color);
+  padding: 80px 0;
+  background: var(--background-primary);
 }
 
 .teachers-section h2 {
   text-align: center;
-  margin-bottom: 3rem;
   font-size: 2.5rem;
-  color: var(--heading-color);
+  color: var(--text-primary);
+  margin-bottom: 40px;
 }
 
 .teachers-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-}
-
-.teachers-grid-full {
+  padding: 0 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
-  margin: 2rem 0;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 }
 
 .teacher-card {
-  background-color: var(--card-background);
+  position: relative;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--background-secondary);
   cursor: pointer;
-  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .teacher-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(255, 51, 51, 0.2);
 }
 
 .teacher-image {
-  width: 100%;
-  height: 300px;
-  overflow: hidden;
   position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
 }
 
 .teacher-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .teacher-card:hover .teacher-image img {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .teacher-info {
-  padding: 1.5rem;
+  padding: 20px;
   text-align: center;
-  background-color: var(--card-background);
+  background: var(--background-secondary);
+  border-top: 1px solid var(--border-color);
 }
 
 .teacher-info h3 {
-  margin: 0;
-  font-size: 1.25rem;
-  color: var(--heading-color);
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 .teacher-info p {
-  margin: 0.5rem 0;
-  color: var(--text-color-secondary);
-}
-
-.more-button {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 0.5rem 1.5rem;
-  border-radius: 25px;
-  cursor: pointer;
-  margin-top: 1rem;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.more-button:hover {
-  background-color: var(--primary-color-dark);
-  transform: translateY(-2px);
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
 }
 
 .load-more {
   text-align: center;
-  margin-top: 3rem;
+  margin-top: 40px;
 }
 
 .btn-primary {
-  background-color: var(--primary-color);
+  background: var(--accent-color);
   color: white;
   border: none;
-  padding: 0.8rem 2rem;
+  padding: 12px 24px;
   border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
-  font-size: 1rem;
   transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-color-dark);
+  background: #ff4444;
   transform: translateY(-2px);
+}
+
+/* Media Carousel Styles */
+.media-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.media-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.media-item {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) scale(0.9);
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+  color: #262626;
+  font-size: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-button:hover {
+  background: white;
+  transform: translateY(-50%) scale(1);
+  box-shadow: 0 8px 24px rgba(255, 51, 51, 0.3);
+}
+
+.carousel-button.prev {
+  left: 20px;
+}
+
+.carousel-button.next {
+  right: 20px;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 1;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot:hover {
+  background: rgba(255, 51, 51, 0.8);
+}
+
+.dot.active {
+  background: var(--accent-color);
+  transform: scale(1.2);
+}
+
+@media (max-width: 1200px) {
+  .teachers-grid {
+    gap: 20px;
+    padding: 0 16px;
+  }
+
+  .teacher-info {
+    padding: 16px;
+  }
+
+  .teacher-info h3 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .teachers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .teachers-section {
+    padding: 60px 0;
+  }
+
+  .teachers-section h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .teachers-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    gap: 24px;
+  }
+
+  .teacher-card {
+    margin: 0 auto;
+  }
+
+  .carousel-button {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .carousel-button.prev {
+    left: 12px;
+  }
+
+  .carousel-button.next {
+    right: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .teachers-grid {
+    gap: 20px;
+  }
+
+  .teacher-info h3 {
+    font-size: 16px;
+  }
+
+  .teacher-info p {
+    font-size: 13px;
+  }
+
+  .carousel-button {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
 }
 
 /* Modal Styles */

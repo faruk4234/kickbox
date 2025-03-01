@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Teacher, MediaItem } from '../types/Teacher';
 import { teachersData } from '../data/teachersData';
@@ -67,7 +67,22 @@ const MediaCarousel: React.FC<{ media: MediaItem[] }> = ({ media }) => {
 export const Teachers: React.FC = () => {
   const navigate = useNavigate();
   const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
-  const [visibleTeachers] = useState(3);
+  const [visibleTeachers, setVisibleTeachers] = useState(3);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setVisibleTeachers(window.innerWidth <= 768 ? 1 : 3);
+    };
+
+    // Set initial value
+    handleResize();
+
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleTeacherClick = (teacher: Teacher) => {
     setSelectedTeacher(teacher);

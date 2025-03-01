@@ -88,7 +88,6 @@ const ImageSlider: React.FC<ImageSliderProps> = ({
               {(titles[index] || descriptions[index]) && (
                 <div className="slider-content">
                   {titles[index] && <h3>{titles[index]}</h3>}
-                  {descriptions[index] && <p>{descriptions[index]}</p>}
                 </div>
               )}
             </div>

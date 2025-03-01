@@ -1,57 +1,211 @@
 .programs {
-  background-color: var(--bg-primary);
+  padding: 80px 0;
+  background: var(--background-primary);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: var(--text-primary);
+}
+
+.programs-slider-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .programs-container {
-  max-width: 1200px;
-  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  padding: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin: 0 auto;
 }
 
 .program-card {
-  background-color: var(--bg-secondary);
-  border-radius: 10px;
-  padding: 2rem;
+  background: var(--background-secondary);
+  border-radius: 12px;
+  padding: 24px;
   text-align: center;
-  transition: transform 0.3s ease;
-  border: 1px solid var(--primary-light);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .program-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .program-card h3 {
-  color: var(--primary-color);
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 12px;
+  color: var(--text-primary);
 }
 
 .program-description {
   color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-}
-
-.program-price {
-  font-size: 1.8rem;
-  color: var(--accent-color);
-  margin-bottom: 1.5rem;
-  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .program-features {
   list-style: none;
-  margin-bottom: 2rem;
+  padding: 0;
+  margin: 0 0 24px;
 }
 
 .program-features li {
-  margin: 0.5rem 0;
+  padding: 8px 0;
   color: var(--text-secondary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.program-card .btn-primary {
-  width: 100%;
+.program-features li:last-child {
+  border-bottom: none;
+}
+
+.btn-primary {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: var(--accent-color-dark);
+  transform: translateY(-2px);
+}
+
+/* Slider Controls */
+.slider-controls {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .programs-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .programs {
+    padding: 60px 0;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .programs-slider-container {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .programs-container {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    gap: 0;
+  }
+
+  .programs-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .program-card {
+    flex: 0 0 100%;
+    width: 100%;
+    scroll-snap-align: start;
+    border-radius: 0;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .program-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Show slider controls on mobile */
+  .slider-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 20px 0;
+  }
+
+  .slider-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .slider-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .slider-button:not(:disabled):hover {
+    background: var(--accent-color);
+    color: white;
+  }
+
+  .slider-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .slider-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .slider-dot.active {
+    background: var(--accent-color);
+    transform: scale(1.2);
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .program-card {
+    padding: 16px;
+  }
+
+  .program-card h3 {
+    font-size: 1.25rem;
+  }
+
+  .slider-button {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
 } 

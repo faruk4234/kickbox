@@ -3,49 +3,61 @@ import ImageSlider from './ImageSlider';
 import '../styles/WomensClass.css';
 
 export const WomensClass: React.FC = () => {
-  const classImages = [
-    "https://images.unsplash.com/photo-1593352216894-89108a0d2653?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?q=80&w=1200&auto=format&fit=crop",
-    "https://images.pexels.com/photos/4162550/pexels-photo-4162550.jpeg?auto=compress&w=1200",
-    "https://images.pexels.com/photos/4162548/pexels-photo-4162548.jpeg?auto=compress&w=1200",
-    "https://images.pexels.com/photos/4162452/pexels-photo-4162452.jpeg?auto=compress&w=1200"
-  ];
-
-  const imageTitles = [
-    "Kadınlar için Özel Kickbox Dersleri",
-    "Güçlendirici Antrenmanlar",
-    "Teknik Gelişim",
-    "Kondisyon ve Dayanıklılık",
-    "Özgüven Geliştirme",
-    "Profesyonel Eğitim"
-  ];
-
-  const imageDescriptions = [
-    "Kadınlara özel tasarlanmış kickbox programımızda, güvenli ve destekleyici bir ortamda kendinizi geliştirin. Deneyimli kadın eğitmenlerimiz eşliğinde, kendi hızınızda ilerleyin.",
-    "Vücut direncini artıran, kas yapısını güçlendiren ve esneklik kazandıran özel antrenman programları. Her seviyeye uygun egzersizlerle forma girin.",
-    "Kickbox tekniklerini adım adım öğrenin. Doğru duruş, vuruş teknikleri ve savunma stratejileri ile kendinizi korumayı öğrenin.",
-    "Yüksek tempolu kardio egzersizleri ile kondisyonunuzu artırın. Dayanıklılık ve güç dengesini yakalayın.",
-    "Kickbox eğitimi ile sadece fiziksel değil, mental olarak da güçlenin. Özgüveninizi artırın ve stresle başa çıkmayı öğrenin.",
-    "Uzman eğitmenlerimizle birebir çalışma imkanı. Size özel hazırlanmış programlarla hedeflerinize ulaşın."
-  ];
-
-  const categories = [
-    "Kadınlara Özel",
-    "Fitness",
-    "Teknik Eğitim",
-    "Kardio",
-    "Mental Gelişim",
-    "Özel Ders"
-  ];
-
-  const dates = [
-    "2024-03-01",
-    "2024-03-02",
-    "2024-03-03",
-    "2024-03-04",
-    "2024-03-05",
-    "2024-03-06"
+  const sliderItems = [
+    {
+      id: 1,
+      type: 'image' as const,
+      url: "https://images.unsplash.com/photo-1593352216894-89108a0d2653?q=80&w=1200&auto=format&fit=crop",
+      title: "Kadınlar için Özel Kickbox Dersleri",
+      description: "Kadınlara özel tasarlanmış kickbox programımızda, güvenli ve destekleyici bir ortamda kendinizi geliştirin. Deneyimli kadın eğitmenlerimiz eşliğinde, kendi hızınızda ilerleyin.",
+      category: "Kadınlara Özel",
+      date: "2024-03-01"
+    },
+    {
+      id: 2,
+      type: 'image' as const,
+      url: "https://images.unsplash.com/photo-1599058917765-a780eda07a3e?q=80&w=1200&auto=format&fit=crop",
+      title: "Güçlendirici Antrenmanlar",
+      description: "Vücut direncini artıran, kas yapısını güçlendiren ve esneklik kazandıran özel antrenman programları. Her seviyeye uygun egzersizlerle forma girin.",
+      category: "Fitness",
+      date: "2024-03-02"
+    },
+    {
+      id: 3,
+      type: 'image' as const,
+      url: "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?q=80&w=1200&auto=format&fit=crop",
+      title: "Teknik Gelişim",
+      description: "Kickbox tekniklerini adım adım öğrenin. Doğru duruş, vuruş teknikleri ve savunma stratejileri ile kendinizi korumayı öğrenin.",
+      category: "Teknik Eğitim",
+      date: "2024-03-03"
+    },
+    {
+      id: 4,
+      type: 'image' as const,
+      url: "https://images.pexels.com/photos/4162550/pexels-photo-4162550.jpeg?auto=compress&w=1200",
+      title: "Kondisyon ve Dayanıklılık",
+      description: "Yüksek tempolu kardio egzersizleri ile kondisyonunuzu artırın. Dayanıklılık ve güç dengesini yakalayın.",
+      category: "Kardio",
+      date: "2024-03-04"
+    },
+    {
+      id: 5,
+      type: 'image' as const,
+      url: "https://images.pexels.com/photos/4162548/pexels-photo-4162548.jpeg?auto=compress&w=1200",
+      title: "Özgüven Geliştirme",
+      description: "Kickbox eğitimi ile sadece fiziksel değil, mental olarak da güçlenin. Özgüveninizi artırın ve stresle başa çıkmayı öğrenin.",
+      category: "Mental Gelişim",
+      date: "2024-03-05"
+    },
+    {
+      id: 6,
+      type: 'image' as const,
+      url: "https://images.pexels.com/photos/4162452/pexels-photo-4162452.jpeg?auto=compress&w=1200",
+      title: "Profesyonel Eğitim",
+      description: "Uzman eğitmenlerimizle birebir çalışma imkanı. Size özel hazırlanmış programlarla hedeflerinize ulaşın.",
+      category: "Özel Ders",
+      date: "2024-03-06"
+    }
   ];
 
   return (
@@ -71,13 +83,7 @@ export const WomensClass: React.FC = () => {
             </ul>
           </div>
           <div className="slider-section">
-            <ImageSlider 
-              images={classImages} 
-              titles={imageTitles}
-              descriptions={imageDescriptions}
-              categories={categories}
-              dates={dates}
-            />
+            <ImageSlider items={sliderItems} />
           </div>
         </div>
       </div>

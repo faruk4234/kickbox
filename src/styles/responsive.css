@@ -1,0 +1,78 @@
+/* Global responsive image rules */
+@media (max-width: 768px) {
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Optimize image loading on mobile */
+  img:not([loading]) {
+    loading: lazy;
+  }
+
+  /* Reduce image quality on mobile for better performance */
+  img[src*=".jpg"],
+  img[src*=".jpeg"],
+  img[src*=".png"] {
+    image-rendering: optimizeSpeed;
+  }
+}
+
+/* Responsive media container */
+.responsive-media {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+/* Mobile-specific image sizes */
+@media (max-width: 480px) {
+  .hero-image {
+    max-height: 300px;
+  }
+
+  .gallery-image {
+    max-height: 200px;
+  }
+
+  .teacher-image {
+    max-height: 250px;
+  }
+}
+
+/* Prevent image overflow */
+.img-container {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+/* Fix for modal scroll on mobile */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modal-content {
+  position: relative;
+  margin: 15px auto;
+  width: 95%;
+  max-width: 1200px;
+  background: var(--background-primary);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Fix for iOS momentum scrolling */
+.scroll-container {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  max-height: 100vh;
+} 

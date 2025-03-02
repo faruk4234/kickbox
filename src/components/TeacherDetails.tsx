@@ -197,7 +197,7 @@ export const TeacherDetails: React.FC<TeacherDetailsProps> = ({
           {onClose && (
             <button className="close-button" onClick={onClose}>&times;</button>
           )}
-          <div className="teacher-modal-container">
+          <div className="teacher-modal-container scroll-container">
             {content}
           </div>
         </div>

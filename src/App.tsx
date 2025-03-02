@@ -13,6 +13,7 @@ import GalleryPage from './pages/GalleryPage';
 import './styles/fonts.css';
 import './styles/theme.css';
 import './styles/App.css';
+import './styles/responsive.css';
 
 const App: React.FC = () => {
   return (

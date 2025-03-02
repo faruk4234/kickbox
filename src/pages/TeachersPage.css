@@ -190,24 +190,25 @@
   -webkit-backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   z-index: 1000;
-  padding: clamp(1rem, 3vw, 2rem);
-  animation: fadeIn 0.3s ease;
-  overflow-y: auto; /* Enable scrolling on overlay */
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  padding: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
 }
 
 .teacher-modal {
   background: var(--background-primary);
-  border-radius: 16px;
+  border-radius: 0;
   width: 100%;
   max-width: 1200px;
-  margin: auto; /* Center modal */
+  margin: 0;
   position: relative;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   animation: slideUp 0.3s ease;
   overflow: hidden;
+  min-height: 100%;
 }
 
 .close-button {
@@ -236,9 +237,9 @@
 
 .teacher-modal-container {
   display: grid;
-  grid-template-columns: minmax(350px, 1fr) 2fr; /* Increased minimum width for sidebar */
-  min-height: 600px; /* Minimum height for desktop */
-  max-height: 90vh;
+  grid-template-columns: minmax(350px, 1fr) 2fr;
+  height: 100%;
+  overflow: hidden;
 }
 
 .teacher-modal-sidebar {
@@ -491,26 +492,47 @@
   .teacher-modal-overlay {
     padding: 0;
     height: 100%;
-    align-items: flex-start; /* Align to top for better scrolling */
   }
 
   .teacher-modal {
     margin: 0;
     border-radius: 0;
-    min-height: 100%;
+    height: 100%;
+    overflow-y: auto;
   }
 
   .teacher-modal-container {
+    grid-template-columns: 1fr;
     height: auto;
+    min-height: 100%;
+    overflow: visible;
   }
 
   .teacher-modal-sidebar {
-    padding: 1rem;
-    gap: 1rem;
+    position: relative;
+    overflow: visible;
+    height: auto;
   }
 
   .teacher-modal-main {
-    padding: 1rem;
+    position: relative;
+    overflow: visible;
+    height: auto;
+  }
+
+  .gallery-modal-overlay {
+    align-items: flex-start;
+  }
+
+  .gallery-modal {
+    margin: 0;
+    height: 100%;
+    border-radius: 0;
+  }
+
+  .gallery-modal-content {
+    height: auto;
+    min-height: 100%;
   }
 
   .teacher-modal-section {
@@ -527,7 +549,7 @@
   }
 
   .close-button {
-    position: fixed; /* Fixed position for better accessibility */
+    position: fixed;
     top: 1rem;
     right: 1rem;
   }
@@ -535,16 +557,22 @@
 
 @media (max-width: 480px) {
   .teacher-modal-overlay {
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    position: fixed;
+    overflow-y: auto;
+  }
+
+  .teacher-modal {
+    min-height: 100%;
+    overflow-y: auto;
   }
 
   .teacher-modal-container {
-    overflow: visible; /* Allow content to scroll */
+    overflow: visible;
   }
 
   .teacher-modal-sidebar,
   .teacher-modal-main {
-    overflow: visible; /* Allow content to scroll */
+    overflow: visible;
   }
 
   .teacher-modal-image {
@@ -573,7 +601,7 @@
   }
 
   .teacher-modal {
-    transform: translateZ(0); /* Force hardware acceleration */
+    transform: translateZ(0);
   }
 
   .close-button {
@@ -638,17 +666,17 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .teachers-page {
-    padding-top: 56px; /* Mobile navbar height */
+    padding-top: 56px;
   }
 
   .page-header-wrapper {
-    top: 56px; /* Mobile navbar height */
-    height: 48px; /* Smaller header on mobile */
+    top: 56px;
+    height: 48px;
   }
 
   .categories-container {
-    top: 104px; /* Mobile navbar (56px) + header (48px) */
-    height: 48px; /* Smaller categories height on mobile */
+    top: 104px;
+    height: 48px;
   }
 
   .categories-wrapper {
@@ -660,7 +688,7 @@
   }
 
   .teachers-content {
-    margin-top: 152px; /* Mobile navbar (56px) + header (48px) + categories (48px) */
+    margin-top: 152px;
     padding: 16px;
   }
 
@@ -717,4 +745,86 @@
   object-fit: cover;
   object-position: center;
   transition: transform 0.3s ease;
+}
+
+.gallery-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gallery-modal {
+  position: relative;
+  width: 95%;
+  max-width: 1000px;
+  margin: 15px auto;
+  background: var(--background-primary);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.gallery-modal-content {
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-height: 90vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gallery-modal-media {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .gallery-modal {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .gallery-modal-content {
+    max-height: 100vh;
+  }
+
+  .gallery-modal-media {
+    max-height: 70vh;
+  }
+
+  .teacher-gallery-image {
+    aspect-ratio: 1/1;
+  }
+
+  .teacher-gallery-card {
+    margin: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-modal-media {
+    max-height: 60vh;
+  }
+
+  .teacher-gallery-image {
+    aspect-ratio: 3/4;
+  }
+
+  .teachers-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 10px;
+  }
 } 

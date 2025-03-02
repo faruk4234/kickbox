@@ -97,7 +97,7 @@
 
 .categories-scroll {
   display: flex;
-  gap: 12px;
+  gap: 20px;
   align-items: center;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -108,7 +108,7 @@
 }
 
 .category-button {
-  padding: 10px 24px;
+  padding: 12px 28px;
   border-radius: 30px;
   border: none;
   background-color: var(--background-secondary);
@@ -535,12 +535,12 @@
   }
 
   .categories-scroll {
+    gap: 16px;
     padding: 12px 0;
   }
 
   .category-button {
-    padding: 8px 20px;
-    font-size: 14px;
+    padding: 10px 24px;
   }
 
   .gallery-modal {
@@ -626,12 +626,12 @@
   }
 
   .categories-scroll {
+    gap: 12px;
     padding: 10px 0;
   }
 
   .category-button {
-    padding: 6px 16px;
-    font-size: 13px;
+    padding: 8px 20px;
   }
 
   .modal-media-section {

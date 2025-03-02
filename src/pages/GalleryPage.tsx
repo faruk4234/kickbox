@@ -100,17 +100,17 @@ const GalleryPage: React.FC = () => {
 
   return (
     <div className="gallery-page">
-      <div className="page-header-wrapper">
+      <header className="page-header-wrapper">
         <div className="page-header">
           <nav className="page-header-nav">
-            <a href="/">← Geri</a>
-            <a href="/">Ana Sayfa</a>
+            <a href="/" className="nav-back">← Geri</a>
+            <a href="/" className="nav-home">Ana Sayfa</a>
           </nav>
           <h1 className="page-header-title">Galeri</h1>
         </div>
-      </div>
+      </header>
       
-      <div className="categories-container">
+      <nav className="categories-container">
         <div className="categories-wrapper">
           <div className="categories-scroll">
             <button
@@ -130,9 +130,9 @@ const GalleryPage: React.FC = () => {
             ))}
           </div>
         </div>
-      </div>
+      </nav>
 
-      <div className="gallery-content">
+      <main className="gallery-content">
         <div className="gallery-content-inner">
           <div className="gallery-grid">
             {filteredItems.map((item) => (
@@ -164,93 +164,85 @@ const GalleryPage: React.FC = () => {
             ))}
           </div>
         </div>
+      </main>
 
-        {selectedItem && (
-          <div className="gallery-modal-overlay" onClick={handleModalClick}>
-            <div className="gallery-modal" onClick={(e) => e.stopPropagation()}>
-              <button className="close-button" onClick={() => setSelectedItem(null)}>&times;</button>
-              <div className="gallery-modal-content">
-                <div className="modal-media-section">
-                  <div 
-                    className={`modal-media-container ${isZoomed ? 'zoomed' : ''}`}
-                    style={isZoomed ? {
-                      cursor: 'zoom-out',
-                      backgroundImage: `url(${selectedItem.url})`,
-                      backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`
-                    } : { cursor: 'zoom-in' }}
-                  >
-                    {selectedItem.type === 'video' ? (
-                      <video
-                        src={selectedItem.url}
-                        controls
-                        playsInline
-                        className="gallery-modal-media"
-                      />
-                    ) : (
-                      <img
-                        src={selectedItem.url}
-                        alt={selectedItem.title}
-                        className="gallery-modal-media"
-                        onClick={handleImageZoom}
-                        onMouseMove={handleMouseMove}
-                        style={{ opacity: isZoomed ? 0 : 1 }}
-                      />
-                    )}
-                  </div>
-                  {filteredItems.length > 1 && (
-                    <>
-                      <button 
-                        className="nav-button prev" 
-                        onClick={handlePrevious}
-                        aria-label="Önceki görsel"
-                      >
-                        &#10094;
-                      </button>
-                      <button 
-                        className="nav-button next" 
-                        onClick={handleNext}
-                        aria-label="Sonraki görsel"
-                      >
-                        &#10095;
-                      </button>
-                      <div className="pagination-dots">
-                        {filteredItems.map((_, index) => (
-                          <span
-                            key={index}
-                            className={`dot ${index === currentIndex ? 'active' : ''}`}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setCurrentIndex(index);
-                              setSelectedItem(filteredItems[index]);
-                              setIsZoomed(false);
-                            }}
-                          />
-                        ))}
-                      </div>
-                    </>
+      {selectedItem && (
+        <div className="gallery-modal-overlay" onClick={handleModalClick}>
+          <div className="gallery-modal" onClick={(e) => e.stopPropagation()}>
+            <button 
+              className="close-button" 
+              onClick={() => setSelectedItem(null)}
+              aria-label="Kapat"
+            >
+              ×
+            </button>
+            <div className="gallery-modal-content">
+              <div className="modal-media-section">
+                <div 
+                  className={`modal-media-container ${isZoomed ? 'zoomed' : ''}`}
+                  style={isZoomed ? {
+                    cursor: 'zoom-out',
+                    backgroundImage: `url(${selectedItem.url})`,
+                    backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`
+                  } : { cursor: 'zoom-in' }}
+                >
+                  {selectedItem.type === 'video' ? (
+                    <video
+                      src={selectedItem.url}
+                      controls
+                      playsInline
+                      className="gallery-modal-media"
+                    />
+                  ) : (
+                    <img
+                      src={selectedItem.url}
+                      alt={selectedItem.title}
+                      className="gallery-modal-media"
+                      onClick={handleImageZoom}
+                      onMouseMove={handleMouseMove}
+                      style={{ opacity: isZoomed ? 0 : 1 }}
+                    />
                   )}
                 </div>
-                <div className="modal-info-section">
-                  <div className="gallery-modal-info">
-                    <div className="modal-header">
-                      <h3>{selectedItem.title}</h3>
-                      <span className="gallery-category">
-                        {formatCategoryName(selectedItem.category)}
-                      </span>
-                    </div>
-                    <div className="modal-description">
-                      <p>{selectedItem.description}</p>
-                    </div>
-                    <div className="modal-footer">
-                      <span className="gallery-date">{selectedItem.date}</span>
-                    </div>
+                {filteredItems.length > 1 && (
+                  <>
+                    <button 
+                      className="nav-button prev" 
+                      onClick={handlePrevious}
+                      aria-label="Önceki görsel"
+                    >
+                      &#10094;
+                    </button>
+                    <button 
+                      className="nav-button next" 
+                      onClick={handleNext}
+                      aria-label="Sonraki görsel"
+                    >
+                      &#10095;
+                    </button>
+                  </>
+                )}
+              </div>
+              <div className="modal-info-section">
+                <div className="gallery-modal-info">
+                  <div className="modal-header">
+                    <h3>{selectedItem.title}</h3>
+                    <span className="gallery-category">
+                      {formatCategoryName(selectedItem.category)}
+                    </span>
+                  </div>
+                  <div className="modal-description">
+                    <p>{selectedItem.description}</p>
+                  </div>
+                  <div className="modal-footer">
+                    <span className="gallery-date">{selectedItem.date}</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

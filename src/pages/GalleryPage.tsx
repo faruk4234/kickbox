@@ -101,7 +101,13 @@ const GalleryPage: React.FC = () => {
   return (
     <div className="gallery-page">
       <div className="page-header-wrapper">
-        <PageHeader title="Galeri" />
+        <div className="page-header">
+          <nav className="page-header-nav">
+            <a href="/">← Geri</a>
+            <a href="/">Ana Sayfa</a>
+          </nav>
+          <h1 className="page-header-title">Galeri</h1>
+        </div>
       </div>
       
       <div className="categories-container">

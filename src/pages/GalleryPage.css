@@ -17,7 +17,6 @@
   background-color: var(--background-primary);
   z-index: 99;
   border-bottom: 1px solid var(--border-color);
-  padding: 8px 0;
   height: 70px;
   display: flex;
   align-items: center;
@@ -26,13 +25,20 @@
 .page-header {
   display: flex;
   align-items: center;
-  padding: 0 24px;
+  justify-content: flex-start;
   width: 100%;
   max-width: 2400px;
   margin: 0 auto;
+  padding: 0 24px;
 }
 
-.page-header a {
+.page-header-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.page-header-nav a {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -40,6 +46,20 @@
   text-decoration: none;
   font-size: 15px;
   font-weight: 500;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+}
+
+.page-header-nav a:hover {
+  background-color: var(--accent-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.page-header-title {
+  margin-left: auto;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .categories-container {
@@ -70,8 +90,27 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  padding: 20px 0;
+  padding: 16px 0;
   width: 100%;
+}
+
+.category-button {
+  padding: 10px 24px;
+  border-radius: 30px;
+  border: none;
+  background-color: var(--background-secondary);
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.category-button:hover,
+.category-button.active {
+  background-color: var(--accent-color);
+  color: white;
 }
 
 .gallery-content {
@@ -441,6 +480,11 @@
     padding: 0 16px;
   }
 
+  .page-header-nav a {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
   .categories-container {
     top: 60px;
     height: 70px;
@@ -461,11 +505,33 @@
   .gallery-item {
     min-height: 220px;
   }
+
+  .categories-wrapper {
+    padding: 0 16px;
+  }
+
+  .categories-scroll {
+    padding: 12px 0;
+  }
+
+  .category-button {
+    padding: 8px 20px;
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 480px) {
   .page-header-wrapper {
     height: 56px;
+  }
+
+  .page-header {
+    padding: 0 12px;
+  }
+
+  .page-header-nav a {
+    font-size: 13px;
+    padding: 4px 10px;
   }
 
   .categories-container {
@@ -490,6 +556,15 @@
 
   .categories-wrapper {
     padding: 0 12px;
+  }
+
+  .categories-scroll {
+    padding: 10px 0;
+  }
+
+  .category-button {
+    padding: 6px 16px;
+    font-size: 13px;
   }
 }
 

@@ -5,8 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-  padding: 2rem;
+  background: var(--background-primary);
   overflow: hidden;
 }
 
@@ -23,23 +22,28 @@
 
 .hero-container {
   position: relative;
-  z-index: 2;
+  z-index: var(--z-elevated);
   display: flex;
   width: 100%;
-  max-width: 1400px;
-  gap: 4rem;
+  max-width: var(--container-2xl);
+  gap: var(--spacing-3xl);
   align-items: center;
-  padding: 2rem;
+  padding: var(--spacing-xl);
+}
+
+.hero-media-wrapper {
+  flex: 1;
+  position: relative;
+  max-width: 600px;
 }
 
 .hero-media {
-  flex: 1;
-  height: 600px;
-  border-radius: 20px;
+  height: clamp(250px, 45vh, 450px);
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-xl);
   transform: perspective(1000px) rotateY(12deg);
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--transition-normal) var(--ease-out);
 }
 
 .hero-media:hover {
@@ -294,17 +298,17 @@
 
 /* Tablet Responsive Styles */
 @media (max-width: 1024px) {
-  .hero {
-    padding: 1rem;
-  }
-
   .hero-container {
-    padding: 1rem;
-    gap: 2rem;
+    padding: var(--spacing-lg);
+    gap: var(--spacing-2xl);
   }
 
   .hero-media {
-    height: 500px;
+    height: clamp(200px, 40vh, 350px);
+  }
+
+  .hero-media-wrapper {
+    max-width: 500px;
   }
 
   .hero-title {
@@ -323,27 +327,30 @@
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
   .hero {
-    padding: 0;
     min-height: auto;
+    padding: var(--spacing-lg) 0;
   }
 
   .hero-container {
     flex-direction: column;
-    padding: 1rem;
-    gap: 2rem;
+    padding: var(--spacing-md);
+    gap: var(--spacing-xl);
+  }
+
+  .hero-media-wrapper {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
   }
 
   .hero-media {
-    height: 300px;
-    width: 100%;
-    transform: none;
-    order: 1;
+    height: clamp(180px, 35vh, 250px);
+    transform: none !important;
   }
 
   .hero-content {
-    order: 2;
     text-align: center;
-    padding: 0 1rem;
+    padding: 0 var(--spacing-sm);
   }
 
   .hero-cta {
@@ -366,12 +373,12 @@
   }
 
   .hero-title {
-    font-size: 2rem;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
     margin-bottom: 0.5rem;
   }
 
   .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 3vw, 1.4rem);
     margin-bottom: 1rem;
   }
 

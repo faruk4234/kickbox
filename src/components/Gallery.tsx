@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Gallery.css';
 
@@ -262,214 +262,191 @@ export const galleryItems: GalleryItem[] = [
 
 export const Gallery = () => {
   const navigate = useNavigate();
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [visibleItems, setVisibleItems] = useState(3);
-  const [isZoomed, setIsZoomed] = useState(false);
-  const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });
+  const [modalOpen, setModalOpen] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
-  // Only show first 3 items
+  // Only show first 3 items in preview
   const previewItems = galleryItems.slice(0, 3);
 
   useEffect(() => {
+    setIsVisible(true);
     const handleResize = () => {
-      setVisibleItems(window.innerWidth <= 768 ? 1 : 3);
+      setIsMobile(window.innerWidth <= 768);
     };
 
-    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const displayedItems = visibleItems === 1 
-    ? [previewItems[currentIndex]] 
-    : previewItems;
-
-  const handleImageZoom = (e: React.MouseEvent<HTMLImageElement>) => {
-    if (!selectedItem) return;
-    
-    const image = e.currentTarget;
-    const rect = image.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    
-    setZoomPosition({ x, y });
-    setIsZoomed(!isZoomed);
+  const handlePrevious = () => {
+    if (currentSlide > 0) {
+      setCurrentSlide(prev => prev - 1);
+      if (sliderRef.current) {
+        sliderRef.current.scrollTo({
+          left: (currentSlide - 1) * sliderRef.current.offsetWidth,
+          behavior: 'smooth'
+        });
+      }
+    }
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>) => {
-    if (!isZoomed || !selectedItem) return;
-    
-    const image = e.currentTarget;
-    const rect = image.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    
-    setZoomPosition({ x, y });
+  const handleNext = () => {
+    if (currentSlide < previewItems.length - 1) {
+      setCurrentSlide(prev => prev + 1);
+      if (sliderRef.current) {
+        sliderRef.current.scrollTo({
+          left: (currentSlide + 1) * sliderRef.current.offsetWidth,
+          behavior: 'smooth'
+        });
+      }
+    }
   };
 
-  const handleItemClick = (item: GalleryItem, index: number) => {
-    setSelectedItem(item);
-    setCurrentIndex(index);
-    setIsZoomed(false);
-  };
-
-  const handleNext = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const nextIndex = (currentIndex + 1) % previewItems.length;
-    setCurrentIndex(nextIndex);
-  };
-
-  const handlePrevious = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const prevIndex = (currentIndex - 1 + previewItems.length) % previewItems.length;
-    setCurrentIndex(prevIndex);
-  };
-
-  const handleModalNext = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const nextIndex = (currentIndex + 1) % previewItems.length;
-    setCurrentIndex(nextIndex);
-    setSelectedItem(previewItems[nextIndex]);
-    setIsZoomed(false);
-  };
-
-  const handleModalPrevious = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const prevIndex = (currentIndex - 1 + previewItems.length) % previewItems.length;
-    setCurrentIndex(prevIndex);
-    setSelectedItem(previewItems[prevIndex]);
-    setIsZoomed(false);
-  };
-
-  const handleClose = () => {
-    setSelectedItem(null);
-    setIsZoomed(false);
+  const handleDotClick = (index: number) => {
+    setCurrentSlide(index);
+    if (sliderRef.current) {
+      sliderRef.current.scrollTo({
+        left: index * sliderRef.current.offsetWidth,
+        behavior: 'smooth'
+      });
+    }
   };
 
   const handleViewAll = () => {
     navigate('/gallery');
   };
 
+  const handleItemClick = (item: GalleryItem) => {
+    setSelectedItem(item);
+    setModalOpen(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const handleCloseModal = () => {
+    setSelectedItem(null);
+    setModalOpen(false);
+    document.body.style.overflow = 'auto';
+  };
+
+  const handleModalPrevious = () => {
+    const currentIndex = galleryItems.findIndex(item => item.id === selectedItem?.id);
+    const newIndex = currentIndex === 0 ? galleryItems.length - 1 : currentIndex - 1;
+    setSelectedItem(galleryItems[newIndex]);
+  };
+
+  const handleModalNext = () => {
+    const currentIndex = galleryItems.findIndex(item => item.id === selectedItem?.id);
+    const newIndex = currentIndex === galleryItems.length - 1 ? 0 : currentIndex + 1;
+    setSelectedItem(galleryItems[newIndex]);
+  };
+
   return (
-    <section className="gallery" id="gallery">
-      <h2 className="section-title">Galeri</h2>
-      <div className="gallery-container">
+    <section className="gallery-section" id="gallery">
+      <div className={`gallery-container ${isVisible ? 'fade-in' : ''}`}>
+        <h2 className="section-title">Galeri</h2>
         <div className="gallery-slider">
-          {displayedItems.map((item, index) => (
-            <div
-              key={item.id}
-              className="gallery-item"
-              onClick={() => handleItemClick(item, visibleItems === 1 ? currentIndex : index)}
-            >
-              {item.type === 'video' ? (
-                <div className="video-thumbnail">
-                  <img src={item.thumbnail || item.url} alt={item.title} loading="lazy" />
-                  <div className="play-button">
-                    <span>▶</span>
-                  </div>
+          <div className="slider-container" ref={sliderRef}>
+            {previewItems.map((item, index) => (
+              <div
+                key={item.id}
+                className={`slider-item ${index === currentSlide ? 'active' : ''}`}
+                onClick={() => handleItemClick(item)}
+              >
+                <div className="item-image">
+                  {item.type === 'video' ? (
+                    <div className="video-thumbnail">
+                      <img src={item.thumbnail || item.url} alt={item.title} loading="lazy" />
+                      <div className="play-button">
+                        <span>▶</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <img src={item.url} alt={item.title} loading="lazy" />
+                  )}
                 </div>
-              ) : (
-                <img src={item.url} alt={item.title} loading="lazy" />
-              )}
-              <div className="gallery-item-overlay">
-                <div className="overlay-content">
+                <div className="item-content">
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
-                  <span className="view-more">Detayları Gör</span>
+                  <button className="btn-secondary">Daha Fazla</button>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-        {visibleItems === 1 && (
-          <>
-            <button className="carousel-button prev" onClick={handlePrevious}>‹</button>
-            <button className="carousel-button next" onClick={handleNext}>›</button>
-            <div className="carousel-dots">
-              {previewItems.map((_, i) => (
-                <span
-                  key={i}
-                  className={`dot ${currentIndex === i ? 'active' : ''}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrentIndex(i);
-                  }}
+            ))}
+          </div>
+
+          <div className="slider-controls">
+            <button 
+              className="slider-button prev" 
+              onClick={handlePrevious}
+              disabled={currentSlide === 0}
+              aria-label="Önceki galeri"
+            >
+              ‹
+            </button>
+            <div className="slider-dots">
+              {previewItems.map((_, index) => (
+                <button
+                  key={index}
+                  className={`slider-dot ${index === currentSlide ? 'active' : ''}`}
+                  onClick={() => handleDotClick(index)}
+                  aria-label={`Galeri ${index + 1}`}
                 />
               ))}
             </div>
-          </>
-        )}
+            <button 
+              className="slider-button next" 
+              onClick={handleNext}
+              disabled={currentSlide === previewItems.length - 1}
+              aria-label="Sonraki galeri"
+            >
+              ›
+            </button>
+          </div>
+        </div>
+        <div className="section-actions">
+          <button className="btn-primary" onClick={handleViewAll}>
+            Tüm Galeriyi Gör
+          </button>
+        </div>
       </div>
 
-      <div className="gallery-actions">
-        <button className="btn-primary" onClick={handleViewAll}>
-          Tüm Galeriyi Gör
-        </button>
-      </div>
-
-      {selectedItem && (
-        <div className="gallery-modal-overlay" onClick={handleClose}>
+      {modalOpen && selectedItem && (
+        <div className="gallery-modal-overlay" onClick={handleCloseModal}>
           <div className="gallery-modal" onClick={e => e.stopPropagation()}>
-            <button className="close-button" onClick={handleClose}>&times;</button>
             <div className="gallery-modal-content">
               <div className="modal-media-section">
-                {selectedItem.type === 'video' ? (
-                  <video
-                    src={selectedItem.url}
-                    controls
-                    playsInline
-                    className="gallery-modal-media"
-                  />
-                ) : (
-                  <div 
-                    className={`modal-media-container ${isZoomed ? 'zoomed' : ''}`}
-                    style={isZoomed ? {
-                      cursor: 'zoom-out',
-                      backgroundImage: `url(${selectedItem.url})`,
-                      backgroundPosition: `${zoomPosition.x}% ${zoomPosition.y}%`
-                    } : { cursor: 'zoom-in' }}
-                  >
+                <div className="modal-media-container">
+                  {selectedItem.type === 'video' ? (
+                    <video
+                      className="gallery-modal-media"
+                      src={selectedItem.url}
+                      controls
+                      autoPlay
+                      playsInline
+                    />
+                  ) : (
                     <img
+                      className="gallery-modal-media"
                       src={selectedItem.url}
                       alt={selectedItem.title}
-                      className="gallery-modal-media"
-                      onClick={handleImageZoom}
-                      onMouseMove={handleMouseMove}
-                      style={{ opacity: isZoomed ? 0 : 1 }}
                     />
-                  </div>
-                )}
+                  )}
+                </div>
                 <button className="nav-button prev" onClick={handleModalPrevious}>
-                  &#10094;
+                  ‹
                 </button>
                 <button className="nav-button next" onClick={handleModalNext}>
-                  &#10095;
+                  ›
                 </button>
-                <div className="pagination-dots">
-                  {previewItems.map((_, index) => (
-                    <span
-                      key={index}
-                      className={`dot ${index === currentIndex ? 'active' : ''}`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCurrentIndex(index);
-                        setSelectedItem(previewItems[index]);
-                        setIsZoomed(false);
-                      }}
-                    />
-                  ))}
-                </div>
               </div>
               <div className="modal-info-section">
                 <div className="gallery-modal-info">
                   <div className="modal-header">
                     <h3>{selectedItem.title}</h3>
-                    <span className="gallery-category">
-                      {selectedItem.category.split('-').map(word => 
-                        word.charAt(0).toUpperCase() + word.slice(1)
-                      ).join(' ')}
-                    </span>
+                    <span className="gallery-category">{selectedItem.category}</span>
                   </div>
                   <div className="modal-description">
                     <p>{selectedItem.description}</p>
@@ -480,6 +457,9 @@ export const Gallery = () => {
                 </div>
               </div>
             </div>
+            <button className="close-button" onClick={handleCloseModal}>
+              ×
+            </button>
           </div>
         </div>
       )}

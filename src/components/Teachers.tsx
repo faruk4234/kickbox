@@ -3,60 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { TeacherDetails } from './TeacherDetails';
 import './Teachers.css';
 import { Teacher } from '../types/Teacher';
+import { teachersData } from '../data/teachersData';
 
-const teachers: Teacher[] = [
-  {
-    id: 1,
-    name: 'Muammer Hoca',
-    title: 'Baş Antrenör',
-    media: [
-      {
-        type: 'image',
-        url: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61',
-        title: 'Muammer Hoca Antrenman',
-        description: 'Profesyonel antrenman seansı'
-      }
-    ],
-    description: '20 yıllık tecrübesiyle kickboks dünyasının önde gelen isimlerinden. Ulusal ve uluslararası birçok şampiyon yetiştirdi.',
-    specialties: ['Profesyonel Kickboks', 'Ring Teknikleri', 'Kondisyon'],
-    achievements: ['Türkiye Şampiyonası Altın Madalya', 'Avrupa Şampiyonası Gümüş Madalya'],
-    experience: '20 yıl',
-    education: 'Spor Bilimleri Fakültesi'
-  },
-  {
-    id: 2,
-    name: 'Ahmet Yılmaz',
-    title: 'Teknik Direktör',
-    media: [
-      {
-        type: 'image',
-        url: 'https://images.unsplash.com/photo-1517438984742-1262db08379e',
-        title: 'Ahmet Hoca Teknik',
-        description: 'Teknik antrenman seansı'
-      }
-    ],
-    description: 'Teknik direktör olarak 15 yıllık deneyime sahip. Sporcuların teknik gelişiminde uzman.',
-    specialties: ['Teknik Antrenman', 'Taktik Geliştirme', 'Spor Psikolojisi'],
-    experience: '15 yıl'
-  },
-  {
-    id: 3,
-    name: 'Ayşe Kaya',
-    title: 'Kondisyon Antrenörü',
-    media: [
-      {
-        type: 'image',
-        url: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b',
-        title: 'Ayşe Hoca Kondisyon',
-        description: 'Kondisyon antrenmanı'
-      }
-    ],
-    description: 'Fitness ve kondisyon alanında uzman. Sporcuların fiziksel gelişimini en üst düzeye çıkarıyor.',
-    specialties: ['Kondisyon', 'Fitness', 'Beslenme'],
-    experience: '10 yıl'
-  }
-];
+const teachers: Teacher[] = teachersData.slice(0, 4);
 
+    
 export const Teachers = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);

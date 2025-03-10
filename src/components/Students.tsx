@@ -107,7 +107,7 @@ export const Students: React.FC = () => {
   };
 
   const handleViewAllStudents = () => {
-    navigate('students');
+    navigate('/students');
   };
 
   const handlePrevious = () => {

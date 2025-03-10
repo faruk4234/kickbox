@@ -129,6 +129,7 @@ export const Navbar = () => {
       </a>
       <Link to="/gallery" onClick={handleLinkClick} role="menuitem">Galeri</Link>
       <Link to="/teachers" onClick={handleLinkClick} role="menuitem">Hocalarımız</Link>
+      <Link to="/students" onClick={handleLinkClick} role="menuitem">Öğrencilerimiz</Link>
       <a href="#programs" onClick={(e) => handleNavClick(e, 'programs')} role="menuitem">
         Programlar
       </a>

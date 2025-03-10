@@ -3,21 +3,23 @@
   top: 0;
   left: 0;
   right: 0;
-  background: var(--background-primary);
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 1000;
-  height: 64px;
+  height: 70px;
   transition: all 0.3s ease;
 }
 
 .navbar.scrolled {
-  background-color: var(--header-bg);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  background-color: rgba(10, 10, 10, 0.98);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .navbar-container {
-  max-width: 1200px;
+  max-width: 1400px;
   width: 100%;
   margin: 0 auto;
   padding: 0 2rem;
@@ -28,11 +30,23 @@
 }
 
 .logo a {
-  color: var(--primary-color);
+  color: var(--text-primary);
   font-size: 1.8rem;
   font-weight: 800;
   text-decoration: none;
   letter-spacing: 2px;
+  background: linear-gradient(135deg, #fff, #ccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.logo a:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #fff, var(--primary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Desktop Navigation */
@@ -44,7 +58,7 @@
 
 .desktop-nav .nav-links {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   align-items: center;
   margin-left: auto;
 }
@@ -52,23 +66,46 @@
 .nav-links a {
   color: var(--text-primary);
   text-decoration: none;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 500;
   transition: all 0.3s ease;
   padding: 0.5rem 1rem;
-  border-radius: 8px;
+  border-radius: 12px;
   white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-links a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
 }
 
 .nav-links a:hover {
-  color: var(--accent-color);
-  background: rgba(var(--accent-rgb), 0.1);
+  color: white;
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 0, 0, 0.2);
+}
+
+.nav-links a:hover::before {
+  transform: translateX(100%);
 }
 
 /* Add margin to main content to account for fixed navbar */
 main {
-  padding-top: 64px;
-  min-height: calc(100vh - 64px);
+  padding-top: 70px;
+  min-height: calc(100vh - 70px);
 }
 
 /* Hamburger Menu Styles */
@@ -85,6 +122,12 @@ main {
   margin-left: 2rem;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.hamburger:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .hamburger-line {
@@ -176,9 +219,11 @@ main {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.9);
     opacity: 0;
     transition: opacity 0.3s ease;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
   }
 
   .drawer-container.active .drawer-backdrop {
@@ -194,8 +239,8 @@ main {
     width: 280px;
     height: 100%;
     margin: 0;
-    padding: 60px 0 20px 0;
-    background: var(--background-primary);
+    padding: 70px 0 20px 0;
+    background: var(--bg-primary);
     flex-direction: column;
     align-items: stretch;
     transform: translateX(100%);
@@ -203,32 +248,40 @@ main {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     box-shadow: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .drawer-container.active .nav-links {
     transform: translateX(0);
-    box-shadow: -4px 0 25px rgba(0, 0, 0, 0.3);
+    box-shadow: -4px 0 25px rgba(0, 0, 0, 0.5);
   }
 
   .drawer-container .nav-links a {
     font-size: 1.1rem;
     padding: 16px 24px;
-    margin: 0;
+    margin: 0 10px;
     color: var(--text-primary);
-    transition: background-color 0.2s ease;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     font-weight: 500;
-    border-radius: 0;
-    border-bottom: 1px solid var(--border-color);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.05);
+    margin-bottom: 8px;
   }
 
   .drawer-container .nav-links a:last-child {
-    border-bottom: none;
+    margin-bottom: 20px;
   }
 
-  .drawer-container .nav-links a:active {
-    background-color: rgba(var(--accent-rgb), 0.1);
+  .drawer-container .nav-links a:active,
+  .drawer-container .nav-links a:hover {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 0, 0, 0.2);
   }
 }
 
@@ -248,7 +301,7 @@ main {
 
   .drawer-container .nav-links {
     width: 100%;
-    padding-top: 56px;
+    padding-top: 60px;
   }
 
   .drawer-container .nav-links a {
@@ -264,7 +317,7 @@ main {
 
   .hamburger-line {
     width: 20px;
-    margin: 2px 0;
+    height: 2px;
   }
 
   .menu-open .hamburger-line:nth-child(1) {
@@ -281,40 +334,42 @@ main {
   }
 }
 
-/* Dark mode adjustments */
 @media (prefers-color-scheme: dark) {
   .navbar {
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .navbar.scrolled {
-    background: rgba(0, 0, 0, 0.98);
+    background-color: rgba(10, 10, 10, 0.98);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 
   .nav-links a:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--primary-color);
+    color: white;
   }
 
   .drawer-container .nav-links {
-    background: rgba(0, 0, 0, 0.95);
+    background: var(--bg-primary);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
   }
 }
 
-/* Touch Device Improvements */
 @media (hover: none) {
   .nav-links a:hover {
     background: none;
+    color: var(--text-primary);
   }
 
   .drawer-container .nav-links {
-    overscroll-behavior: contain;
+    padding-bottom: 80px;
   }
 
   .nav-links a,
-  .hamburger {
+  .drawer-container .nav-links a {
     -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
   }
 } 

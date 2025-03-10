@@ -10,6 +10,7 @@ import { Programs } from './components/Programs';
 import { Contact } from './components/Contact';
 import { WomensClass } from './components/WomensClass';
 import TeachersPage from './pages/TeachersPage';
+import StudentsPage from './pages/StudentsPage';
 import GalleryPage from './pages/GalleryPage';
 import './styles/fonts.css';
 import './styles/theme.css';
@@ -46,6 +47,7 @@ const App: React.FC = () => {
             </main>
           } />
           <Route path="teachers" element={<TeachersPage />} />
+          <Route path="students" element={<StudentsPage />} />
           <Route path="gallery" element={<GalleryPage />} />
           <Route path="presentation" element={<PresentationRedirect />} />
         </Routes>

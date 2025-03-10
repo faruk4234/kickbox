@@ -41,45 +41,7 @@ export const studentsData: Student[] = [
       }
     ]
   },
-  {
-    id: 2,
-    name: 'Zeynep Kaya',
-    title: 'Amatör Kickboksçu',
-    purpose: 'Fiziksel kondisyon ve kendini savunma',
-    startYear: 2020,
-    experience: '3 Yıl',
-    success: 'İstanbul Amatör Ligi Üçüncüsü',
-    specialties: ['Kickboks', 'Fitness', 'Savunma Teknikleri'],
-    media: [
-      {
-        type: 'image',
-        url: 'https://images.unsplash.com/photo-1609267258252-42c606fad3cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
-      },
-      {
-        type: 'image',
-        url: 'https://images.unsplash.com/photo-1593352216894-89108a0d2653?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
-      }
-    ],
-    bio: 'Zeynep, fitness ve kendini savunma amacıyla kickboksa başladı. Kısa sürede gelişim göstererek amatör turnuvalara katılmaya başladı ve çeşitli dereceler elde etti.',
-    achievements: [
-      'İstanbul Amatör Ligi Üçüncüsü (2022)',
-      'Fitness ve Savunma Teknikleri Sertifikası (2021)'
-    ],
-    gallery: [
-      {
-        type: 'image',
-        url: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80',
-        title: 'Grup Dersi',
-        description: 'Haftalık grup dersinde teknik çalışma'
-      },
-      {
-        type: 'image',
-        url: 'https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80',
-        title: 'Turnuva Anı',
-        description: 'İstanbul Amatör Ligi müsabakasından bir kare'
-      }
-    ]
-  },
+ 
   {
     id: 3,
     name: 'Mehmet Demir',

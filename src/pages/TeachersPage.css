@@ -5,17 +5,22 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  padding-bottom: 40px;
+  overflow: hidden;
 }
 
 .page-header-wrapper {
   background-color: var(--bg-primary);
   border-bottom: 1px solid var(--border-color);
-  padding: 6px 0;
+  padding: 12px 0;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 99;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
 }
 
 .page-header {
@@ -67,30 +72,40 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 6px 0;
+  padding: 12px 0;
   position: fixed;
-  top: 36px;
+  top: 90px;
   left: 0;
   right: 0;
   z-index: 98;
+  min-height: 65px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.categories-container.sticky {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .categories-wrapper {
   max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 12px;
+  padding: 0 20px;
 }
 
 .categories-scroll {
   display: flex;
-  gap: 6px;
+  gap: 12px;
   overflow-x: auto;
-  padding: 2px 0;
+  padding: 5px 0;
   scrollbar-width: none;
   -ms-overflow-style: none;
   -webkit-overflow-scrolling: touch;
   mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  width: 100%;
 }
 
 .categories-scroll::-webkit-scrollbar {
@@ -127,17 +142,24 @@
 }
 
 .teachers-content {
-  margin-top: 80px;
-  padding: 12px;
-  flex: 1;
+  position: fixed;
+  top: 175px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .teachers-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  gap: 24px;
   max-width: 1400px;
   margin: 0 auto;
+  padding-bottom: 40px;
 }
 
 .teacher-gallery-card {
@@ -381,7 +403,8 @@
 
 @media (max-width: 768px) {
   .page-header-wrapper {
-    padding: 6px 0;
+    padding: 10px 0;
+    min-height: 60px;
   }
 
   .page-header {
@@ -398,8 +421,9 @@
   }
 
   .categories-container {
-    top: 36px;
-    padding: 6px 0;
+    top: 70px;
+    min-height: 55px;
+    padding: 10px 0;
   }
 
   .categories-wrapper {
@@ -412,13 +436,13 @@
   }
 
   .teachers-content {
-    margin-top: 80px;
-    padding: 10px;
+    top: 145px;
+    padding: 15px;
   }
 
   .teachers-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
+    gap: 20px;
+    padding-bottom: 30px;
   }
 
   .teacher-gallery-image {
@@ -459,7 +483,8 @@
 
 @media (max-width: 480px) {
   .page-header-wrapper {
-    padding: 4px 0;
+    padding: 8px 0;
+    min-height: 50px;
   }
 
   .page-header {
@@ -476,8 +501,9 @@
   }
 
   .categories-container {
-    top: 32px;
-    padding: 4px 0;
+    top: 60px;
+    min-height: 50px;
+    padding: 8px 0;
   }
 
   .categories-wrapper {
@@ -490,13 +516,13 @@
   }
 
   .teachers-content {
-    margin-top: 70px;
-    padding: 8px;
+    top: 120px;
+    padding: 12px;
   }
 
   .teachers-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 16px;
+    padding-bottom: 20px;
   }
 
   .teacher-gallery-image {

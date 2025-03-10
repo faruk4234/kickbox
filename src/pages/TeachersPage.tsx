@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Teacher } from '../types/Teacher';
+import { Student } from '../types/Student';
 import { teachersData } from '../data/teachersData';
+import { studentsData } from '../data/studentsData';
 import { PageHeader } from '../components/PageHeader';
 import { TeacherDetails } from '../components/TeacherDetails';
 import './TeachersPage.css';
@@ -102,10 +104,18 @@ const MediaCarousel: React.FC<{ media: any[]; onClose?: () => void }> = ({ media
 };
 
 export const TeachersPage: React.FC = () => {
+  // Teachers state and refs
   const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
   const [selectedGalleryItem, setSelectedGalleryItem] = useState<any | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [categories, setCategories] = useState<string[]>([]);
+  const categoriesRef = useRef<HTMLDivElement>(null);
+  
+  // Students state and refs
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
+  const [selectedStudentCategory, setSelectedStudentCategory] = useState<string | null>(null);
+  const [studentCategories, setStudentCategories] = useState<string[]>([]);
+  const studentCategoriesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Get unique categories from teacher specialties
@@ -113,14 +123,60 @@ export const TeachersPage: React.FC = () => {
       new Set(teachersData.flatMap(teacher => teacher.specialties))
     ).sort((a, b) => a.localeCompare(b));
     setCategories(uniqueCategories);
+
+    // Get unique categories from student specialties
+    const uniqueStudentCategories = Array.from(
+      new Set(studentsData.flatMap((student: Student) => student.specialties))
+    ).sort((a: string, b: string) => a.localeCompare(b));
+    setStudentCategories(uniqueStudentCategories as string[]);
+
+    // Add scroll event listener for categories
+    const handleScroll = () => {
+      if (window.scrollY > 60) {
+        document.querySelector('.categories-container')?.classList.add('sticky');
+      } else {
+        document.querySelector('.categories-container')?.classList.remove('sticky');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Scroll selected category into view
+  useEffect(() => {
+    if (selectedCategory && categoriesRef.current) {
+      const activeButton = categoriesRef.current.querySelector('.category-button.active');
+      if (activeButton) {
+        activeButton.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  }, [selectedCategory]);
+
+  // Scroll selected student category into view
+  useEffect(() => {
+    if (selectedStudentCategory && studentCategoriesRef.current) {
+      const activeButton = studentCategoriesRef.current.querySelector('.category-button.active');
+      if (activeButton) {
+        activeButton.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  }, [selectedStudentCategory]);
 
   const filteredTeachers = selectedCategory
     ? teachersData.filter(teacher => teacher.specialties.includes(selectedCategory))
     : teachersData;
 
+  const filteredStudents = selectedStudentCategory
+    ? studentsData.filter((student: Student) => student.specialties.includes(selectedStudentCategory))
+    : studentsData;
+
   const handleTeacherClick = (teacher: Teacher) => {
     setSelectedTeacher(teacher);
+  };
+
+  const handleStudentClick = (student: Student) => {
+    setSelectedStudent(student);
   };
 
   const handleGalleryItemClick = (item: any) => {
@@ -129,11 +185,16 @@ export const TeachersPage: React.FC = () => {
 
   const handleClose = () => {
     setSelectedTeacher(null);
+    setSelectedStudent(null);
     setSelectedGalleryItem(null);
   };
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category === selectedCategory ? null : category);
+  };
+
+  const handleStudentCategoryClick = (category: string) => {
+    setSelectedStudentCategory(category === selectedStudentCategory ? null : category);
   };
 
   return (
@@ -144,7 +205,7 @@ export const TeachersPage: React.FC = () => {
       
       <div className="categories-container">
         <div className="categories-wrapper">
-          <div className="categories-scroll">
+          <div className="categories-scroll" ref={categoriesRef}>
             <button
               className={`category-button ${selectedCategory === null ? 'active' : ''}`}
               onClick={() => handleCategoryClick('')}
@@ -166,23 +227,39 @@ export const TeachersPage: React.FC = () => {
 
       <div className="teachers-content">
         <div className="teachers-grid">
-          {filteredTeachers.map((teacher) => (
-            <div key={teacher.id} className="teacher-gallery-card" onClick={() => handleTeacherClick(teacher)}>
-              <div className="teacher-gallery-image">
-                <MediaCarousel media={teacher.media} />
-              </div>
-              <div className="teacher-gallery-info">
-                <h3>{teacher.name}</h3>
-                <p>{teacher.title}</p>
-                <div className="specialties">
-                  {teacher.specialties.slice(0, 3).map((specialty, index) => (
-                    <span key={index} className="specialty-tag">{specialty}</span>
-                  ))}
+          {filteredTeachers.length > 0 ? (
+            filteredTeachers.map((teacher) => (
+              <div key={teacher.id} className="teacher-gallery-card" onClick={() => handleTeacherClick(teacher)}>
+                <div className="teacher-gallery-image">
+                  <MediaCarousel media={teacher.media} />
+                </div>
+                <div className="teacher-gallery-info">
+                  <h3>{teacher.name}</h3>
+                  <p>{teacher.title}</p>
+                  <div className="specialties">
+                    {teacher.specialties.slice(0, 3).map((specialty, index) => (
+                      <span key={index} className="specialty-tag">{specialty}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
+            ))
+          ) : (
+            <div className="no-results">
+              <p>Bu kategoride hoca bulunamadı.</p>
+              <button 
+                className="category-button" 
+                onClick={() => setSelectedCategory(null)}
+              >
+                Tüm hocaları göster
+              </button>
             </div>
-          ))}
+          )}
         </div>
+        
+        {/* Students Section */}
+    
+       
       </div>
 
       {selectedTeacher && (
@@ -192,6 +269,121 @@ export const TeachersPage: React.FC = () => {
           onClose={handleClose}
           onGalleryItemClick={handleGalleryItemClick}
         />
+      )}
+
+      {selectedStudent && (
+        <div className="student-modal-overlay" onClick={handleClose}>
+          <div className="student-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="close-button" onClick={handleClose}>&times;</button>
+            <div className="student-modal-content">
+              <div className="student-modal-sidebar">
+                <div className="student-modal-image">
+                  <MediaCarousel media={selectedStudent.media} />
+                </div>
+                <div className="student-modal-basic-info">
+                  <h2>{selectedStudent.name}</h2>
+                  <h3>{selectedStudent.title}</h3>
+                  
+                  <div className="student-details-modal">
+                    <div className="detail-item">
+                      <span className="detail-label">Amaç:</span>
+                      <span className="detail-value">{selectedStudent.purpose}</span>
+                    </div>
+                    <div className="detail-item">
+                      <span className="detail-label">Başlangıç:</span>
+                      <span className="detail-value">{selectedStudent.startYear}</span>
+                    </div>
+                    <div className="detail-item">
+                      <span className="detail-label">Deneyim:</span>
+                      <span className="detail-value">{selectedStudent.experience}</span>
+                    </div>
+                    <div className="detail-item">
+                      <span className="detail-label">Başarı:</span>
+                      <span className="detail-value">{selectedStudent.success}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="specialties">
+                    {selectedStudent.specialties.map((specialty: string, index: number) => (
+                      <span key={index} className="specialty-tag">{specialty}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="student-modal-main">
+                <div className="student-modal-section">
+                  <div className="section-header">
+                    <div className="section-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </svg>
+                    </div>
+                    <h4>Biyografi</h4>
+                  </div>
+                  <div className="section-content">
+                    <p>{selectedStudent.bio}</p>
+                  </div>
+                </div>
+                
+                <div className="student-modal-section">
+                  <div className="section-header">
+                    <div className="section-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                      </svg>
+                    </div>
+                    <h4>Başarılar</h4>
+                  </div>
+                  <div className="section-content">
+                    <ul className="achievements-list">
+                      {selectedStudent.achievements.map((achievement: string, index: number) => (
+                        <li key={index}>{achievement}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="student-modal-section">
+                  <div className="section-header">
+                    <div className="section-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                      </svg>
+                    </div>
+                    <h4>Galeri</h4>
+                  </div>
+                  <div className="section-content">
+                    <div className="gallery-grid">
+                      {selectedStudent.gallery.map((item: any, index: number) => (
+                        <div key={index} className="gallery-item">
+                          {item.type === 'video' ? (
+                            <div className="video-thumbnail">
+                              <img src={item.thumbnail || item.url} alt={item.title || ''} loading="lazy" />
+                              <div className="play-button">
+                                <span>▶</span>
+                              </div>
+                            </div>
+                          ) : (
+                            <img src={item.url} alt={item.title || ''} loading="lazy" />
+                          )}
+                          {item.title && (
+                            <div className="gallery-item-info">
+                              <h5>{item.title}</h5>
+                              {item.description && <p>{item.description}</p>}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
 
       {selectedGalleryItem && (
@@ -209,7 +401,7 @@ export const TeachersPage: React.FC = () => {
               ) : (
                 <img
                   src={selectedGalleryItem.url}
-                  alt={selectedGalleryItem.title}
+                  alt={selectedGalleryItem.title || ''}
                   className="gallery-modal-media"
                 />
               )}

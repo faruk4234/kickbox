@@ -5,7 +5,7 @@ import './Teachers.css';
 import { Teacher } from '../types/Teacher';
 import { teachersData } from '../data/teachersData';
 
-const teachers: Teacher[] = teachersData.slice(0, 4);
+const teachers: Teacher[] = teachersData.slice(0, 3);
 
     
 export const Teachers = () => {

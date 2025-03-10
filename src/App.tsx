@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
@@ -14,6 +14,17 @@ import './styles/fonts.css';
 import './styles/theme.css';
 import './styles/App.css';
 import './styles/responsive.css';
+
+// Presentation redirect component
+const PresentationRedirect: React.FC = () => {
+  React.useEffect(() => {
+    // Get the base URL from the homepage in package.json
+    const baseUrl = process.env.PUBLIC_URL || '';
+    window.location.href = `${baseUrl}/presentation/index.html`;
+  }, []);
+  
+  return <div>Redirecting to presentation...</div>;
+};
 
 const App: React.FC = () => {
   return (
@@ -34,6 +45,7 @@ const App: React.FC = () => {
           } />
           <Route path="teachers" element={<TeachersPage />} />
           <Route path="gallery" element={<GalleryPage />} />
+          <Route path="presentation" element={<PresentationRedirect />} />
         </Routes>
       </div>
     </Router>
